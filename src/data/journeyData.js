@@ -5,12 +5,6 @@ export const journeyData = [
 
       
       description: "Critical period where primary care physicians play a key role in initial detection and assessment.",
-    //   actions: [
-    //     "Symptom Recognition",
-    //     "Primary Care Visit",
-    //     "Cognitive Assessment",
-    //     "Referral Decision"
-    //   ],
     actions: [
         { 
           name: "Symptom Recognition", 
@@ -39,48 +33,77 @@ export const journeyData = [
       barriers: {
         physician: [
           {
-            description: "Diagnostic uncertainty in early stages",
             subpoints: [
-              "Only 8% of MCI cases are diagnosed.",
-              "Nearly 40% of PCPs are uncomfortable making a diagnosis"
-            ]
+              {
+                text: "Early-stage diagnostic uncertainty and a lack of standardized screening protocols lead to underdiagnosis and delayed care.",
+              },
+              {
+                text: "Limited time for comprehensive assessment and discomfort in making a diagnosis reduce diagnostic accuracy.",
+              },
+              {
+                text: "Complexity of differential diagnosis increases challenges for physicians in providing timely and accurate diagnoses.",
+              },
+            ],
           },
-          { description: "Limited time for comprehensive assessment" },
-          {
-            description: "Lack of standardized screening protocols",
-            subpoints: [
-              "Only 0.1% of over 200,000 clinicians and practices have diagnosis rates within the expected range"
-            ]
-          },
-          { description: "Complexity of differential diagnosis" }
         ],
         system: [
-          { description: "Inadequate cognitive assessment tools" },
           {
-            description: "Limited specialist referral networks",
             subpoints: [
-              "20 U.S. states are 'Dementia Neurology Deserts",
-              "55% of PCPs report a shortage of specialists."
-            ]
+              {
+                text: "Inadequate cognitive assessment tools and insufficient diagnostic support contribute to misdiagnosis and delays.",
+              },
+              {
+                text: "Limited specialist referral networks, with many states experiencing shortages, hinder access to specialized care.",
+              },
+              {
+                text: "Cognitive assessment and diagnosis remain fragmented, with gaps in support and coverage for patients.",
+              },
+            ],
           },
-          { description: "Insufficient diagnostic support" }
         ],
         patient: [
-          { description: "Delayed symptom reporting" },
-          { description: "Fear and stigma associated with diagnosis" },
           {
-            description: "Limited awareness of early signs",
-            subpoints: ["54% of individuals with SCD haven't seen a healthcare provider."]
+            subpoints: [
+              {
+                text: "Delayed symptom reporting and limited awareness of early signs contribute to later-stage diagnoses.",
+              },
+              {
+                text: "Fear and stigma associated with diagnosis prevent many patients from seeking timely help.",
+              },
+              {
+                text: "Access to healthcare barriers, including geographic and financial challenges, further complicate diagnosis and care.",
+              },
+            ],
           },
-          { description: "Access to healthcare barriers" }
-        ]
+        ],
       },
+      
       findings: [
-        "High rate of missed diagnoses in primary care",
-        "Critical need for early detection tools",
-        "Significant impact of delayed diagnosis",
-        "Importance of standardized assessment"
-      ]
+        {
+          description: "Missed Diagnoses in Primary Care",
+          subpoints: [
+            "High rate of missed diagnoses in primary care."
+          ]
+        },
+        {
+          description: "Early Detection Tools",
+          subpoints: [
+            "Critical need for early detection tools."
+          ]
+        },
+        {
+          description: "Impact of Delayed Diagnosis",
+          subpoints: [
+            "Significant impact of delayed diagnosis."
+          ]
+        },
+        {
+          description: "Standardized Assessment",
+          subpoints: [
+            "Importance of standardized assessment."
+          ]
+        }
+      ]      
     },
     {
       number: 2,
@@ -115,61 +138,77 @@ export const journeyData = [
       barriers: {
         physician: [
           {
-            description: "Complex diagnostic criteria",
             subpoints: [
-              "15-30% of those meeting Alzheimer's criteria don’t have Alzheimer's brain changes.",
-              "5-10% have vascular dementia alone, but it’s usually mixed.",
-              "5% of older adults with dementia have only Lewy body dementia, but most also have Alzheimer's changes.",
-              "The overlap of dementia types complicates diagnosis, even with established criteria."
+              
+              {
+                text: "15-30% of those meeting Alzheimer's criteria don’t have Alzheimer's brain changes, complicating diagnosis.",
+              },
+              {
+                text: "85% of dementia diagnoses are made by non-specialists, leading to variability in accuracy due to limited specialized training.",
+              },
+              {
+                text: "Limited access to biomarker testing and overlap of dementia types hinder precise diagnosis and staging.",
+              },
             ]
-          },
-          { description: "Limited biomarker testing access" },
-          {
-            description: "Varied expertise in AD diagnosis",
-            subpoints: [
-              "85% of dementia diagnoses are made by non-specialists",
-              "Only 0.1% of clinicians/practices meet expected diagnosis rates",
-              "Less than 1% of advanced practice clinicians have gerontology certification.",
-              "Most initial diagnoses are made by providers without specialized dementia training, leading to variability in diagnostic accuracy."
-            ]
-          },
-          { description: "Challenges in disease staging" }
-        ],
-        system: [
-          { description: "High diagnostic testing costs",
-            subpoints: ["Medicare reimburses $268 for cognitive assessments, but broader tests like PET scans are expensive and not always covered."]
-          },
-          {
-            description: "Limited specialist availability",
-            subpoints: [
-              "44% of PCPs in large cities and 54% in suburban areas report a lack of specialists.s",
-              "63% of PCPs in small cities/towns and 71% in rural areas report the same."
-            ]
-          },
-          {
-            description: "Insurance coverage restrictions",
-            subpoints: [
-              "Medicare does not cover long-term nursing home care",
-              "Coverage for biomarker tests and diagnostic tools varies by plan."
-            ]
-          },
-          { description: "Complex authorization processes",
-            subpoints: ["Prior authorization is required for some tests and medications, leading to delays in diagnosis and treatment."]
           }
+            
         ],
+        system:[ { subpoints: [
+          {
+            text: "High costs and limited insurance coverage for diagnostic tools like PET scans and biomarker tests hinder timely diagnosis.",
+          },
+          {
+            text: "44% to 71% of PCPs report a lack of specialists, especially in rural and suburban areas, impacting patient access to care.",
+          },
+          {
+            text: "Complex authorization processes and limited Medicare coverage delay diagnosis and access to necessary treatments.",
+          },
+        ]}
+      ],
+        
         patient: [
-          { description: "Financial burden of testing" },
-          { description: "Transportation challenges" },
-          { description: "Understanding complex procedures" },
-          { description: "Emotional impact of diagnosis" }
+          {
+            subpoints: [
+              {
+                text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
+              },
+              {
+                text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
+              },
+              {
+                text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
+              },
+            ]
+            
+          }
         ]
       },
       findings: [
-        "Low access to affordable diagnostic resources",
-        "Significant disparity in specialist availability",
-        "Complex diagnostic criteria impact accuracy",
-        "Insurance limitations affect diagnostic access"
-      ]
+        {
+          description: "Access to Diagnostic Resources",
+          subpoints: [
+            "Low access to affordable diagnostic resources."
+          ]
+        },
+        {
+          description: "Specialist Availability Disparity",
+          subpoints: [
+            "Significant disparity in specialist availability."
+          ]
+        },
+        {
+          description: "Diagnostic Criteria Complexity",
+          subpoints: [
+            "Complex diagnostic criteria impact accuracy."
+          ]
+        },
+        {
+          description: "Insurance Limitations",
+          subpoints: [
+            "Insurance limitations affect diagnostic access."
+          ]
+        }
+      ]      
     },
     {
       number: 3,
@@ -206,63 +245,77 @@ export const journeyData = [
       barriers: {
         physician: [
           {
-            description: "Complex Treatment Protocols",
             subpoints: [
-              "90% of Medicare beneficiaries with Alzheimer's also have at least one other chronic condition.",
-              "Over 60% of Alzheimer's patients take multiple medications for dementia, highlighting the complexity of treatment."
-            ]
+              {
+                text: "The complexity of treatment protocols, with many Alzheimer's patients having multiple chronic conditions, challenges diagnosis and management.",
+              },
+              {
+                text: "Monitoring requirements for treatments like anti-amyloid drugs create additional challenges for physicians, with ARIA occurring in a significant percentage of patients.",
+              },
+              {
+                text: "Limited treatment experience among healthcare providers affects the ability to manage complex cases effectively.",
+              },
+            ],
           },
-          {
-            description: "ARIA Monitoring Requirements",
-            subpoints: [
-              "ARIA occurs in 20-40% of patients treated with anti-amyloid drugs like Aducanumab and Lecanemab, with ARIA-E affecting 10-30% and ARIA-H affecting 5-10%."
-            ]
-          },
-          { description: "Limited Treatment Experience" },
-          { description: "Care Coordination Challenges" }
         ],
         system: [
-          { description: "High Treatment Costs",
-            subpoints: [
-                "Total cost of Alzheimer's care in 2024 is $360 billion (excluding unpaid caregiving",
-                "Lecanemab costs $26,500 annually per patient, raising affordability concerns."]
-          },
           {
-            description: "Complex Reimbursement",
             subpoints: [
-              "Medicare/Medicaid cover 64% of Alzheimer's-related costs",
-              "Medicare doesn’t cover long-term nursing home care beyond 90 days"
-            ]
+              {
+                text: "The high costs associated with Alzheimer's care, including expensive medications like Lecanemab, create financial barriers for patients and the healthcare system.",
+              },
+              {
+                text: "Medicare/Medicaid coverage is limited, and long-term care costs are not adequately covered by Medicare, creating resource strain.",
+              },
+              {
+                text: "The lack of access to treatment centers, along with resource-intensive monitoring requirements, complicates timely and effective care.",
+              },
+            ],
           },
-          { description: "Limited Access to Treatment Centers" },
-          { description: "Resource-Intensive Monitoring",
-            subpoints: ["Cognitive assessments are reimbursed at $246 to $266 per assessment"]
-          }
         ],
         patient: [
           {
-            description: "Significant Financial Burden",
             subpoints: [
-              "Alzheimer's patients face $91 billion in out-of-pocket costs, 25% of total payments.",
-              "Many seniors have limited savings, with 50% of Medicare beneficiaries age 65+ having $92,188 or less."
-            ]
+              {
+                text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
+              },
+              {
+                text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
+              },
+              {
+                text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
+              },
+            ],
           },
-          { description: "Treatment Adherence Challenges" },
-          { description: "Side Effect Management" },
-          {
-            description: "Caregiver Burden",
-            subpoints: [
-              "Over 11 million Americans provide unpaid care, contributing 18.4 billion hours valued at $346.6 billion in 2023."
-            ]
-          }
-        ]
-      },
+        ],
+      },      
       findings: [
-        "High financial burden on families and caregivers",
-        "Complexity of treatment plans with multiple chronic conditions",
-        "Limited accessibility to specialized treatment centers",
-        "Significant reliance on unpaid caregivers"
+        {
+          description: "Financial Burden",
+          subpoints: [
+            "High financial burden on families and caregivers."
+          ]
+        },
+        {
+          description: "Treatment Complexity",
+          subpoints: [
+            "Complexity of treatment plans with multiple chronic conditions."
+          ]
+        },
+        {
+          description: "Limited Access to Treatment",
+          subpoints: [
+            "Limited accessibility to specialized treatment centers."
+          ]
+        },
+        {
+          description: "Caregiver Dependency",
+          subpoints: [
+            "Significant reliance on unpaid caregivers."
+          ]
+        }
       ]
+      
     }
   ];
   
