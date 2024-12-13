@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,MessageCircle
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -17,6 +17,7 @@ import {
 } from 'recharts';
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
+import ChatbotButton from './ChatBot'
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -371,6 +372,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
+            <div className="w-48 h-24 border-2 rounded-lg border-grey flex items-center justify-center">
+              
+            </div>
           </div>
           
             
@@ -543,6 +547,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     </a>
   );
 };
+const [isChatOpen, setIsChatOpen] = React.useState(false);
+
+  const handleChatToggle = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
 
   return (
@@ -707,9 +716,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       </div>
       
       <div className="absolute left-8 bottom-0 w-0.5 h-8 bg-purple-200" />
+      <ChatbotButton />
     </div>
   );
 };
+
 const KeyBarriers = ({ barriers }) => {
   const barrierColors = {
     physician: {
