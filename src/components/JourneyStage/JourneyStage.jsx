@@ -13,7 +13,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,LineChart,
-  Line,PieChart,Pie,Cell,
+  Line,PieChart,Pie,Cell,AreaChart,Area
 } from 'recharts';
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
@@ -56,11 +56,19 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           { name: '75-84 Years', value: 38.6 },
           { name: '85+ Years', value: 35.4 },
         ];
+        const projected = [
+          { year: 2020, "Ages 65–74": 2, "Ages 75–84": 4, "Ages 85+": 6.1 },
+          { year: 2030, "Ages 65–74": 2.5, "Ages 75–84": 4.5, "Ages 85+": 8.5 },
+          { year: 2040, "Ages 65–74": 3, "Ages 75–84": 5.2, "Ages 85+": 11.2 },
+          { year: 2050, "Ages 65–74": 3.2, "Ages 75–84": 6.3, "Ages 85+": 12.7 },
+          { year: 2060, "Ages 65–74": 3.5, "Ages 75–84": 6.7, "Ages 85+": 13.8 },
+        ];
 
         return {
           type:'line',
           question_data:question_data,
-          ageGroupData:ageGroupData
+          ageGroupData:ageGroupData,
+          projected:projected
 
         }
         
@@ -214,13 +222,55 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             { name: 'Other', value: 11 },
           ];
 
+          const healthcare_worker =[
+            {
+              category: "Health Care System",
+              "Very effective": 5,
+              "Somewhat effective": 35,
+              "Not too effective": 50,
+              "Not at all effective": 10,
+            },
+            {
+              category: "Own Organization",
+              "Very effective": 21,
+              "Somewhat effective": 61,
+              "Not too effective": 16,
+              "Not at all effective": 2,
+            },
+          ];
+          const barrier_data = [
+            {
+              barrier: "Lack of community-based resources for dementia caregiver",
+              "Barrier": 77,
+              "Extreme Barrier": 44,
+            },
+            {
+              barrier: "Current payment models do not incentivize care coordination",
+              "Barrier": 70,
+              "Extreme Barrier": 41,
+            },
+            {
+              barrier: "Lack of trained health care social workers",
+              "Barrier": 50,
+              "Extreme Barrier": 10,
+            },
+            {
+              barrier: "Lack of trained nurse practitioners",
+              "Barrier": 29,
+              "Extreme Barrier": 3,
+            },
+          ];
+        
+
 
           return{
             type:'pie',
             deathdata:deathdata,
             mortality:mortality,
             caregivers1:caregivers1,
-            insurance:insurance
+            insurance:insurance,
+            healthcare_worker:healthcare_worker,
+            barrier_data:barrier_data
           }
       }
       default:
@@ -232,7 +282,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     const chartConfig = getChartData();
     if (!chartConfig) return null;
 
-    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,caregivers,caregivers1,insurance,Comorbid } = chartConfig;
+    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrier_data } = chartConfig;
 
     switch (type) {
       case 'line':
@@ -283,6 +333,49 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
             </Card>
           </div>
+          <div className="grid grid-cols-2 gap-8">
+            <Card className="p-6">
+            <div style={{ width: "100%", height: 500 }}>
+                <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                  Projected Number of People Age 65 and Older (Total and by Age) in the
+                  U.S. Population with Alzheimer’s Dementia, 2020 to 2060
+                </h3>
+                <p style={{ textAlign: "center", color: "gray", fontSize: "14px" }}>
+                  Millions of people
+                </p>
+                <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart data={projected}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area
+                      type="monotone"
+                      dataKey="Ages 65–74"
+                      stackId="1"
+                      stroke="#5CCDC4"
+                      fill="#5CCDC4"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="Ages 75–84"
+                      stackId="1"
+                      stroke="#F5B841"
+                      fill="#F5B841"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="Ages 85+"
+                      stackId="1"
+                      stroke="#4F2683"
+                      fill="#4F2683"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+          </div>
+
         </div>
       );
 
@@ -372,9 +465,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
-            <div className="w-48 h-24 border-2 rounded-lg border-grey flex items-center justify-center">
-              
-            </div>
+
+
+            
           </div>
           
             
@@ -495,6 +588,52 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                     </ResponsiveContainer>
                   </div>
                 </Card>
+              </div>
+              <div className="grid grid-cols-2 gap-8">
+              <Card className="p-6">
+                <div style={{ width: "100%", height: 500 }}>
+                  <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                    Health Care Workers’ Views on the Effectiveness of Dementia Care
+                    Navigation
+                  </h3>
+                  <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={healthcare_worker} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="category" />
+                      <YAxis tickFormatter={(tick) => `${tick}%`} />
+                      <Tooltip formatter={(value) => `${value}%`} />
+                      <Legend />
+                      <Bar dataKey="Very effective" fill={'#4F2683'} />
+                      <Bar dataKey="Somewhat effective" fill={"#4F2683"} />
+                      <Bar dataKey="Not too effective" fill={'#5CCDC4'} />
+                      <Bar dataKey="Not at all effective" fill={'#5CCDC4'} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+
+
+              <Card className="p-6">
+              <div style={{ width: "100%", height: 500 }}>
+                  <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                    Barriers to Dementia Care Navigation
+                  </h3>
+                  <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={barrier_data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis
+                        dataKey="barrier"
+                        
+                      />
+                      <YAxis tickFormatter={(tick) => `${tick}%`} />
+                      <Tooltip formatter={(value) => `${value}%`} />
+                      <Legend />
+                      <Bar dataKey="Barrier" fill={"#4F2683"} />
+                      <Bar dataKey="Extreme Barrier" fill={"#5CCDC4"} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
               </div>
               <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
