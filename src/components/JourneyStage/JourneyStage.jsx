@@ -38,6 +38,21 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
   // Colors for charts
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE'];
+  const COLORS1 = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
+  const COLORS2 = ['#0088FE', '#00C49F'];
+
+  const CustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
 
   // Transform the insights data for visualizations
   const getChartData = () => {
@@ -260,6 +275,20 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               "Extreme Barrier": 3,
             },
           ];
+          const treatmentdata = [
+            { name: 'Rivastigmine', value: 1190 },
+            { name: 'Donepezil', value: 1073 },
+            { name: 'Memantine', value: 941 },
+            { name: 'Rivastigmine + Memantine', value: 266 },
+            { name: 'Donepezil + Memantine', value: 216 },
+            { name: 'Galantamine', value: 164 },
+            { name: 'Galantamine + Memantine', value: 56 },
+          ];
+          
+          const treatmentdatainner = [
+            { name: 'Monotherapy', value: 3368 },
+            { name: 'Dual therapy', value: 538 },
+          ];
         
 
 
@@ -270,7 +299,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             caregivers1:caregivers1,
             insurance:insurance,
             healthcare_worker:healthcare_worker,
-            barrier_data:barrier_data
+            barrier_data:barrier_data,
+            treatmentdata:treatmentdata,
+            treatmentdatainner:treatmentdatainner
+
           }
       }
       default:
@@ -282,7 +314,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     const chartConfig = getChartData();
     if (!chartConfig) return null;
 
-    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrier_data } = chartConfig;
+    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrier_data,treatmentdatainner,treatmentdata } = chartConfig;
 
     switch (type) {
       case 'line':
@@ -634,6 +666,62 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </ResponsiveContainer>
                 </div>
               </Card>
+              </div>
+              <div className="grid gap-8">
+                <Card className="p-6">
+                  <div style={{ width: "100%", height: 500 }}>
+                    <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                      Treatment Distribution
+                    </h3>
+                    <ResponsiveContainer width="100%" height={400}>
+                    <PieChart>
+                      {/* Outer Pie */}
+                      <Pie
+                        data={treatmentdata}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={90}
+                        outerRadius={120}
+                        fill="#8884d8"
+                        label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                      >
+                        {treatmentdata.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+
+                      {/* Inner Pie */}
+                      <Pie
+                        data={treatmentdatainner}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        fill="#82ca9d"
+                        label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                      >
+                        {treatmentdatainner.map((entry, index) => (
+                          <Cell key={`cell-inner-${index}`} fill={COLORS2[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+
+                      <Tooltip />
+                      <Legend
+                        iconType="circle"
+                        iconSize={10}
+                        layout="horizontal"
+                        verticalAlign="bottom"
+                        align="center"
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+
+                  </div>
+                </Card>
               </div>
               <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />

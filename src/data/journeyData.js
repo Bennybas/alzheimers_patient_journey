@@ -25,10 +25,11 @@ export const journeyData = [
       ],
       metrics: [
         { value: "85%", label: "Initial PCP Diagnoses" },
+        {value:"18 Months",label:"Time to Referral"},
+        { value: "4 years", label: "Time Spent Under Incorrect Diagnosis" },
+        { value: "13%", label: "Misdiagnosis Rate" },
         { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)" },
-        { value: "8%", label: "Early MCI Detection" },
-        { value: "50%", label: "Diagnosis Delay Rate" },
-        { value: "54%", label: "Underuse of Diagnostic Services" }
+        { value: "8%", label: "Early MCI Detection" }
       ],
       barriers: {
         physician: [
@@ -129,10 +130,13 @@ export const journeyData = [
       ],
       metrics: [
         { value: "6.9 million Americans", label: "Prevalence of Alzheimer's Dementia" },
-        { value: "50%", label: "PCP referral Delays" },
+        { value: "17.7 weeks", label: "Average Time to Diagnosis" },
         { value: "8%", label: "Leqembi Eligibility" },
-        { value: "910,000 people aged 65+", label: "Incidence" },
-        { value: "$7,264", label: "Annual Medicare Cost Increase for Specialist Diagnosis" }
+        { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },
+        { value: "6 months", label: "Delay in Amyloid/Tau Imaging (Scheduling)" },
+        { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
+        { value: "40%", label: "Rate of Cognitive Screening Use:MoCA" },
+        { value: "~30%", label: "Rate of Neuropsychological Testing" }
 
       ],
       barriers: {
@@ -233,14 +237,17 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "$43,644", label: "Annual Cost of Care" },
-        { value: "$26,500", label: "Annual cost of Leqembi per patient" },
+        { value: "21.1 months", label: "Time to first-line Treatment" },
+        { value: "12.7 months", label: "Time to second-line Treatment" },
+        { value: "24.3%", label: "Treatment Switch/Add-on Rate" },
+        { value: "21.2%", label: "Patient Drop-Off Rate" },
         { value: "31 hrs", label: "Monthly Caregiver Time" },
         { value: "36 deaths per 100,000 people", label: "Death Rate" },
         { value: "61%", label: "Life Expectancy Impact" },
         { value: "69.20%", label: "Non-Adherence Percentage" },
-        { value: "76%", label: "Agitation" }
-
+        { value: "76%", label: "Agitation" },
+        { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
+        { value: "60%", label: "Rate of Caregiver Burnout" },
       ],
       barriers: {
         physician: [
