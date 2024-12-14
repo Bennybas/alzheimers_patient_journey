@@ -3,40 +3,40 @@ import { MessageCircle, X, Send } from 'lucide-react';
 
 // Knowledge Base with predefined responses
 const knowledgeBase = { 
-  'initial assessment': { 
-    response: 'The initial assessment for Zolgensma includes genetic testing and clinical evaluation. Key points:', 
+  'early symptoms': { 
+    response: 'Recognizing early symptoms of Alzheimer\'s disease is crucial:', 
     details: [ 
-      '• Genetic testing confirms SMN1 gene mutations', 
-      '• Clinical evaluation assesses motor function', 
-      '• Insurance pre-authorization typically takes 14.2 days', 
-      '• EMR data shows 83% diagnosis rate in early stages' 
+      '• Memory loss affecting daily life', 
+      '• Difficulty planning or solving problems', 
+      '• Confusion with time or place', 
+      '• Withdrawal from work or social activities' 
     ] 
   }, 
-  'eligibility': { 
-    response: 'Zolgensma eligibility is determined by several factors:', 
+  'diagnosis': { 
+    response: 'The diagnostic process for Alzheimer\'s disease includes:', 
     details: [ 
-      '• Patient must be under 2 years of age', 
-      '• Confirmed bi-allelic SMN1 mutations', 
-      '• Weight requirements must be met', 
-      '• Anti-AAV9 antibody testing needed' 
+      '• Detailed medical history and physical exam', 
+      '• Cognitive tests to assess memory and thinking skills', 
+      '• Brain imaging like MRI or CT scans', 
+      '• Biomarker testing for early detection' 
     ] 
   }, 
-  'insurance': { 
-    response: 'Insurance coverage for Zolgensma involves:', 
+  'treatment': { 
+    response: 'Current treatment options for Alzheimer\'s disease include:', 
     details: [ 
-      '• Average approval time: 14.2 days', 
-      '• 76% first-time approval rate', 
-      '• Prior authorization required', 
-      '• Financial assistance programs available' 
+      '• FDA-approved medications like cholinesterase inhibitors', 
+      '• Lifestyle changes to support cognitive health', 
+      '• Supportive therapies including counseling and cognitive training', 
+      '• Clinical trials for new treatments' 
     ] 
   }, 
-  'side effects': { 
-    response: 'Important information about side effect management:', 
+  'caregiver support': { 
+    response: 'Support for caregivers of Alzheimer\'s patients includes:', 
     details: [ 
-      '• Regular liver function monitoring', 
-      '• Platelet count monitoring', 
-      '• Cardiac monitoring required', 
-      '• Troponin-I monitoring schedule' 
+      '• Accessing respite care services', 
+      '• Joining support groups for emotional help', 
+      '• Learning effective communication strategies', 
+      '• Understanding progression of the disease' 
     ] 
   } 
 };
@@ -47,13 +47,13 @@ const ChatbotButton = () => {
   const [messages, setMessages] = useState([
     { 
       id: 1, 
-      text: "Hello! I can help you understand the patient journey. What would you like to know about?", 
+      text: "Hello! I can help you understand Alzheimer\'s disease. What would you like to know about?", 
       sender: 'bot',
       options: [
-        'Initial Assessment Process',
-        'Treatment Eligibility',
-        'Insurance Coverage', 
-        'Side Effects Management'
+        'Early Symptoms',
+        'Diagnosis Process',
+        'Treatment Options', 
+        'Caregiver Support'
       ]
     }
   ]);
@@ -71,10 +71,10 @@ const ChatbotButton = () => {
   const handleOptionClick = (option) => {
     // Mapping of user-friendly options to knowledge base keys
     const optionMap = {
-      'Initial Assessment Process': 'initial assessment',
-      'Treatment Eligibility': 'eligibility',
-      'Insurance Coverage': 'insurance',
-      'Side Effects Management': 'side effects'
+      'Early Symptoms': 'early symptoms',
+      'Diagnosis Process': 'diagnosis',
+      'Treatment Options': 'treatment',
+      'Caregiver Support': 'caregiver support'
     };
 
     // Find the corresponding knowledge base key
@@ -101,10 +101,10 @@ const ChatbotButton = () => {
         sender: 'bot',
         details: entry.details,
         options: [
-          'Initial Assessment Process',
-          'Treatment Eligibility',
-          'Insurance Coverage', 
-          'Side Effects Management'
+          'Early Symptoms',
+          'Diagnosis Process',
+          'Treatment Options', 
+          'Caregiver Support'
         ]
       };
 
@@ -130,10 +130,10 @@ const ChatbotButton = () => {
       text: `I received: "${message}". Would you like to explore one of these options?`,
       sender: 'bot',
       options: [
-        'Initial Assessment Process',
-        'Treatment Eligibility',
-        'Insurance Coverage', 
-        'Side Effects Management'
+        'Early Symptoms',
+        'Diagnosis Process',
+        'Treatment Options', 
+        'Caregiver Support'
       ]
     };
     
