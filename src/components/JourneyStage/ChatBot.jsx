@@ -61,7 +61,7 @@ const ChatbotButton = () => {
       };
       setMessages((prev) => [...prev, initialBotMessage]);
   
-      const response = await fetch('https://alz-backend.onrender.com/chat', {
+      const response = await fetch('https://alz-backend-1.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
