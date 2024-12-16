@@ -129,7 +129,6 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "6.9 million Americans", label: "Prevalence of Alzheimer's Dementia" },
         { value: "17.7 weeks", label: "Average Time to Diagnosis" },
         { value: "8%", label: "Leqembi Eligibility" },
         { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },

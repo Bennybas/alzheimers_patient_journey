@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,MessageCircle
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,AlertCircle
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -231,10 +231,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           ];
 
           const insurance =[
-            { name: 'Medicare', value: 45 },
-            { name: 'Medicaid', value: 19 },
-            { name: 'Out of pocket', value: 25 },
-            { name: 'Other', value: 11 },
+            { name: 'Medicare', value: 70.31 },
+            { name: 'Medicaid', value: 29.69 },
+            
           ];
 
           const healthcare_worker =[
@@ -245,15 +244,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               "Not too effective": 50,
               "Not at all effective": 10,
             },
-            {
-              category: "Own Organization",
-              "Very effective": 21,
-              "Somewhat effective": 61,
-              "Not too effective": 16,
-              "Not at all effective": 2,
-            },
+          
           ];
-          const barrier_data = [
+          const barrierData = [
             {
               barrier: "Lack of community-based resources for dementia caregiver",
               "Barrier": 77,
@@ -273,8 +266,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               barrier: "Lack of trained nurse practitioners",
               "Barrier": 29,
               "Extreme Barrier": 3,
-            },
-          ];
+            }
+          ];        
           const treatmentdata = [
             { name: 'Rivastigmine', value: 1190 },
             { name: 'Donepezil', value: 1073 },
@@ -299,7 +292,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             caregivers1:caregivers1,
             insurance:insurance,
             healthcare_worker:healthcare_worker,
-            barrier_data:barrier_data,
+            barrierData:barrierData,
             treatmentdata:treatmentdata,
             treatmentdatainner:treatmentdatainner
 
@@ -314,7 +307,13 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     const chartConfig = getChartData();
     if (!chartConfig) return null;
 
-    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrier_data,treatmentdatainner,treatmentdata } = chartConfig;
+    const calculateIntensity = (barrier, extremeBarrier) => {
+      const totalScore = barrier + extremeBarrier;
+      return Math.min(totalScore / 100, 1);
+    };
+  
+
+    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrierData,treatmentdatainner,treatmentdata } = chartConfig;
 
     switch (type) {
       case 'line':
@@ -324,7 +323,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
           <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
-              <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of PCP Receiving Alzheimer’s Questions (Age 65 and Above)</h3>
+              <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={question_data}>
@@ -340,7 +339,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
             </Card>
             <Card className="p-6">
-            <h3 className="text-sm font-bold text-gray-700 mb-4">Age 65 and older with Alzheimer’s</h3>
+            <h3 className="text-sm font-bold text-gray-700 mb-4">Age Distribution of People 65+ With Alzheimer's</h3>
             <div className="aspect-[4/3] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart width={400} height={400}>
@@ -369,8 +368,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             <Card className="p-6">
             <div style={{ width: "100%", height: 500 }}>
                 <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                  Projected Number of People Age 65 and Older (Total and by Age) in the
-                  U.S. Population with Alzheimer’s Dementia, 2020 to 2060
+                Projected Alzheimer's Cases in U.S. Adults 65+, 2020-2060
                 </h3>
                 <p style={{ textAlign: "center", color: "gray", fontSize: "14px" }}>
                   Millions of people
@@ -416,7 +414,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           <div className="w-full space-y-6">
             <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
-              <h4 className="text-sm font-medium text-gray-700">Specialist Availability to Meet Patient Demand</h4>
+              <h4 className="text-sm font-medium text-gray-700">Perceived Specialist Availability to Meet Patient Demand</h4>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={Specialist_availability}>
@@ -432,7 +430,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </Card>
 
             <Card className="p-6">
-            <h4 className="text-sm font-medium text-gray-700">Estimated Lifetime Risk for Alzheimer’s</h4>
+            <h4 className="text-sm font-medium text-gray-700">Estimated Lifetime Risk of Alzheimer's by Gender and Age </h4>
             <div className="aspect-[4/3] w-full">
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={agedata}>
@@ -452,30 +450,14 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
           <div className="grid grid-cols-2 gap-8">
           <Card className="p-6">
-            <h4 className="text-sm font-medium text-gray-700">Impact of Alzheimer's on Comorbid Chronic Diseases</h4>
-              <div className="aspect-[4/3] w-full">
-              {/* <ResponsiveContainer width="100%" height={300}>
-                <BarChart
-                      data={caregivers}
-                      margin={{
-                        top: 20, right: 30, left: 20, bottom: 5,
-                      }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="activity" />
-                <YAxis label={{ value: 'Percentage', angle: -90, position: 'insideLeft' }} domain={[0, 55]}/> 
-                <Tooltip />
-                <Legend verticalAlign="bottom" height={36}/>
-                <Bar dataKey="alzheimers" name="Caregivers of people with Alzheimer's or other dementias" fill="#4c2464" />
-                <Bar dataKey="other" name="Caregivers of other older people" fill="#4eb9a0" />
-                </BarChart>
-                </ResponsiveContainer> */}
+            <h4 className="text-sm font-medium text-gray-700">Impact of Alzheimer's on Hospital Stays for Common Comorbid Conditions</h4>
+              <div className="w-full">
 
-                <ResponsiveContainer width="105%" height={400}>
+                <ResponsiveContainer width="100%" height={400}>
                   <BarChart
                         data={Comorbid}
                         margin={{
-                          top: 20, right: 30, left: 20, bottom: 95, //Increased bottom margin
+                          top: 20, right: 30, left: 10, //Increased bottom margin
                         }}
                   >
                   <CartesianGrid strokeDasharray="3 3" />
@@ -644,84 +626,146 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </div>
               </Card>
 
-
-              <Card className="p-6">
-              <div style={{ width: "100%", height: 500 }}>
-                  <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                    Barriers to Dementia Care Navigation
-                  </h3>
-                  <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={barrier_data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis
-                        dataKey="barrier"
-                        
-                      />
-                      <YAxis tickFormatter={(tick) => `${tick}%`} />
-                      <Tooltip formatter={(value) => `${value}%`} />
-                      <Legend />
-                      <Bar dataKey="Barrier" fill={"#4F2683"} />
-                      <Bar dataKey="Extreme Barrier" fill={"#5CCDC4"} />
-                    </BarChart>
-                  </ResponsiveContainer>
+              <Card className="p-3">
+                <div style={{ width: "100%", height: "auto" }}>
+                  <h2 className="text-center font-semibold text-xl mb-4">
+                    Healthcare Barriers Landscape
+                  </h2>
+                  <div className="space-y-4">
+                    {barrierData.map((item, index) => {
+                      const intensity = calculateIntensity(item["Barrier"], item["Extreme Barrier"]);
+                      const backgroundIntensity = Math.floor(intensity * 100);  // Reduce the intensity scaling
+                      
+                      return (
+                        <div 
+                          key={index} 
+                          className="flex items-center bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-all"
+                          style={{
+                            backgroundColor: `rgb(240, ${240 - backgroundIntensity}, ${240 - backgroundIntensity})`  // Softer background color
+                          }}
+                        >
+                          <div className="mr-4">
+                            {item["Extreme Barrier"] > 30 ? (
+                              <AlertCircle 
+                                color="#E74C3C"  // Softer red color
+                                size={40} 
+                                className="animate-pulse"
+                              />
+                            ) : (
+                              <AlertTriangle 
+                                color="#F39C12"  // Softer orange color
+                                size={40}
+                              />
+                            )}
+                          </div>
+                          <div className="flex-grow">
+                            <h3 className="font-semibold text-gray-800 mb-2">
+                              {item.barrier}
+                            </h3>
+                            <div className="flex space-x-4">
+                              <div className="flex items-center">
+                                <span className="mr-2 text-sm text-gray-600">Barrier:</span>
+                                <div 
+                                  className="h-2 bg-blue-400 rounded-full"  // Softer blue color
+                                  style={{ width: `${item["Barrier"]}px` }}
+                                />
+                                <span className="ml-2 text-sm font-bold">{item["Barrier"]}</span>
+                              </div>
+                              <div className="flex items-center">
+                                <span className="mr-2 text-sm text-gray-600">Extreme:</span>
+                                <div 
+                                  className="h-2 bg-red-400 rounded-full"  // Softer red color
+                                  style={{ width: `${item["Extreme Barrier"]}px` }}
+                                />
+                                <span className="ml-2 text-sm font-bold">{item["Extreme Barrier"]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-6 text-center text-sm text-gray-600">
+                    <p>🔴 High Intensity Barriers | 🟠 Moderate Intensity Barriers</p>
+                  </div>
                 </div>
               </Card>
+              
               </div>
               <div className="grid gap-8">
-                <Card className="p-6">
-                  <div style={{ width: "100%", height: 500 }}>
-                    <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                      Treatment Distribution
-                    </h3>
-                    <ResponsiveContainer width="100%" height={400}>
-                    <PieChart>
-                      {/* Outer Pie */}
-                      <Pie
-                        data={treatmentdata}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={90}
-                        outerRadius={120}
-                        fill="#8884d8"
-                        label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                      >
-                        {treatmentdata.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS.length]} />
-                        ))}
-                      </Pie>
+              <Card className="p-6">
+                <div style={{ width: "100%", height: 500 }}>
+                  <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
+                    Treatment Distribution
+                  </h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    
+                    {/* First Donut Chart */}
+                    <div style={{ width: '45%' }}>
+                      <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                          <Pie
+                            data={treatmentdata}
+                            dataKey="value"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={90}
+                            outerRadius={120}
+                            fill="#8884d8"
+                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                          >
+                            {treatmentdata.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend
+                            iconType="circle"
+                            iconSize={10}
+                            layout="horizontal"
+                            verticalAlign="bottom"
+                            align="center"
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
 
-                      {/* Inner Pie */}
-                      <Pie
-                        data={treatmentdatainner}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        fill="#82ca9d"
-                        label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                      >
-                        {treatmentdatainner.map((entry, index) => (
-                          <Cell key={`cell-inner-${index}`} fill={COLORS2[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-
-                      <Tooltip />
-                      <Legend
-                        iconType="circle"
-                        iconSize={10}
-                        layout="horizontal"
-                        verticalAlign="bottom"
-                        align="center"
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
+                    {/* Second Donut Chart */}
+                    <div style={{ width: '45%' }}>
+                      <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                          <Pie
+                            data={treatmentdatainner}
+                            dataKey="value"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            fill="#82ca9d"
+                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                          >
+                            {treatmentdatainner.map((entry, index) => (
+                              <Cell key={`cell-inner-${index}`} fill={COLORS2[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend
+                            iconType="circle"
+                            iconSize={10}
+                            layout="horizontal"
+                            verticalAlign="bottom"
+                            align="center"
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
 
                   </div>
-                </Card>
+                </div>
+              </Card>
+
               </div>
               <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
