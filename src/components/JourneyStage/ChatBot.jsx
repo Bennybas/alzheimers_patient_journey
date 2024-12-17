@@ -54,7 +54,7 @@ const ChatbotButton = () => {
       const initialBotMessage = { id: botResponseId, text: "", sender: "bot" };
       setMessages((prev) => [...prev, initialBotMessage]);
   
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch("https://alz-backend-1.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: trimmedMessage }),
