@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,AlertCircle,MessageCircleQuestion
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -808,10 +808,19 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     </a>
   );
 };
-  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [defaultMessage, setDefaultMessage] = useState("");
 
+ 
   const handlePromptClick = () => {
+    setDefaultMessage(`Explain detailly about ${stage.title} of Alzheimer's Patient Journey`);
     setIsChatOpen(true);
+    console.log(defaultMessage)
+  };
+  const handlePromptClick2 = () => {
+    setDefaultMessage(`Explain detailly about ${stage.title} barriers of Alzheimer's Patient Journey`);
+    setIsChatOpen(true);
+    console.log(defaultMessage)
   };
   return (
     <div className="relative w-full">
@@ -845,11 +854,19 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
         </div>
         <div className='flex'>
           <p className="text-gray-700 mb-6 leading-relaxed pr-4">{stage.description}</p>
-          <MessageCircleQuestion 
+          <div className="relative group inline-block">
+            <MessageCircleQuestion 
               onClick={handlePromptClick} 
-              className="cursor-pointer"
+              className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out" 
             />
-          {isChatOpen && <ChatbotButton />}
+            <div>{{isChatOpen} &&(
+            <ChatbotButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} predifined_prompt={defaultMessage} 
+            />)}</div>
+            <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
+              Ask AIVY
+            </div>
+          </div>
+          
         
         </div>
        
@@ -947,7 +964,18 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             <h3 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500" />
               Key Barriers
+              <div className="relative group inline-block">
+                <MessageCircleQuestion 
+                  onClick={handlePromptClick2} 
+                  className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out" 
+                />
+                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
+                  Ask AIVY
+                </div>
+              </div>
+
             </h3>
+            
             <KeyBarriers barriers={barriers} />
           </Card>
         </div>
@@ -984,7 +1012,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       </div>
       
       <div className="absolute left-8 bottom-0 w-0.5 h-8 bg-purple-200" />
-      <ChatbotButton />
+      
     </div>
   );
 };

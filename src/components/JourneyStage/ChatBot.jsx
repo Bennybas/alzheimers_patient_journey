@@ -11,9 +11,9 @@ import python from "highlight.js/lib/languages/python";
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("python", python);
 
-
-const ChatbotButton = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
+  console.log("benny",predifined_prompt);
+  
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
@@ -27,6 +27,17 @@ const ChatbotButton = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  
+  useEffect(() => {
+    if (predifined_prompt && predifined_prompt.trim() !== "") {
+      setMessage(predifined_prompt);
+      handleSendMessage(predifined_prompt);
+      
+      // Reset predifined_prompt to prevent re-triggering
+      predifined_prompt = "";
+    }
+  }, [predifined_prompt]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -38,48 +49,48 @@ const ChatbotButton = () => {
   const handleSendMessage = async () => {
     const trimmedMessage = message.trim();
     if (trimmedMessage === "") return;
-  
+
     const newUserMessage = {
       id: Date.now(),
       text: trimmedMessage,
       sender: "user",
     };
-  
+
     setMessages((prev) => [...prev, newUserMessage]);
     setMessage("");
     setIsLoading(true);
-  
+
     try {
       const botResponseId = Date.now() + 1;
       const initialBotMessage = { id: botResponseId, text: "", sender: "bot" };
       setMessages((prev) => [...prev, initialBotMessage]);
-  
+
       const response = await fetch("https://alz-backend-1.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: trimmedMessage }),
       });
-  
+
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let fullResponse = "";
-  
+
       while (true) {
         const { done, value } = await reader?.read();
         if (done) break;
-  
+
         const chunk = decoder.decode(value);
         const events = chunk.split("\n\n");
-  
+
         events.forEach((event) => {
           if (event.startsWith("data: ")) {
             const content = event.replace("data: ", "").trim();
-  
+
             if (content === "[DONE]") {
               setIsLoading(false);
               return;
             }
-  
+
             // Update with full response
             fullResponse = content;
             setMessages((prev) =>
@@ -137,52 +148,56 @@ const ChatbotButton = () => {
         </div>
 
         <div className="flex-1 h-[calc(100%-200px)] overflow-y-auto p-4 space-y-3">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-          >
+          {messages.map((msg) => (
             <div
-              className={`max-w-[80%] p-3 rounded-xl break-words whitespace-pre-wrap ${
-                msg.sender === "user" ? "bg-purple-100 text-right" : "bg-blue-100 text-left"
-              }`}
+              key={msg.id}
+              className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw, rehypeSanitize]}
-                components={{
-                  strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
-                  li: ({node, ...props}) => (
-                    <span className="block mb-2">
-                      <span className="font-semibold">{props.children}</span>
-                    </span>
-                  ),
-                  ol: ({node, ...props}) => (
-                    <div className="space-y-1">
-                      {props.children}
-                    </div>
-                  )
-                }}
+              <div
+                className={`max-w-[80%] p-3 rounded-xl break-words whitespace-pre-wrap ${
+                  msg.sender === "user" ? "bg-purple-100 text-right" : "bg-blue-100 text-left"
+                }`}
               >
-                {msg.text}
-              </ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                  components={{
+                    strong: ({ node, ...props }) => <strong className="font-bold" {...props} />,
+                    li: ({ node, ...props }) => (
+                      <span className="block mb-2">
+                        <span className="font-semibold">{props.children}</span>
+                      </span>
+                    ),
+                    ol: ({ node, ...props }) => (
+                      <div className="space-y-1">
+                        {props.children}
+                      </div>
+                    )
+                  }}
+                >
+                  {msg.text}
+                </ReactMarkdown>
+              </div>
             </div>
-          </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t flex items-center gap-2">
-          <input
+        <textarea
             ref={inputRef}
-            type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask here..."
+            onChange={(e) => {
+              setMessage(e.target.value);
+              e.target.style.height = "auto"; 
+              e.target.style.height = e.target.scrollHeight + "px"; 
+            }}
+            placeholder="Ask Here.."
             disabled={isLoading}
-            className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            rows={1} // Initial rows
+            className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden resize-none"
           />
+
           <button
             onClick={handleSendMessage}
             disabled={isLoading || message.trim() === ""}
