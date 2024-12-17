@@ -16,7 +16,7 @@ export const journeyData = [
         },
         { 
           name: "Cognitive Assessment", 
-          content: "Cognitive testing like MMSE (Mini-Mental State Examination) MMSE (Mini-Mental State Examination) ,MoCA (Montreal Cognitive Assessment) are performed by the PCP" 
+          content: "Cognitive testing like MMSE (Mini-Mental State Examination) ,MoCA (Montreal Cognitive Assessment) are performed by the PCP" 
         },
         { 
           name: "Referral Decision", 
@@ -130,7 +130,7 @@ export const journeyData = [
       ],
       metrics: [
         { value: "17.7 weeks", label: "Average Time to Diagnosis" },
-        { value: "8%", label: "Leqembi Eligibility" },
+        { value: "8%", label: "Leqembi Eligibility Rate" },
         { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },
         { value: "6 months", label: "Delay in Amyloid/Tau Imaging (Scheduling)" },
         { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
@@ -238,15 +238,15 @@ export const journeyData = [
       metrics: [
         { value: "21.1 months", label: "Time to first-line Treatment" },
         { value: "12.7 months", label: "Time to second-line Treatment" },
-        { value: "24.3%", label: "Treatment Switch/Add-on Rate" },
-        { value: "21.2%", label: "Patient Drop-Off Rate" },
+        { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
+       
         { value: "31 hrs", label: "Monthly Caregiver Time" },
-        { value: "36 deaths per 100,000 people", label: "Death Rate" },
+        
         { value: "61%", label: "Life Expectancy Impact" },
         { value: "69.20%", label: "Non-Adherence Percentage" },
         { value: "76%", label: "Agitation" },
-        { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
         { value: "60%", label: "Rate of Caregiver Burnout" },
+        
       ],
       barriers: {
         physician: [

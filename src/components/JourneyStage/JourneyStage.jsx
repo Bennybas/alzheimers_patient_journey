@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,AlertCircle
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,AlertCircle,MessageCircleQuestion
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -13,7 +13,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,LineChart,
-  Line,PieChart,Pie,Cell,AreaChart,Area
+  Line,PieChart,Pie,Cell,AreaChart,Area,LabelList
 } from 'recharts';
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
@@ -39,6 +39,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   // Colors for charts
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE'];
   const COLORS1 = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
+  const colors_for_health = ['#8884d8', '#82ca9d', '#ffc658', '#ff6347'];
   const COLORS2 = ['#0088FE', '#00C49F'];
 
   const CustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -59,12 +60,12 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     switch (stage.number) {
       case 1: {
         const question_data = [
-          { name: "Every day", percentage: 19 },
-          { name: "Every few days", percentage: 34 },
-          { name: "Once a week", percentage: 18 },
-          { name: "Every two weeks", percentage: 12 },
-          { name: "Once a month", percentage: 10 },
-          { name: "Less than once a month", percentage: 8 }
+          { name: "1", percentage: 19 },
+          { name: "2-3", percentage: 34 },
+          { name: "7", percentage: 18 },
+          { name: "14", percentage: 12 },
+          { name: "30", percentage: 10 },
+          { name: ">30", percentage: 8 }
         ];
         const ageGroupData = [
           { name: '65-74 Years', value: 26.4 },
@@ -92,25 +93,22 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       case 2: {
         const Specialist_availability =[
           {
-            name: 'Almost no specialists',
+            name: '1',
             value: 6,
           },
           {
-            name: 'Not enough specialists',
+            name: '1-5',
             value: 49,
           },
           {
-            name: 'Enough specialists',
+            name: '6-10',
             value: 35,
           },
           {
-            name: 'More than enough specialists',
+            name: '10+',
             value: 7,
           },
-          {
-            name: 'Unsure or never refer',
-            value: 3,
-          },
+         
         ];
         const agedata = [
           {
@@ -236,36 +234,37 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             
           ];
 
-          const healthcare_worker =[
-            {
-              category: "Health Care System",
-              "Very effective": 5,
-              "Somewhat effective": 35,
-              "Not too effective": 50,
-              "Not at all effective": 10,
-            },
-          
+          const healthcare_worker = [
+            { category: "Very effective", value: 5, color: "#00C49F" },
+            { category: "Somewhat effective", value: 35, color: "#FFBB28" },
+            { category: "Not too effective", value: 50, color: "#FF8042" },
+            { category: "Not at all effective", value: 10, color: "#D0D0D0" },
           ];
+          
           const barrierData = [
             {
-              barrier: "Lack of community-based resources for dementia caregiver",
-              "Barrier": 77,
-              "Extreme Barrier": 44,
+              barrier: "Dementia Caregiver Resources",
+              description: "Lack of community resources for dementia caregivers",
+              barrier: 77,
+              extremeBarrier: 44,
             },
             {
-              barrier: "Current payment models do not incentivize care coordination",
-              "Barrier": 70,
-              "Extreme Barrier": 41,
+              barrier: "Care Coordination Payment",
+              description: "Payment models do not incentivize care coordination",
+              barrier: 70,
+              extremeBarrier: 41,
             },
             {
-              barrier: "Lack of trained health care social workers",
-              "Barrier": 50,
-              "Extreme Barrier": 10,
+              barrier: "Healthcare Social Workers",
+              description: "Insufficient trained healthcare social workers",
+              barrier: 50,
+              extremeBarrier: 10,
             },
             {
-              barrier: "Lack of trained nurse practitioners",
-              "Barrier": 29,
-              "Extreme Barrier": 3,
+              barrier: "Nurse Practitioners",
+              description: "Shortage of trained nurse practitioners",
+              barrier: 29,
+              extremeBarrier: 3,
             }
           ];        
           const treatmentdata = [
@@ -311,7 +310,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       const totalScore = barrier + extremeBarrier;
       return Math.min(totalScore / 100, 1);
     };
-  
+    const colors = ['#4F2683', '#8884d8', '#ff5c58', '#ffc658'];
 
     const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrierData,treatmentdatainner,treatmentdata } = chartConfig;
 
@@ -326,15 +325,24 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={question_data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="percentage" fill="#82ca9d" />
-                </BarChart>
-              </ResponsiveContainer>
+    <BarChart data={question_data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      
+      {/* Place the Legend here with custom valueKey */}
+      <Legend
+        valueKey="Frequency of Days" // This sets the label for the legend
+        iconType="circle"    // Optional: Set the icon type for the legend
+      />
+
+      <Bar dataKey="percentage" fill="#82ca9d" name="Frequency of Days">
+        {/* Display the percentage on top of each bar */}
+        <LabelList dataKey="percentage" position="top" />
+      </Bar>
+    </BarChart>
+  </ResponsiveContainer>
               </div>
 
             </Card>
@@ -368,7 +376,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             <Card className="p-6">
             <div style={{ width: "100%", height: 500 }}>
                 <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                Projected Alzheimer's Cases in U.S. Adults 65+, 2020-2060
+                Projected Alzheimer's Cases in U.S. Adults 65+
                 </h3>
                 <p style={{ textAlign: "center", color: "gray", fontSize: "14px" }}>
                   Millions of people
@@ -422,8 +430,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Legend />
-                  <Bar dataKey="value" fill="#ffb74d" />
+                  <Legend verticalAlign='bottom' />
+                  <Bar dataKey="value" fill="#ffb74d" name='Number of Specialist per 100000 people' />
                 </BarChart>
               </ResponsiveContainer>
               </div>
@@ -579,7 +587,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
 
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Alzheimer's Care: Payment Source Distribution</h4>
+                  <h4 className="text-sm font-medium text-gray-700">Payment Source Distribution</h4>
                   <div className="aspect-[4/3] w-full">
                   <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
@@ -607,86 +615,68 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <Card className="p-6">
                 <div style={{ width: "100%", height: 500 }}>
                   <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                    Health Care Workers’ Views on the Effectiveness of Dementia Care
-                    Navigation
+                    Effectiveness of Dementia Care Navigation
                   </h3>
                   <ResponsiveContainer width="100%" height={400}>
                     <BarChart data={healthcare_worker} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" />
+                      <XAxis dataKey="category"  />
                       <YAxis tickFormatter={(tick) => `${tick}%`} />
                       <Tooltip formatter={(value) => `${value}%`} />
-                      <Legend />
-                      <Bar dataKey="Very effective" fill={'#4F2683'} />
-                      <Bar dataKey="Somewhat effective" fill={"#4F2683"} />
-                      <Bar dataKey="Not too effective" fill={'#5CCDC4'} />
-                      <Bar dataKey="Not at all effective" fill={'#5CCDC4'} />
+                      <Legend layout="horizontal" align="center" verticalAlign="bottom" />
+                      <Bar 
+                        dataKey="value" 
+                        name="Healthcare Worker Effectiveness" 
+                        fill="#00C49F" 
+                        stackId="a" 
+                        data={healthcare_worker}
+                        isAnimationActive={false} 
+                      />
                     </BarChart>
                   </ResponsiveContainer>
+
                 </div>
               </Card>
 
               <Card className="p-3">
-                <div style={{ width: "100%", height: "auto" }}>
-                  <h2 className="text-center font-semibold text-xl mb-4">
-                    Healthcare Barriers Landscape
-                  </h2>
-                  <div className="space-y-4">
-                    {barrierData.map((item, index) => {
-                      const intensity = calculateIntensity(item["Barrier"], item["Extreme Barrier"]);
-                      const backgroundIntensity = Math.floor(intensity * 100);  // Reduce the intensity scaling
-                      
-                      return (
-                        <div 
-                          key={index} 
-                          className="flex items-center bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-all"
-                          style={{
-                            backgroundColor: `rgb(240, ${240 - backgroundIntensity}, ${240 - backgroundIntensity})`  // Softer background color
-                          }}
-                        >
-                          <div className="mr-4">
-                            {item["Extreme Barrier"] > 30 ? (
-                              <AlertCircle 
-                                color="#E74C3C"  // Softer red color
-                                size={40} 
-                                className="animate-pulse"
-                              />
-                            ) : (
-                              <AlertTriangle 
-                                color="#F39C12"  // Softer orange color
-                                size={40}
-                              />
-                            )}
+              <div className="p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
+                  <div className="space-y-3">
+                    {barrierData.map((item, index) => (
+                      <div key={index} className="mb-2">
+                        <div className="flex items-center">
+                          {/* Barrier Label */}
+                          <div className="w-1/4 text-sm font-semibold text-gray-800">
+                            {item.barrier}
                           </div>
-                          <div className="flex-grow">
-                            <h3 className="font-semibold text-gray-800 mb-2">
-                              {item.barrier}
-                            </h3>
-                            <div className="flex space-x-4">
-                              <div className="flex items-center">
-                                <span className="mr-2 text-sm text-gray-600">Barrier:</span>
-                                <div 
-                                  className="h-2 bg-blue-400 rounded-full"  // Softer blue color
-                                  style={{ width: `${item["Barrier"]}px` }}
-                                />
-                                <span className="ml-2 text-sm font-bold">{item["Barrier"]}</span>
-                              </div>
-                              <div className="flex items-center">
-                                <span className="mr-2 text-sm text-gray-600">Extreme:</span>
-                                <div 
-                                  className="h-2 bg-red-400 rounded-full"  // Softer red color
-                                  style={{ width: `${item["Extreme Barrier"]}px` }}
-                                />
-                                <span className="ml-2 text-sm font-bold">{item["Extreme Barrier"]}</span>
-                              </div>
-                            </div>
+                          {/* Progress Bar Container */}
+                          <div className="flex-grow flex space-x-1">
+                            {/* Barrier Intensity */}
+                            <div
+                              className="bg-blue-500 h-4 rounded -ml-24"
+                              style={{ width: `${item.barrier}%` }}
+                            />
+                            {/* Extreme Barrier Intensity */}
+                            <div
+                              className="bg-red-500 h-4 rounded"
+                              style={{ width: `${item.extremeBarrier}%` }}
+                            />
+                          </div>
+                          {/* Total Value */}
+                          <div className="text-xs text-gray-600 ml-2">
+                            {item.barrier + item.extremeBarrier}
                           </div>
                         </div>
-                      );
-                    })}
+                        {/* Description always visible */}
+                        <div className="text-xs text-gray-500 mt-1 ml-28">
+                          {item.description}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="mt-6 text-center text-sm text-gray-600">
-                    <p>🔴 High Intensity Barriers | 🟠 Moderate Intensity Barriers</p>
+                  <div className="mt-4 text-xs text-center text-gray-500">
+                    <span className="mr-2">🔵Seen as Barrier</span>
+                    <span>🔴 Seen as Extreme Barrier</span>
                   </div>
                 </div>
               </Card>
@@ -818,13 +808,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     </a>
   );
 };
-const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
 
-  const handleChatToggle = () => {
-    setIsChatOpen(!isChatOpen);
+  const handlePromptClick = () => {
+    setIsChatOpen(true);
   };
-
-
   return (
     <div className="relative w-full">
       <Card className="bg-gradient-to-r from-purple-50 via-purple-100 to-purple-50 p-6 mb-6 shadow-lg rounded-lg border border-purple-200 transition-all duration-300 hover:shadow-xl">
@@ -833,10 +821,12 @@ const [isChatOpen, setIsChatOpen] = React.useState(false);
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center shadow-md transform transition-transform hover:scale-105">
               <span className="text-2xl font-bold text-white">{stage.number}</span>
+              
             </div>
             <div>
               <h2 className="text-xl font-bold text-purple-900">{stage.title}</h2>
-              <p className="text-sm text-purple-700 mt-1">{stage.timeframe}</p>
+              <p className="text-sm text-purple-700 mt-1 pr-4">{stage.timeframe}</p>
+             
             </div>
           </div>
           <div className="flex gap-4">
@@ -853,9 +843,16 @@ const [isChatOpen, setIsChatOpen] = React.useState(false);
             </button>
           </div>
         </div>
-
-        <p className="text-gray-700 mb-6 leading-relaxed">{stage.description}</p>
-
+        <div className='flex'>
+          <p className="text-gray-700 mb-6 leading-relaxed pr-4">{stage.description}</p>
+          <MessageCircleQuestion 
+              onClick={handlePromptClick} 
+              className="cursor-pointer"
+            />
+          {isChatOpen && <ChatbotButton />}
+        
+        </div>
+       
         {/* Actions Flow */}
         <div className="flex items-center gap-4 mb-6">
           {stage.actions.map((action, idx) => (
