@@ -13,7 +13,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,LineChart,
-  Line,PieChart,Pie,Cell,AreaChart,Area,LabelList
+  Line,PieChart,Pie,Cell,AreaChart,Area,LabelList,ScatterChart,Scatter
 } from 'recharts';
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
@@ -80,11 +80,32 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           { year: 2060, "Ages 65–74": 3.5, "Ages 75–84": 6.7, "Ages 85+": 13.8 },
         ];
 
+        const alzheimersData = [
+          { timeToFirstVisit: 6, diseaseStage: 1 }, // Mild Stage
+          { timeToFirstVisit: 12, diseaseStage: 2 }, // Moderate Stage
+          { timeToFirstVisit: 18, diseaseStage: 3 }, // Severe Stage
+          { timeToFirstVisit: 24, diseaseStage: 3 },
+          { timeToFirstVisit: 30, diseaseStage: 3 },
+          { timeToFirstVisit: 4, diseaseStage: 1 },
+          { timeToFirstVisit: 15, diseaseStage: 2 },
+          { timeToFirstVisit: 20, diseaseStage: 2 },
+          { timeToFirstVisit: 36, diseaseStage: 3 }
+        ];
+        
+        // Trend Line Data (Example linear approximation)
+        const trendLineData = [
+          { timeToFirstVisit: 0, diseaseStage: 1 },
+          { timeToFirstVisit: 40, diseaseStage: 3 }
+        ];
+
         return {
           type:'line',
           question_data:question_data,
           ageGroupData:ageGroupData,
-          projected:projected
+          projected:projected,
+          alzheimersData:alzheimersData,
+          trendLineData:trendLineData
+
 
         }
         
@@ -312,7 +333,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     };
     const colors = ['#4F2683', '#8884d8', '#ff5c58', '#ffc658'];
 
-    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrierData,treatmentdatainner,treatmentdata } = chartConfig;
+    const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrierData,treatmentdatainner,
+      treatmentdata,trendLineData,alzheimersData } = chartConfig;
 
     switch (type) {
       case 'line':
@@ -412,6 +434,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
+
           </div>
 
         </div>

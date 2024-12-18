@@ -4,16 +4,8 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
-import hljs from "highlight.js/lib/core";
-import javascript from "highlight.js/lib/languages/javascript";
-import python from "highlight.js/lib/languages/python";
 
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("python", python);
-
-const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
-  console.log("benny",predifined_prompt);
-  
+const ChatbotButton = ({ isChatOpen, setIsChatOpen, predifined_prompt }) => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
@@ -23,28 +15,21 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
       sender: "bot",
     },
   ]);
+  const [suggestedQuestions, setSuggestedQuestions] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  
   useEffect(() => {
     if (predifined_prompt && predifined_prompt.trim() !== "") {
       setMessage(predifined_prompt);
       handleSendMessage(predifined_prompt);
-      
-      // Reset predifined_prompt to prevent re-triggering
-      predifined_prompt = "";
     }
   }, [predifined_prompt]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  const handleChatToggle = () => {
-    setIsChatOpen(!isChatOpen);
-  };
 
   const handleSendMessage = async () => {
     const trimmedMessage = message.trim();
@@ -59,17 +44,28 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
     setMessages((prev) => [...prev, newUserMessage]);
     setMessage("");
     setIsLoading(true);
+    setSuggestedQuestions([]); // Clear previous suggested questions
 
     try {
+      const backendUrl = "https://alz-backend-1.onrender.com/chat";
+
       const botResponseId = Date.now() + 1;
       const initialBotMessage = { id: botResponseId, text: "", sender: "bot" };
       setMessages((prev) => [...prev, initialBotMessage]);
 
-      const response = await fetch("https://alz-backend-1.onrender.com/chat", {
+      const response = await fetch(backendUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: trimmedMessage }),
+        signal: AbortSignal.timeout(30000), // 30-second timeout
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
@@ -91,34 +87,49 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
               return;
             }
 
-            // Update with full response
-            fullResponse = content;
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === botResponseId ? { ...msg, text: fullResponse } : msg
-              )
-            );
+            try {
+              const parsedContent = JSON.parse(content);
+              fullResponse = parsedContent.message.replace(/\\n/g, '\n');
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === botResponseId ? { ...msg, text: fullResponse } : msg
+                )
+              );
+
+              if (parsedContent.suggested_questions && parsedContent.suggested_questions.length > 0) {
+                setSuggestedQuestions(parsedContent.suggested_questions);
+              }
+            } catch (parseError) {
+              console.error("Error parsing response:", parseError);
+            }
           }
         });
       }
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          text: "Sorry, there was an issue connecting to the service. Please try again.",
-          sender: "bot",
-        },
-      ]);
+      const errorMessage = {
+        id: Date.now() + 1,
+        text: `Connection Error: ${error.message}\n\n**Troubleshooting Tips:**`,
+        sender: "bot",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
       setIsLoading(false);
     }
   };
 
+  const handleSuggestedQuestionClick = (question) => {
+    handleSendMessage(question);
+  };
+
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !isLoading) {
+    if (e.key === "Enter" && !e.shiftKey && !isLoading) {
+      e.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const handleChatToggle = () => {
+    setIsChatOpen(!isChatOpen);
   };
 
   return (
@@ -150,7 +161,7 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
         <div className="flex-1 h-[calc(100%-200px)] overflow-y-auto p-4 space-y-3">
           {messages.map((msg) => (
             <div
-              key={msg.id}
+ key={msg.id}
               className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
@@ -181,21 +192,38 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen,  predifined_prompt }) => {
             </div>
           ))}
           <div ref={messagesEndRef} />
+          {suggestedQuestions.length > 0 && (
+            <div className="p-4 bg-gray-50 border-t">
+              <h4 className="text-sm font-semibold mb-2 text-gray-600">Related Questions:</h4>
+              <div className="flex flex-wrap gap-2">
+                {suggestedQuestions.map((question, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSuggestedQuestionClick(question)}
+                    className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs hover:bg-purple-200 transition-colors"
+                  >
+                    {question}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t flex items-center gap-2">
-        <textarea
+          <textarea
             ref={inputRef}
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);
-              e.target.style.height = "auto"; 
-              e.target.style.height = e.target.scrollHeight + "px"; 
+              e.target.style.height = "auto";
+              e.target.style.height = e.target.scrollHeight + "px";
             }}
             placeholder="Ask Here.."
             disabled={isLoading}
-            rows={1} // Initial rows
+            rows={1}
             className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden resize-none"
+            onKeyPress={handleKeyPress}
           />
 
           <button
