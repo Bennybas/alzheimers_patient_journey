@@ -86,7 +86,7 @@ const BoxPlot = ({ width, height }) => {
         fontSize="14"
         fill="black"
 >
-        Response Value
+        MMSE score
 </text>
  
       {data.map((d, index) => (
@@ -168,9 +168,9 @@ const BoxPlot = ({ width, height }) => {
       {/* Legend */}
 <g transform={`translate(${width - margin.right + 10}, ${margin.top})`}>
 <circle cx={0} cy={0} r={4} fill="green" />
-<text x={10} y={0} dy="0.32em" fontSize="12" fill="black">Mean</text>
+<text x={10} y={0} dy="0.32em" fontSize="12" fill="black"></text>
 <line x1={-5} y1={20} x2={5} y2={20} stroke="red" strokeWidth="2" />
-<text x={10} y={20} dy="0.32em" fontSize="12" fill="black">Median</text>
+<text x={10} y={20} dy="0.32em" fontSize="12" fill="black"></text>
 </g>
 </svg>
   );

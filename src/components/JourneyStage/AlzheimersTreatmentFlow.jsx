@@ -222,7 +222,8 @@ const AlzheimersTreatmentFlow = ({
             fill="#6B7280"
             fontSize="11"
           >
-            (Donepezil + Memantine, Rivastigmine + Memantine )
+            (Memantine)
+           
           </text>
         </svg>
       </div>
@@ -308,7 +309,7 @@ const AlzheimersTreatmentFlow = ({
             fill="#6B7280"
             fontSize="11"
           >
-            (Memantine)
+             (Donepezil + Memantine, Rivastigmine + Memantine )
           </text>
         </svg>
       </div>

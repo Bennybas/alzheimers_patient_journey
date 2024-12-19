@@ -84,7 +84,7 @@ const EffectDataPlot = () => {
 
   return (
     <div className="w-full max-w-4xl p-4">
-      <h3 className="text-lg font-bold mb-4">Medication Effectiveness Box Plot</h3>
+      <h3 className="text-lg font-bold mb-4">Medication Effectiveness</h3>
       <ScatterChart
         width={400}
         height={300}

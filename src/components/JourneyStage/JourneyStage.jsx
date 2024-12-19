@@ -828,7 +828,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <EffectDataPlot />
               </Card>
               <Card className="p-6">
-              <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
+              <h3 className="text-lg font-bold mb-4 text-gray-800">Adherence vs Disease Progression</h3>
                 <div className="space-y-3">
                 <ResponsiveContainer width="100%" height={300}>
                     <LineChart
