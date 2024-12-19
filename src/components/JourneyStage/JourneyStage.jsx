@@ -808,7 +808,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                           </div>
                         </div>
                         {/* Description always visible */}
-                        <div className="text-xs text-gray-500 mt-1 ml-28">
+                        <div className="text-xs text-gray-500 mt-1 ml-4">
                           {item.description}
                         </div>
                       </div>
