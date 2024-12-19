@@ -13,12 +13,15 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,LineChart,
-  Line,PieChart,Pie,Cell,AreaChart,Area,LabelList,ScatterChart,Scatter
+  Line,PieChart,Pie,Cell,AreaChart,Area,LabelList,ScatterChart,Scatter,ZAxis,BoxPlot
 } from 'recharts';
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
 import ChatbotButton from './ChatBot'
-
+import EffectDataPlot from './EffectData';
+import AlzheimersTreatmentFlow from './AlzheimersTreatmentFlow'
+import SideEffectsAdherenceChart from '../Charts/SideEffects'
+import Therapies from '../Charts/Therapies';
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -41,7 +44,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const COLORS1 = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
   const colors_for_health = ['#8884d8', '#82ca9d', '#ffc658', '#ff6347'];
   const COLORS2 = ['#0088FE', '#00C49F'];
-
+  const colorScale = (value) => {
+    if (value < 30) return "#d4e157"; // Light green
+    if (value < 50) return "#ffee58"; // Yellow
+    return "#ef5350"; // Red
+  };
   const CustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -80,31 +87,33 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           { year: 2060, "Ages 65–74": 3.5, "Ages 75–84": 6.7, "Ages 85+": 13.8 },
         ];
 
-        const alzheimersData = [
-          { timeToFirstVisit: 6, diseaseStage: 1 }, // Mild Stage
-          { timeToFirstVisit: 12, diseaseStage: 2 }, // Moderate Stage
-          { timeToFirstVisit: 18, diseaseStage: 3 }, // Severe Stage
-          { timeToFirstVisit: 24, diseaseStage: 3 },
-          { timeToFirstVisit: 30, diseaseStage: 3 },
-          { timeToFirstVisit: 4, diseaseStage: 1 },
-          { timeToFirstVisit: 15, diseaseStage: 2 },
-          { timeToFirstVisit: 20, diseaseStage: 2 },
-          { timeToFirstVisit: 36, diseaseStage: 3 }
+        const alzheimersData  =[ { x: 3, y: 1 }, { x: 6, y: 2 }, { x: 9, y: 3 }, { x: 12, y: 4 }, { x: 15, y: 5 }, { x: 18, y: 6 }, { x: 21, y: 7 }, { x: 24, y: 8 }, { x: 27, y: 9 }, { x: 30, y: 10 }, ];
+        
+        const demographic= [
+          { x: '20-29', y: 'Male', value: 80 },
+          { x: '20-29', y: 'Female', value: 75 },
+          { x: '30-39', y: 'Male', value: 70 },
+          { x: '30-39', y: 'Female', value: 65 },
+          { x: '40-49', y: 'Male', value: 60 },
+          { x: '40-49', y: 'Female', value: 55 },
+          { x: '50-59', y: 'Male', value: 50 },
+          { x: '50-59', y: 'Female', value: 45 },
+          { x: '60-69', y: 'Male', value: 40 },
+          { x: '60-69', y: 'Female', value: 35 },
+          { x: '70-79', y: 'Male', value: 30 },
+          { x: '70-79', y: 'Female', value: 25 },
+          { x: '80-89', y: 'Male', value: 20 },
+          { x: '80-89', y: 'Female', value: 15 },
         ];
         
-        // Trend Line Data (Example linear approximation)
-        const trendLineData = [
-          { timeToFirstVisit: 0, diseaseStage: 1 },
-          { timeToFirstVisit: 40, diseaseStage: 3 }
-        ];
-
-        return {
+        
+        return{
           type:'line',
           question_data:question_data,
           ageGroupData:ageGroupData,
           projected:projected,
           alzheimersData:alzheimersData,
-          trendLineData:trendLineData
+          demographic:demographic
 
 
         }
@@ -202,12 +211,27 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           { condition: 'Diabetes', withAlzheimer: 666, withoutAlzheimer: 368 },
           { condition: 'Cancer', withAlzheimer: 666, withoutAlzheimer: 366 },
         ];
+
+        const severity =[
+          { symptomSeverity: 1, timeToDiagnosis: 120 },
+          { symptomSeverity: 2, timeToDiagnosis: 100 },
+          { symptomSeverity: 3, timeToDiagnosis: 80 },
+          { symptomSeverity: 4, timeToDiagnosis: 60 },
+          { symptomSeverity: 5, timeToDiagnosis: 40 },
+          { symptomSeverity: 6, timeToDiagnosis: 30 },
+          { symptomSeverity: 7, timeToDiagnosis: 20 },
+          { symptomSeverity: 8, timeToDiagnosis: 15 },
+          { symptomSeverity: 9, timeToDiagnosis: 10 },
+          { symptomSeverity: 10, timeToDiagnosis: 5 },
+        ];
+        
         return{
           type:'bar',
           Specialist_availability:Specialist_availability,
           agedata:agedata,
           caregivers:caregivers,
-          Comorbid:Comorbid
+          Comorbid:Comorbid,
+          severity:severity
 
         }
         
@@ -302,8 +326,17 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             { name: 'Monotherapy', value: 3368 },
             { name: 'Dual therapy', value: 538 },
           ];
-        
 
+          const AdhereData = [
+            { medicationAdherence: 20, diseaseProgression: 80 },
+            { medicationAdherence: 40, diseaseProgression: 70 },
+            { medicationAdherence: 60, diseaseProgression: 60 },
+            { medicationAdherence: 80, diseaseProgression: 50 },
+            { medicationAdherence: 100, diseaseProgression: 40 },
+          ];
+          
+          
+        
 
           return{
             type:'pie',
@@ -314,7 +347,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             healthcare_worker:healthcare_worker,
             barrierData:barrierData,
             treatmentdata:treatmentdata,
-            treatmentdatainner:treatmentdatainner
+            treatmentdatainner:treatmentdatainner,
+            AdhereData:AdhereData
 
           }
       }
@@ -334,7 +368,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     const colors = ['#4F2683', '#8884d8', '#ff5c58', '#ffc658'];
 
     const { type, agedata,Specialist_availability,question_data,deathdata,ageGroupData,mortality,projected,caregivers1,insurance,Comorbid,healthcare_worker,barrierData,treatmentdatainner,
-      treatmentdata,trendLineData,alzheimersData } = chartConfig;
+      treatmentdata,alzheimersData,severity,AdhereData } = chartConfig;
+
 
     switch (type) {
       case 'line':
@@ -347,24 +382,24 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={300}>
-    <BarChart data={question_data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      
-      {/* Place the Legend here with custom valueKey */}
-      <Legend
-        valueKey="Frequency of Days" // This sets the label for the legend
-        iconType="circle"    // Optional: Set the icon type for the legend
-      />
+                <BarChart data={question_data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  
+                  {/* Place the Legend here with custom valueKey */}
+                  <Legend
+                    valueKey="Frequency of Days" // This sets the label for the legend
+                    iconType="circle"    // Optional: Set the icon type for the legend
+                  />
 
-      <Bar dataKey="percentage" fill="#82ca9d" name="Frequency of Days">
-        {/* Display the percentage on top of each bar */}
-        <LabelList dataKey="percentage" position="top" />
-      </Bar>
-    </BarChart>
-  </ResponsiveContainer>
+                  <Bar dataKey="percentage" fill="#82ca9d" name="Frequency of Days">
+                    {/* Display the percentage on top of each bar */}
+                    <LabelList dataKey="percentage" position="top" />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
               </div>
 
             </Card>
@@ -435,7 +470,59 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </div>
             </Card>
 
+            <Card className="p-6">
+            <div style={{ width: "100%", height: 500 }}>
+                <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                Time to First Visit vs. Disease Progression 
+                </h3>
+                <ResponsiveContainer width="100%" height={400}>
+                  <ScatterChart
+                          margin={{
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20,
+                          }}
+                  >
+                  <CartesianGrid />
+                  <XAxis type="number" dataKey="x" name="Time to First Visit (months)" />
+                  <YAxis type="number" dataKey="y" name="Disease Progression Stage" />
+                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                  <Legend />
+                  <Scatter name="Time to First Visit vs. Disease Progression" data={alzheimersData} fill="rgba(75,192,192,0.4)" />
+                  </ScatterChart>
+                  </ResponsiveContainer>
+            </div>
+            </Card>
+
           </div>
+
+          {/* <div className="grid grid-cols-2 gap-8">
+            <Card className="p-6">
+            <div style={{ width: "100%", height: 500 }}>
+                <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                Correlation between Patient Demographics and Initial Treatment Response 
+                </h3>
+                <div style={{ width: "100%", height: "400px" }}>
+                  <HeatMap
+                    xLabels={xLabels}
+                    yLabels={yLabels}
+                    data={data}
+                    xLabelsLocation="bottom"
+                    xLabelWidth={60}
+                    yLabelWidth={80}
+                    cellRender={(value) => value && <div>{value}</div>}
+                    cellStyle={(value) => ({
+                      background: `rgb(255, ${255 - value * 2}, ${255 - value * 2})`,
+                      color: "black",
+                      fontWeight: "bold",
+                    })}
+                  />
+                </div>
+
+            </div>
+            </Card>
+          </div> */}
 
         </div>
       );
@@ -512,6 +599,45 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </Card>
 
 
+            <Card className="p-6">
+            <h4 className="text-sm font-medium text-gray-700">Correlation between Symptom Severity and Diagnosis Time</h4>
+              <div className="w-full">
+              <ResponsiveContainer width="100%" height={400}>
+                  <LineChart
+                    data={severity}
+                    margin={{
+                      top: 50,
+                      right: 30,
+                      left: 30,
+                      bottom: 50,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="symptomSeverity"
+                      name="Symptom Severity"
+                      type="number"
+                      label={{ value: 'Symptom Severity', position: 'insideBottom', offset: 0 }}
+                    />
+                    <YAxis
+                      dataKey="timeToDiagnosis"
+                      name="Time to Diagnosis (days)"
+                      type="number"
+                      label={{ value: 'Time to Diagnosis (days)', angle: -90, position: 'insideLeft', offset: 0 }}
+                    />
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="timeToDiagnosis"
+                      stroke="#8884d8"
+                      activeDot={{ r: 8 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+
             
           </div>
           
@@ -558,25 +684,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 <Card className="p-6">
                   <h4 className="text-sm font-medium text-gray-700">Mortality Rate By(per 100000 patients ) Year</h4>
                   <div className="aspect-[4/3] w-full">
-                  <ResponsiveContainer width="100%" height={400}>
-                    <LineChart
-                      data={mortality}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="year" label={{ value: "Year", position: "insideBottom", dy: 10 }} />
-                      <YAxis label={{ value: "Mortality Rate", angle: -90, position: "insideLeft" }} />
-                      <Tooltip />
-                      <Line
-                        type="monotone"
-                        dataKey="rate"
-                        stroke="#8884d8"
-                        strokeWidth={2}
-                        dot={{ r: 4 }}
-                        activeDot={{ r: 6 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
+                  < SideEffectsAdherenceChart />
                   </div>
                 </Card>
 
@@ -634,9 +742,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </div>
                 </Card>
               </div>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-3 gap-8">
               <Card className="p-6">
-                <div style={{ width: "100%", height: 500 }}>
+                <div style={{ width: "100%", height: 400 }}>
                   <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
                     Effectiveness of Dementia Care Navigation
                   </h3>
@@ -660,9 +768,12 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
                 </div>
               </Card>
+              <Card className="p-6">
+                <Therapies />
+              </Card>
 
-              <Card className="p-3">
-              <div className="p-4 rounded-lg shadow-md">
+              <Card className="p-6">
+              <div className="p-4">
                   <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
                   <div className="space-y-3">
                     {barrierData.map((item, index) => (
@@ -705,81 +816,60 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </Card>
               
               </div>
-              <div className="grid gap-8">
+              <div className="grid grid-cols-2 gap-8">
               <Card className="p-6">
-                <div style={{ width: "100%", height: 500 }}>
-                  <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
-                    Treatment Distribution
-                  </h3>
-                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    
-                    {/* First Donut Chart */}
-                    <div style={{ width: '45%' }}>
-                      <ResponsiveContainer width="100%" height={400}>
-                        <PieChart>
-                          <Pie
-                            data={treatmentdata}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={90}
-                            outerRadius={120}
-                            fill="#8884d8"
-                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                          >
-                            {treatmentdata.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip />
-                          <Legend
-                            iconType="circle"
-                            iconSize={10}
-                            layout="horizontal"
-                            verticalAlign="bottom"
-                            align="center"
-                          />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
-
-                    {/* Second Donut Chart */}
-                    <div style={{ width: '45%' }}>
-                      <ResponsiveContainer width="100%" height={400}>
-                        <PieChart>
-                          <Pie
-                            data={treatmentdatainner}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={60}
-                            outerRadius={80}
-                            fill="#82ca9d"
-                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                          >
-                            {treatmentdatainner.map((entry, index) => (
-                              <Cell key={`cell-inner-${index}`} fill={COLORS2[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip />
-                          <Legend
-                            iconType="circle"
-                            iconSize={10}
-                            layout="horizontal"
-                            verticalAlign="bottom"
-                            align="center"
-                          />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
-
-                  </div>
-                </div>
+                
+                  <EffectDataPlot />
               </Card>
+              <Card className="p-6">
+              <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
+                <div className="space-y-3">
+                <ResponsiveContainer width="100%" height={300}>
+                    <LineChart
+                      data={AdhereData}
+                      margin={{
+                        top: 10,
+                        right: 10,
+                        left: 10,
+                        
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis
+                        dataKey="medicationAdherence"
+                        name="Medication Adherence (%)"
+                        type="number"
+                        label={{ value: 'Medication Adherence (%)', position: 'insideBottom', offset: 0 }}
+                      />
+                      <YAxis
+                        dataKey="diseaseProgression"
+                        name="Disease Progression (Change in Cognitive Function Scores)"
+                        type="number"
+                        label={{ value: 'Disease Progression', angle: -90, position: 'left', offset: 0 }}
+                      />
+                      <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="diseaseProgression"
+                        stroke="#8884d8"
+                        activeDot={{ r: 8 }}
+                        dot={{ r: 4 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
 
+                </div>
+                  
+              </Card>
               </div>
+              <div className="grid grid-cols-1 gap-8">
+                <h3 className="text-sm font-medium text-gray-900" style={{textAlign:'center',fontSize:'25px'}}> Treatment Flow</h3>
+                <div className="p-6" style={{marginBottom:'200px'}}>
+                <AlzheimersTreatmentFlow />
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
 

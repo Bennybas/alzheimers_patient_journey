@@ -20,7 +20,7 @@ export const journeyData = [
         },
         { 
           name: "Referral Decision", 
-          content: "PCP refers to a neurologist for further evaluation if Alzheimer's is suspected." 
+          content: "PCP refers Patients to a Neurologist for further evaluation if Alzheimer's is suspected." 
         }
       ],
       metrics: [

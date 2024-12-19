@@ -163,7 +163,7 @@ const SankeyDiagram = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-      .text("Patient Provider Distribution");
+      .text("Patient Flow");
 
     // Add annotation about 15% to specialized providers
     svg

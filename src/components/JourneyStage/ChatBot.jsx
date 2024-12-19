@@ -58,7 +58,7 @@ const ChatbotButton = ({ isChatOpen, setIsChatOpen, predifinedPrompt, conversati
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
           w-[650px] bg-white/90 shadow-2xl z-[100] rounded-2xl overflow-hidden 
-          transition-all duration-300 ease-in-out 
+          transition-all duration-300 ease-in-out transparent
           ${isChatOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'}`}
       >
         <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 flex justify-between items-center shadow-md">
