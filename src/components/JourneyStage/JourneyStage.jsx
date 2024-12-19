@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion,MessageCircle
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -831,20 +831,121 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
     </a>
   );
 };
-  const [isChatOpen, setIsChatOpen] = useState(false);
+const [isChatOpen, setIsChatOpen] = useState(false);
   const [defaultMessage, setDefaultMessage] = useState("");
+  const [conversation, setConversation] = useState([
+    {
+      id: 1,
+      text: "Hi! I'm AIVY, your healthcare assistant. Ask me anything about your patient journey.",
+      sender: "bot",
+    },
+  ]);
 
- 
+  const handleChatToggle = () => {
+    const newMessage = ``;
+    setDefaultMessage(newMessage);
+    if (!isChatOpen) {
+      setIsChatOpen(true);
+    }
+  };
+
   const handlePromptClick = () => {
-    setDefaultMessage(`Explain detailly about ${stage.title} of Alzheimer's Patient Journey`);
-    setIsChatOpen(true);
-    console.log(defaultMessage)
+    const newMessage = `Explain detailly about ${stage.title} of Alzheimer's Patient Journey`;
+    setDefaultMessage(newMessage);
+    if (!isChatOpen) {
+      setIsChatOpen(true);
+    }
   };
+
   const handlePromptClick2 = () => {
-    setDefaultMessage(`Explain detailly about ${stage.title} barriers of Alzheimer's Patient Journey`);
-    setIsChatOpen(true);
-    console.log(defaultMessage)
+    const newMessage = `Explain detailly about ${stage.title} barriers of Alzheimer's Patient Journey`;
+    setDefaultMessage(newMessage);
+    if (!isChatOpen) {
+      setIsChatOpen(true);
+    }
   };
+
+  const sendMessage = async (message, setSuggestedQuestions) => {
+    const trimmedMessage = message.trim();
+    if (trimmedMessage === "") return;
+
+    const newUserMessage = {
+      id: Date.now(),
+      text: trimmedMessage,
+      sender: "user",
+    };
+
+    setConversation((prev) => [...prev, newUserMessage]);
+
+    try {
+      const backendUrl = "https://alz-backend-1.onrender.com/chat";
+
+      const botResponseId = Date.now() + 1;
+      const initialBotMessage = { id: botResponseId, text: "", sender: "bot" };
+      setConversation((prev) => [...prev, initialBotMessage]);
+
+      const response = await fetch(backendUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: trimmedMessage }),
+        signal: AbortSignal.timeout(30000), // 30-second timeout
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let fullResponse = "";
+
+      while (true) {
+        const { done, value } = await reader?.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const events = chunk.split("\n\n");
+
+        events.forEach((event) => {
+          if (event.startsWith("data: ")) {
+            const content = event.replace("data: ", "").trim();
+
+            if (content === "[DONE]") {
+              return;
+            }
+
+            try {
+              const parsedContent = JSON.parse(content);
+              fullResponse = parsedContent.message.replace(/\\n/g, '\n');
+              setConversation((prev) =>
+                prev.map((msg) =>
+                  msg.id === botResponseId ? { ...msg, text: fullResponse } : msg
+                )
+              );
+
+              if (parsedContent.suggested_questions && parsedContent.suggested_questions.length > 0) {
+                setSuggestedQuestions(parsedContent.suggested_questions);
+              }
+            } catch (parseError) {
+              console.error("Error parsing response:", parseError);
+            }
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      const errorMessage = {
+        id: Date.now() + 1,
+        text: `Connection Error: ${error.message}\n\n**Troubleshooting Tips:**`,
+        sender: "bot",
+      };
+      setConversation((prev) => [...prev, errorMessage]);
+    }
+  };
+
   return (
     <div className="relative w-full">
       <Card className="bg-gradient-to-r from-purple-50 via-purple-100 to-purple-50 p-6 mb-6 shadow-lg rounded-lg border border-purple-200 transition-all duration-300 hover:shadow-xl">
@@ -882,15 +983,29 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               onClick={handlePromptClick} 
               className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out" 
             />
-            <div>{{isChatOpen} &&(
-            <ChatbotButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} predifined_prompt={defaultMessage} 
-            />)}</div>
+            <div className="fixed bottom-6 right-6 z-50">
+              <button
+                onClick={handleChatToggle}
+                className="bg-purple-600 text-white p-4 rounded-full shadow-2xl hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 active:scale-95"
+              >
+                <MessageCircle className="w-6 h-6" />
+              </button>
+            </div>
+            {isChatOpen && (
+              <ChatbotButton 
+                isChatOpen={isChatOpen} 
+                setIsChatOpen={setIsChatOpen} 
+                predifinedPrompt={defaultMessage} 
+                conversation={conversation} 
+                setConversation={setConversation}
+                sendMessage={sendMessage} 
+              />
+            )}
             <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
               Ask AIVY
             </div>
           </div>
-          
-        
+
         </div>
        
         {/* Actions Flow */}
@@ -1035,6 +1150,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       </div>
       
       <div className="absolute left-8 bottom-0 w-0.5 h-8 bg-purple-200" />
+      
       
     </div>
   );
