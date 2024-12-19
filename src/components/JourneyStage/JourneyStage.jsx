@@ -649,6 +649,12 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
         case 'pie':
           return (
             <div className="w-full space-y-8">
+              <div className="grid grid-cols-1 gap-8">
+                <h3 className="text-sm font-medium text-gray-900" style={{textAlign:'center',fontSize:'25px'}}> Treatment Flow</h3>
+                <div className="p-6" style={{marginBottom:'200px'}}>
+                <AlzheimersTreatmentFlow />
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-8">
                 <Card className="p-6">
                   <h4 className="text-sm font-medium text-gray-700">Mortality Rate By Age and Year</h4>
@@ -863,12 +869,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   
               </Card>
               </div>
-              <div className="grid grid-cols-1 gap-8">
-                <h3 className="text-sm font-medium text-gray-900" style={{textAlign:'center',fontSize:'25px'}}> Treatment Flow</h3>
-                <div className="p-6" style={{marginBottom:'200px'}}>
-                <AlzheimersTreatmentFlow />
-                </div>
-              </div>
+              
 
               <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
