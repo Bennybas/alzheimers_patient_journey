@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion,MessageCircle
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion,MessageCircle,
+  TheaterIcon
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -26,6 +27,9 @@ import PCPPieChart from '../Charts/Specialists';
 import BarriersToMCIChart from '../Charts/Barriers';
 import IncorrectDiagnosesChart from '../Charts/Incorrect';
 import ReasonsForSCDChart from '../Charts/SCD';
+import TreatmentDistribution from '../Charts/TreatmentFlow';
+import TherapyMetrics from '../Charts/TherapyMetrics';
+import DrugPrescribingCharts from '../Charts/DrugPrescribe';
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -637,11 +641,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
         case 'pie':
           return (
             <div className="w-full space-y-8">
-              <div className="grid grid-cols-1 gap-8">
-                <h3 className="text-sm font-medium text-gray-900" style={{textAlign:'center',fontSize:'25px'}}> Treatment Flow</h3>
-                <div className="p-6" style={{marginBottom:'200px'}}>
-                <AlzheimersTreatmentFlow />
-                </div>
+              <div className="grid gap-8">
+                
+                <TreatmentDistribution />
+                <DrugPrescribingCharts />
+             
               </div>
               <div className="grid grid-cols-2 gap-8">
                 <Card className="p-6">
@@ -676,7 +680,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
 
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Mortality Rate By(per 100000 patients ) Year</h4>
+                  <h4 className="text-sm font-medium text-gray-700">SideEffects and Adherence</h4>
                   <div className="aspect-[4/3] w-full">
                   < SideEffectsAdherenceChart />
                   </div>

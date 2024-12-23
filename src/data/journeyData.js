@@ -132,7 +132,7 @@ export const journeyData = [
       metrics: [
         { value: "17.7 weeks", label: "Average Time to Diagnosis", link: { url: "https://www.alzheimers.org.uk/news/2022-09-23/people-dementia-face-two-year-wait-diagnosis", name: "Reference" }},
         { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },
-        { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://pubmed.ncbi.nlm.nih.gov/33223644/", name: "Reference" }},
+        { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.19302?af=R", name: "Reference" }},
         { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
         { value: "40%", label: "Rate of Cognitive Screening Use:MoCA" },
         { value: "~30%", label: "Rate of Neuropsychological Testing" }
@@ -238,7 +238,7 @@ export const journeyData = [
       metrics: [
         { value: "21.1 months", label: "Time to first-line Treatment" },
         { value: "12.7 months", label: "Time to second-line Treatment" },
-        { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
+       
         { value: "31 hrs", label: "Monthly Caregiver Time", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=96", name: "Reference" }},
         { value: "61%", label: "Quality of Life Improvement", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=99", name: "Reference" }},
         { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
