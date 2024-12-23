@@ -22,6 +22,10 @@ import EffectDataPlot from './EffectData';
 import AlzheimersTreatmentFlow from './AlzheimersTreatmentFlow'
 import SideEffectsAdherenceChart from '../Charts/SideEffects'
 import Therapies from '../Charts/Therapies';
+import PCPPieChart from '../Charts/Specialists';
+import BarriersToMCIChart from '../Charts/Barriers';
+import IncorrectDiagnosesChart from '../Charts/Incorrect';
+import ReasonsForSCDChart from '../Charts/SCD';
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -376,7 +380,15 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       return (
         <div className="w-full space-y-6">
           <SankeyDiagram />
+          <div className="grid grid-cols-2 gap-8">
+              <PCPPieChart />
+              <ReasonsForSCDChart />
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <BarriersToMCIChart />
+            <IncorrectDiagnosesChart />
 
+          </div>
           <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
               <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
