@@ -481,31 +481,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
-
-            <Card className="p-6">
-            <div style={{ width: "100%", height: 500 }}>
-                <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                Time to First Visit vs. Disease Progression 
-                </h3>
-                <ResponsiveContainer width="100%" height={400}>
-                  <ScatterChart
-                          margin={{
-                            top: 20,
-                            right: 20,
-                            bottom: 20,
-                            left: 20,
-                          }}
-                  >
-                  <CartesianGrid />
-                  <XAxis type="number" dataKey="x" name="Time to First Visit (months)" />
-                  <YAxis type="number" dataKey="y" name="Disease Progression Stage" />
-                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                  <Legend />
-                  <Scatter name="Time to First Visit vs. Disease Progression" data={alzheimersData} fill="rgba(75,192,192,0.4)" />
-                  </ScatterChart>
-                  </ResponsiveContainer>
-            </div>
-            </Card>
+           
 
           </div>
 
@@ -1081,11 +1057,17 @@ const [isChatOpen, setIsChatOpen] = useState(false);
         </div>
         <div className='flex'>
           <p className="text-gray-700 mb-6 leading-relaxed pr-4">{stage.description}</p>
-          <div className="relative group inline-block">
-            <MessageCircleQuestion 
-              onClick={handlePromptClick} 
-              className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out" 
-            />
+          <div className="relative inline-block">
+            <div className="relative group inline-block">
+              <MessageCircleQuestion
+                onClick={handlePromptClick}
+                className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out"
+              />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
+                Ask AIVY
+              </div>
+            </div>
+
             <div className="fixed bottom-6 right-6 z-50">
               <button
                 onClick={handleChatToggle}
@@ -1094,20 +1076,19 @@ const [isChatOpen, setIsChatOpen] = useState(false);
                 <MessageCircle className="w-6 h-6" />
               </button>
             </div>
+
             {isChatOpen && (
-              <ChatbotButton 
-                isChatOpen={isChatOpen} 
-                setIsChatOpen={setIsChatOpen} 
-                predifinedPrompt={defaultMessage} 
-                conversation={conversation} 
+              <ChatbotButton
+                isChatOpen={isChatOpen}
+                setIsChatOpen={setIsChatOpen}
+                predifinedPrompt={defaultMessage}
+                conversation={conversation}
                 setConversation={setConversation}
-                sendMessage={sendMessage} 
+                sendMessage={sendMessage}
               />
             )}
-            <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
-              Ask AIVY
-            </div>
           </div>
+
 
         </div>
        

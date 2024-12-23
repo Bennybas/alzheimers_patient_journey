@@ -23,14 +23,15 @@ export const journeyData = [
           content: "PCP refers Patients to a Neurologist for further evaluation if Alzheimer's is suspected." 
         }
       ],
-      metrics: [
-        { value: "85%", label: "Initial PCP Diagnoses" },
-        {value:"18 Months",label:"Time to Referral"},
-        { value: "4 years", label: "Time Spent Under Incorrect Diagnosis" },
-        { value: "13%", label: "Misdiagnosis Rate" },
-        { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)" },
-        { value: "8%", label: "Early MCI Detection" }
-      ],
+      metrics:[
+        { value: "85%", label: "Initial PCP Diagnoses", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=63", name:"Reference" }},
+        { value: "18 Months", label: "Time to Referral", link:{ url:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6745869/", name:"Reference" }},
+        { value: "5.5 years", label: "Average time from onset of symptoms to correct diagnosis", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31161973/", name:"Reference" }},
+        { value: "13%", label: "Misdiagnosis Rate", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/33136176/", name:"Reference" }},
+        { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=25", name:"Reference" }},
+        { value: "8%", label: "Early MCI Detection", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31905546/", name:"Reference" }}
+      ]
+      ,
       barriers: {
         physician: [
           {
@@ -129,15 +130,14 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "17.7 weeks", label: "Average Time to Diagnosis" },
-        { value: "8%", label: "Leqembi Eligibility Rate" },
+        { value: "17.7 weeks", label: "Average Time to Diagnosis", link: { url: "https://www.alzheimers.org.uk/news/2022-09-23/people-dementia-face-two-year-wait-diagnosis", name: "Reference" }},
         { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },
-        { value: "6 months", label: "Delay in Amyloid/Tau Imaging (Scheduling)" },
+        { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://pubmed.ncbi.nlm.nih.gov/33223644/", name: "Reference" }},
         { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
         { value: "40%", label: "Rate of Cognitive Screening Use:MoCA" },
         { value: "~30%", label: "Rate of Neuropsychological Testing" }
-
-      ],
+      ]
+      ,
       barriers: {
         physician: [
           {
@@ -239,15 +239,13 @@ export const journeyData = [
         { value: "21.1 months", label: "Time to first-line Treatment" },
         { value: "12.7 months", label: "Time to second-line Treatment" },
         { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
-       
-        { value: "31 hrs", label: "Monthly Caregiver Time" },
-        
-        { value: "61%", label: "Life Expectancy Impact" },
-        { value: "69.20%", label: "Non-Adherence Percentage" },
-        { value: "76%", label: "Agitation" },
-        { value: "60%", label: "Rate of Caregiver Burnout" },
-        
-      ],
+        { value: "31 hrs", label: "Monthly Caregiver Time", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=96", name: "Reference" }},
+        { value: "61%", label: "Quality of Life Improvement", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=99", name: "Reference" }},
+        { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
+        { value: "76%", label: "Agitation", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=15", name: "Reference" }},
+        { value: "60%", label: "Rate of Caregiver Burnout" }
+      ]
+      ,
       barriers: {
         physician: [
           {

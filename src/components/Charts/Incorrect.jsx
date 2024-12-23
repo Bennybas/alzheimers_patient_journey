@@ -1,19 +1,19 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-// Sample data for the bar chart
+// Sample data updated for Alzheimer's misdiagnoses
 const data = [
-  { name: 'Condition A', frequency: 45 },
-  { name: 'Condition B', frequency: 30 },
-  { name: 'Condition C', frequency: 20 },
-  { name: 'Condition D', frequency: 15 },
-  { name: 'Condition E', frequency: 10 },
+  { name: 'Normal Aging', frequency: 35 }, // Often misdiagnosed as Alzheimer's due to similar symptoms in older adults
+  { name: 'Depression', frequency: 25 }, // Symptoms of depression can mimic cognitive decline
+  { name: 'Anxiety Disorders', frequency: 20 }, // Anxiety and stress-related disorders can be mistaken for cognitive impairment
+  { name: 'Thyroid Disorders', frequency: 15 }, // Hypothyroidism can present symptoms resembling Alzheimer's
+  { name: 'Vitamin Deficiencies', frequency: 10 }, // Deficiencies like B12 can lead to cognitive symptoms similar to Alzheimer's
 ];
 
 const IncorrectDiagnosesChart = () => {
   return (
     <div style={{ textAlign: 'center' }}>
-      <h2 style={{ fontWeight: 'bold' }}>Most Common Initial Incorrect Diagnoses</h2>
+      <h2 style={{ fontWeight: 'bold' }}>Most Common Initial Incorrect Diagnoses in Alzheimer's Disease</h2>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
