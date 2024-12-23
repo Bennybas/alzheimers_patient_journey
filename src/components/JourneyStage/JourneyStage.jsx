@@ -740,7 +740,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </div>
                 </Card>
               </div>
-              <div className="grid grid-cols-3 gap-8">
+              <div className="grid grid-cols-2 gap-8">
               <Card className="p-6">
                 <div style={{ width: "100%", height: 400 }}>
                   <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
@@ -766,9 +766,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
                 </div>
               </Card>
-              <Card className="p-6">
-                <Therapies />
-              </Card>
+              
 
               <Card className="p-6">
               <div className="p-4">
@@ -813,53 +811,6 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </div>
               </Card>
               
-              </div>
-              <div className="grid grid-cols-2 gap-8">
-              <Card className="p-6">
-                
-                  <EffectDataPlot />
-              </Card>
-              <Card className="p-6">
-              <h3 className="text-lg font-bold mb-4 text-gray-800">Adherence vs Disease Progression</h3>
-                <div className="space-y-3">
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart
-                      data={AdhereData}
-                      margin={{
-                        top: 10,
-                        right: 10,
-                        left: 10,
-                        
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis
-                        dataKey="medicationAdherence"
-                        name="Medication Adherence (%)"
-                        type="number"
-                        label={{ value: 'Medication Adherence (%)', position: 'insideBottom', offset: 0 }}
-                      />
-                      <YAxis
-                        dataKey="diseaseProgression"
-                        name="Disease Progression (Change in Cognitive Function Scores)"
-                        type="number"
-                        label={{ value: 'Disease Progression', angle: -90, position: 'left', offset: 0 }}
-                      />
-                      <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="diseaseProgression"
-                        stroke="#8884d8"
-                        activeDot={{ r: 8 }}
-                        dot={{ r: 4 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-
-                </div>
-                  
-              </Card>
               </div>
               
 

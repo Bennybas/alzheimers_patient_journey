@@ -236,8 +236,6 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "21.1 months", label: "Time to first-line Treatment" },
-        { value: "12.7 months", label: "Time to second-line Treatment" },
        
         { value: "31 hrs", label: "Monthly Caregiver Time", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=96", name: "Reference" }},
         { value: "61%", label: "Quality of Life Improvement", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=99", name: "Reference" }},
