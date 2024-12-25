@@ -884,7 +884,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
   };
 
   const handlePromptClick = () => {
-    const newMessage = `Explain detailly about ${stage.title} of Alzheimer's Patient Journey`;
+    const newMessage = `Provide a comprehensive and well-structured explanation of the ${stage.title} phase in the Alzheimer's Patient Journey.`;
     setDefaultMessage(newMessage);
     if (!isChatOpen) {
       setIsChatOpen(true);
@@ -892,7 +892,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
   };
 
   const handlePromptClick2 = () => {
-    const newMessage = `Explain detailly about ${stage.title} barriers of Alzheimer's Patient Journey`;
+    const newMessage = `Provide a comprehensive and well-structured explanation of the ${stage.title} phase in the Alzheimer's Patient Journey.`;
     setDefaultMessage(newMessage);
     if (!isChatOpen) {
       setIsChatOpen(true);
