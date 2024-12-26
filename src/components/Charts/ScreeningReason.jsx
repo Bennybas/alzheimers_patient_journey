@@ -26,7 +26,7 @@ const ScreeningReason = () => {
     <div className="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
       {/* Chart Title */}
       <h2 className="text-center text-lg font-bold mb-4">
-        Reasons for Screening
+        Reasons for Patients Completing Screening
       </h2>
 
       {/* Pie Chart */}

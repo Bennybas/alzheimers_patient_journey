@@ -55,7 +55,7 @@ const BarriersToMCIChart = () => {
         <BarChart
           data={data}
           layout="vertical"
-          margin={{ top: 20, right: 50, bottom: 20 }}
+          margin={{ top: 20, right: 50, bottom: 20, left:-16 }}
         >
           <CartesianGrid strokeDasharray="3 3" horizontal={false} />
           <XAxis

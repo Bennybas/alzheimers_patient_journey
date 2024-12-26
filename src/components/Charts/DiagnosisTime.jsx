@@ -91,19 +91,6 @@ const DiagnosisTimeline = () => {
             </div>
           </div>
         </div>
-
-        {/* Hospital Contacts Card */}
-        <div className="mt-6 bg-white p-3 rounded-lg shadow-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center shadow-md">
-                <Activity className="w-4 h-4 text-red-500" />
-              </div>
-              <h3 className="text-sm font-medium text-slate-800">Hospital Contacts</h3>
-            </div>
-            <div className="text-lg font-bold text-red-500">5.4 Average Visits</div>
-          </div>
-        </div>
       </div>
     </div>
   );

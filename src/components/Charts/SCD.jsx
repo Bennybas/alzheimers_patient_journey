@@ -47,11 +47,11 @@ const ReasonsForSCDChart = () => {
   return (
     <div style={{ textAlign: 'center' }}>
       <h2 style={{ fontWeight: 'bold' }}>Reasons for Reporting Subjective Cognitive Decline (SCD) by Age Group</h2>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={400} >
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="ageGroup" label={{ value: 'Age Group', position: 'insideBottomRight', offset: -5 }} />
-          <YAxis label={{ value: 'Percentage of Individuals Reporting SCD', angle: -90, position: 'insideLeft' }} />
+          <YAxis label={{ value: 'Percentage of Individuals Reporting SCD', angle: -90 }} />
           <Tooltip />
           <Legend />
           <Bar dataKey="stressAnxiety" stackId="a" fill="#8884d8">

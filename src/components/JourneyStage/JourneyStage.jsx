@@ -394,11 +394,16 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           <SankeyDiagram />
           <div className="grid grid-cols-2 gap-8">
               <PCPPieChart />
-              <ReasonsForSCDChart />
+              <Cognitive />
+              
           </div>
           <div className="grid grid-cols-2 gap-8">
+          <Card className="p-6">
+            <ReasonsForSCDChart />
+          </Card>
+          <Card className="p-6">
             <BarriersToMCIChart />
-            <IncorrectDiagnosesChart />
+            </Card>
 
           </div>
           <div className="grid grid-cols-2 gap-8">
@@ -494,7 +499,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </div>
             </Card>
 
-            <Cognitive />
+            <IncorrectDiagnosesChart />
            
 
           </div>
@@ -611,46 +616,6 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                           fill="#4eb9a0"
                         />
                   </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </Card>
-
-
-            <Card className="p-6">
-            <h4 className="text-sm font-medium text-gray-700">Correlation between Symptom Severity and Diagnosis Time</h4>
-              <div className="w-full">
-              <ResponsiveContainer width="100%" height={400}>
-                  <LineChart
-                    data={severity}
-                    margin={{
-                      top: 50,
-                      right: 30,
-                      left: 30,
-                      bottom: 50,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="symptomSeverity"
-                      name="Symptom Severity"
-                      type="number"
-                      label={{ value: 'Symptom Severity', position: 'insideBottom', offset: 0 }}
-                    />
-                    <YAxis
-                      dataKey="timeToDiagnosis"
-                      name="Time to Diagnosis (days)"
-                      type="number"
-                      label={{ value: 'Time to Diagnosis (days)', angle: -90, position: 'insideLeft', offset: 0 }}
-                    />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="timeToDiagnosis"
-                      stroke="#8884d8"
-                      activeDot={{ r: 8 }}
-                    />
-                  </LineChart>
                 </ResponsiveContainer>
               </div>
             </Card>
