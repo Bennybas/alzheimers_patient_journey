@@ -73,19 +73,19 @@ const DiagnosisTimeline = () => {
               <FlaskRound className="w-4 h-4 text-white" />
             </div>
             <div className="bg-white p-3 rounded-lg shadow-sm">
-              <h3 className="text-sm font-medium text-pink-700 mb-1">Diagnostic Tests</h3>
+              <h3 className="text-sm font-medium text-pink-700 mb-1">Diagnostic Tests (or) Scan Initiation Lag</h3>
               <div className="space-y-1">
                 <div className="bg-pink-50 p-2 rounded">
-                  <div className="text-xs text-pink-700 mb-1">MRI Score</div>
-                  <div className="text-sm font-bold text-pink-900">4.3</div>
+                  <div className="text-xs text-pink-700 mb-1">MRI</div>
+                  <div className="text-sm font-bold text-pink-900">4.3 Months</div>
                 </div>
                 <div className="bg-pink-50 p-2 rounded">
-                  <div className="text-xs text-pink-700 mb-1">CERAD Score</div>
-                  <div className="text-sm font-bold text-pink-900">6.5</div>
+                  <div className="text-xs text-pink-700 mb-1">CERAD</div>
+                  <div className="text-sm font-bold text-pink-900">6.5 Months</div>
                 </div>
                 <div className="bg-pink-50 p-2 rounded">
-                  <div className="text-xs text-pink-700 mb-1">LP Score</div>
-                  <div className="text-sm font-bold text-pink-900">8.3</div>
+                  <div className="text-xs text-pink-700 mb-1">LP </div>
+                  <div className="text-sm font-bold text-pink-900">8.3 Months</div>
                 </div>
               </div>
             </div>
