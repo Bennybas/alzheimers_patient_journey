@@ -969,7 +969,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
     } catch (error) {
         const errorMessage = error.name === 'AbortError' 
             ? "Request timed out. Please try again."
-            : `Error: ${error.message}. Please try again or contact support if the problem persists.`;
+            : `Error: ${error.message}. Please try again.`;
 
         setConversation((prev) =>
             prev.map((msg) =>
