@@ -1,8 +1,8 @@
 import React from "react";
-import { PieChart, Pie, Tooltip, Cell, Legend } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Cell } from "recharts";
 
-const SymptomsPieChart = () => {
-  // Data for the Pie Chart
+const SymptomsBarChart = () => {
+  // Data for the Bar Chart
   const data = [
     { name: "Amnesia", value: 94.6 },
     { name: "Disorientation", value: 58.5 },
@@ -14,7 +14,7 @@ const SymptomsPieChart = () => {
     { name: "Personality changes", value: 15.2 },
   ];
 
-  // Define colors for each segment
+  // Define colors for each bar
   const COLORS = [
     "#FF6384",
     "#36A2EB",
@@ -33,21 +33,18 @@ const SymptomsPieChart = () => {
         Symptoms Experienced by Patients in the Onset
       </h2>
       
-      {/* Pie Chart */}
-      <PieChart width={400} height={400}>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          outerRadius={120}
-          fill="#8884d8"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
+      {/* Bar Chart */}
+      <BarChart width={400} height={400} data={data} margin={{ top: 50, right: 30, left: 20, bottom: 50 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="name"
+          interval={0}
+          angle={-35}
+          textAnchor="end"
+          minTickGap={1}
+          tick={{ fontSize: 12 }}
+        />
+        <YAxis />
         <Tooltip
           formatter={(value, name) => [`${value}%`, name]}
           contentStyle={{
@@ -57,15 +54,15 @@ const SymptomsPieChart = () => {
             textAlign: "center",
           }}
         />
-        <Legend />
-      </PieChart>
-      
-      {/* Chart Footer */}
-      <p className="text-center text-sm text-gray-500 mt-4">
-        Label: Percentage of cases
-      </p>
+        <Legend verticalAlign="top" align="center" />
+        <Bar dataKey="value" fill="#8884d8">
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Bar>
+      </BarChart>
     </div>
   );
 };
 
-export default SymptomsPieChart;
+export default SymptomsBarChart;

@@ -239,7 +239,6 @@ export const journeyData = [
         { value: "18.6 months", label: "Average Time to start Treatment after Diagnosis", link: { url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8359937/", name: "Reference" }},
         { value: "31 hrs", label: "Monthly Caregiver Time", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=96", name: "Reference" }},
         { value: "61%", label: "Quality of Life Improvement", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=99", name: "Reference" }},
-        { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
         { value: "76%", label: "Agitation", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=15", name: "Reference" }},
         { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
         { value: "60%", label: "Rate of Caregiver Burnout", link: { url: "https://braincheck.com/articles/caregiver-stress-dementia/", name: "Reference" }},

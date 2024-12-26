@@ -19,8 +19,6 @@ import {
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
 import ChatbotButton from './ChatBot'
-import EffectDataPlot from './EffectData';
-import AlzheimersTreatmentFlow from './AlzheimersTreatmentFlow'
 import SideEffectsAdherenceChart from '../Charts/SideEffects'
 import Therapies from '../Charts/Therapies';
 import PCPPieChart from '../Charts/Specialists';
@@ -33,11 +31,12 @@ import DrugPrescribingCharts from '../Charts/DrugPrescribe';
 import Cognitive from '../Charts/Cognitive';
 import AlzheimerStagesPieChart from '../Charts/Stages';
 import DiagnosisTimeline from '../Charts/DiagnosisTime';
-import SymptomsPieChart from '../Charts/Symptoms';
+import SymptomsBarChart from '../Charts/Symptoms';
 import ScreeningReason from '../Charts/ScreeningReason';
 import AgeDistributionBarChart from '../Charts/AgeDistribution';
 import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
 import AssessmentBarChart from '../Charts/Assesment';
+
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -542,7 +541,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </div>
             <div className="grid grid-cols-2 gap-8">
               <AlzheimerStagesPieChart />
-              <SymptomsPieChart />
+              <SymptomsBarChart />
               
             </div>
             <div className="grid grid-cols-2 gap-8">

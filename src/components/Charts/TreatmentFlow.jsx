@@ -61,7 +61,7 @@ const TreatmentDistribution = () => {
                       </div>
                       <div className="opacity-0 group-hover:opacity-100 absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white p-2 rounded text-xs whitespace-nowrap z-10">
                         {item.name}<br />
-                        Count: {item.count}
+                        {item.percentage}%
                       </div>
                     </div>
                   ))}
