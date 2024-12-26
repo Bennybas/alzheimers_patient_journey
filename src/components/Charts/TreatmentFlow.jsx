@@ -77,7 +77,7 @@ const TreatmentDistribution = () => {
         </div>
       </div>
 
-      <TherapyMetrics />
+      
       
     </div>
   );

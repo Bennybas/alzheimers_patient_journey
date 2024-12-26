@@ -6,55 +6,47 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
-  Label
+  Label,
 } from 'recharts';
 
 const TherapyMetrics = () => {
-  // Patient distribution data by line of therapy
-  const patientData = [
+  // Combined data for Patients and Avg Duration
+  const combinedData = [
     {
       line: "L1",
       percentage: 63.5,
-      patients: 2479,
-      fill: "#0088FE"
+      months: 21.1,
     },
     {
       line: "L2",
       percentage: 36.5,
-      patients: 1801,
-      fill: "#00C49F"
-    }
-  ];
-
-  // Average duration data by line of therapy
-  const durationData = [
-    {
-      line: "L1",
-      months: 21.1,
-      fill: "#0088FE"
-    },
-    {
-      line: "L2",
       months: 12.7,
-      fill: "#00C49F"
-    }
+    },
   ];
 
+  // Drug prescribing pattern data
+  const drugData = [
+    { name: "Donepezil", percentage: 58.4 },
+    { name: "Rivastigmine", percentage: 13.63 },
+    { name: "Donepezil + Memantine", percentage: 6.43 },
+    { name: "Galantamine", percentage: 12.83 },
+    { name: "No antidementia drug", percentage: 8 },
+  ];
+
+  // Custom tooltip for the grouped bar chart
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
       return (
         <div className="bg-white p-2 border border-gray-200 rounded shadow-sm">
-          <p className="font-medium">{`Line ${label}`}</p>
-          {data.percentage ? (
-            <>
-              <p>{`${data.percentage}% of patients`}</p>
-              <p>{`${data.patients.toLocaleString()} patients`}</p>
-            </>
-          ) : (
-            <p>{`${data.months} months average duration`}</p>
-          )}
+          <p className="font-medium">{`Line: ${label}`}</p>
+          {payload.map((entry, index) => (
+            <p key={index} style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+              {entry.name === "Percentage" ? "%" : " months"}
+            </p>
+          ))}
         </div>
       );
     }
@@ -62,49 +54,75 @@ const TherapyMetrics = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl p-8">
-      <div className="grid grid-cols-2 gap-16">
-        {/* Patients by Line of Therapy */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-4 text-center">Patients by Line of Therapy</h3>
-          <div className="h-64">
+    <div className="w-full p-8">
+      <div className="flex flex-row gap-4">
+        {/* Combined Patients and Avg Days Chart */}
+        <div className="bg-white p-4 rounded-lg shadow flex-1">
+          <h3 className="text-lg font-bold mb-4 text-center">
+            Patients and Avg Days by Line of Therapy
+          </h3>
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={patientData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <BarChart
+                data={combinedData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                barCategoryGap="30%"
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="line" />
-                <YAxis tickFormatter={(value) => `${value}%`}>
+                <YAxis
+                  yAxisId="left"
+                  orientation="left"
+                  tickFormatter={(value) => `${value}%`}
+                >
                   <Label
-                    value="Patient Distribution"
+                    value="Patient Percentage"
                     angle={-90}
                     position="insideLeft"
-                    style={{ textAnchor: 'middle' }}
+                    style={{ textAnchor: "middle" }}
+                  />
+                </YAxis>
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  domain={[0, 24]}
+                  tickFormatter={(value) => `${value}m`}
+                >
+                  <Label
+                    value="Avg Duration (Months)"
+                    angle={-90}
+                    position="insideRight"
+                    style={{ textAnchor: "middle" }}
                   />
                 </YAxis>
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="percentage" fill="#8884d8" />
+                <Legend />
+                <Bar yAxisId="left" dataKey="percentage" name="Percentage" fill="#0088FE" />
+                <Bar yAxisId="right" dataKey="months" name="Avg Duration" fill="#00C49F" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Average Duration by Line of Therapy */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-4 text-center">Avg Days on each Line of Therapy</h3>
-          <div className="h-64">
+        {/* Drug Prescribing Pattern Chart */}
+        <div className="bg-white p-4 rounded-lg shadow flex-1">
+          <h3 className="text-lg font-bold mb-4 text-center">
+            Antidementia Drug Prescribing Pattern
+          </h3>
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={durationData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <BarChart
+                layout="vertical"
+                data={drugData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                barCategoryGap="30%"
+              >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="line" />
-                <YAxis domain={[0, 24]} tickFormatter={(value) => `${value}m`}>
-                  <Label
-                    value="Duration (Months)"
-                    angle={-90}
-                    position="insideLeft"
-                    style={{ textAnchor: 'middle' }}
-                  />
-                </YAxis>
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="months" fill="#82ca9d" />
+                <XAxis type="number" domain={[0, 70]} />
+                <YAxis type="category" dataKey="name" width={200} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="percentage" name="Percentage" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
           </div>

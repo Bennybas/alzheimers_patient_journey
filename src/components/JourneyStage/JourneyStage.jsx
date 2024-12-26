@@ -30,6 +30,14 @@ import ReasonsForSCDChart from '../Charts/SCD';
 import TreatmentDistribution from '../Charts/TreatmentFlow';
 import TherapyMetrics from '../Charts/TherapyMetrics';
 import DrugPrescribingCharts from '../Charts/DrugPrescribe';
+import Cognitive from '../Charts/Cognitive';
+import AlzheimerStagesPieChart from '../Charts/Stages';
+import DiagnosisTimeline from '../Charts/DiagnosisTime';
+import SymptomsPieChart from '../Charts/Symptoms';
+import ScreeningReason from '../Charts/ScreeningReason';
+import AgeDistributionBarChart from '../Charts/AgeDistribution';
+import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
+import AssessmentBarChart from '../Charts/Assesment';
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -485,6 +493,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
+
+            <Cognitive />
            
 
           </div>
@@ -522,7 +532,20 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       case 'bar':
         return (
           <div className="w-full space-y-6">
+            <div className="grid grid-cols-1 gap-8">
+            <DiagnosisTimeline />
+            </div>
             <div className="grid grid-cols-2 gap-8">
+              <AlzheimerStagesPieChart />
+              <SymptomsPieChart />
+              
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              
+              <ScreeningReason />
+              <AssessmentBarChart />
+            </div>
+            <div className="grid grid-cols-3 gap-8">
             <Card className="p-6">
               <h4 className="text-sm font-medium text-gray-700">Perceived Specialist Availability to Meet Patient Demand</h4>
               <div className="aspect-[4/3] w-full">
@@ -538,6 +561,8 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </ResponsiveContainer>
               </div>
             </Card>
+
+            <AgeDistributionBarChart />
 
             <Card className="p-6">
             <h4 className="text-sm font-medium text-gray-700">Estimated Lifetime Risk of Alzheimer's by Gender and Age </h4>
@@ -644,50 +669,24 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <div className="grid gap-8">
                 
                 <TreatmentDistribution />
-                <DrugPrescribingCharts />
+                
              
               </div>
+              <div className="grid gap-8">
+                <TherapyMetrics />
+              </div>
+              <div className="grid gap-8">
+              <DrugPrescribingCharts />
+              </div>
               <div className="grid grid-cols-2 gap-8">
-                <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Mortality Rate By Age and Year</h4>
-                  <div className="aspect-[4/3] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        width={500}
-                        height={300}
-                        data={deathdata}
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ddd" /> {/* Lighter grid */}
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="45-54" stroke="#3498db" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="55-64" stroke="#2ecc71" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="65-74" stroke="#f39c12" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="75-84" stroke="#e74c3c" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="85+" stroke="#9b59b6" strokeWidth={2} /> 
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-
 
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">SideEffects and Adherence</h4>
+                  <h2 className="text-lg font-bold text-grey-700">SideEffects and Adherence</h2>
                   <div className="aspect-[4/3] w-full">
                   < SideEffectsAdherenceChart />
                   </div>
                 </Card>
-
-
-                
+                <DrugDiscontinuationRates />
               </div>
 
               <div className="grid grid-cols-2 gap-8">
@@ -892,7 +891,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
   };
 
   const handlePromptClick2 = () => {
-    const newMessage = `Provide a comprehensive and well-structured explanation of the ${stage.title} phase in the Alzheimer's Patient Journey.`;
+    const newMessage = `Provide a comprehensive and well-structured explanation of the barriers in ${stage.title} phase in the Alzheimer's Patient Journey.`;
     setDefaultMessage(newMessage);
     if (!isChatOpen) {
       setIsChatOpen(true);

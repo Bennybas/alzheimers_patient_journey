@@ -1,3 +1,5 @@
+import { lab, link } from "d3";
+
 export const journeyData = [
     {
       number: 1,
@@ -26,7 +28,6 @@ export const journeyData = [
       metrics:[
         { value: "85%", label: "Initial PCP Diagnoses", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=63", name:"Reference" }},
         { value: "18 Months", label: "Time to Referral", link:{ url:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6745869/", name:"Reference" }},
-        { value: "5.5 years", label: "Average time from onset of symptoms to correct diagnosis", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31161973/", name:"Reference" }},
         { value: "13%", label: "Misdiagnosis Rate", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/33136176/", name:"Reference" }},
         { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=25", name:"Reference" }},
         { value: "8%", label: "Early MCI Detection", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31905546/", name:"Reference" }}
@@ -135,7 +136,10 @@ export const journeyData = [
         { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.19302?af=R", name: "Reference" }},
         { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
         { value: "40%", label: "Rate of Cognitive Screening Use:MoCA" },
-        { value: "~30%", label: "Rate of Neuropsychological Testing" }
+        { value: "~30%", label: "Rate of Neuropsychological Testing" },
+        { value: "5.5 years", label: "Average time from onset of symptoms to correct diagnosis", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31161973/", name:"Reference" }},
+        {value:'2',label:"Average number of visits required for diagnosis",link:{url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10357118/",name: "Reference" }},
+        {value:'79%',label:"MMSE Cognitive Screening Usage Rate",link:{url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10357118/",name: "Reference" }}
       ]
       ,
       barriers: {
@@ -241,7 +245,9 @@ export const journeyData = [
         { value: "61%", label: "Quality of Life Improvement", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=99", name: "Reference" }},
         { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
         { value: "76%", label: "Agitation", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=15", name: "Reference" }},
-        { value: "60%", label: "Rate of Caregiver Burnout" }
+        { value: "60%", label: "Rate of Caregiver Burnout" },
+        { value: "71%", label: "Adherence Percentage", link: { url: "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2022.987936/full", name: "Reference" }},
+        { value: "60%", label: "Rate of Caregiver Burnout", link: { url: "https://braincheck.com/articles/caregiver-stress-dementia/", name: "Reference" }},
       ]
       ,
       barriers: {
