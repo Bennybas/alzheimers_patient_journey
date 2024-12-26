@@ -19,12 +19,12 @@ const AlzheimerStagesPieChart = () => {
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={60}
-            outerRadius={100}
+            innerRadius={50}
+            outerRadius={90}
             fill="#8884d8"
             paddingAngle={5}
             dataKey="value"
-            label={({ name, value }) => `${name}: ${value}%`}
+            label={({ name, value }) => `${name}:${value}%`}
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

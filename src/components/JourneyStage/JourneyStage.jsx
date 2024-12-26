@@ -36,6 +36,7 @@ import ScreeningReason from '../Charts/ScreeningReason';
 import AgeDistributionBarChart from '../Charts/AgeDistribution';
 import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
 import AssessmentBarChart from '../Charts/Assesment';
+import AverageWaitingTimeChart from '../Charts/WaitingTime';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -539,9 +540,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             <div className="grid grid-cols-1 gap-8">
             <DiagnosisTimeline />
             </div>
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-3 gap-8">
               <AlzheimerStagesPieChart />
               <SymptomsBarChart />
+              <AverageWaitingTimeChart />
               
             </div>
             <div className="grid grid-cols-2 gap-8">

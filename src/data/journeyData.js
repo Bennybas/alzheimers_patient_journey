@@ -131,7 +131,7 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "17.7 weeks", label: "Average Time to Diagnosis", link: { url: "https://www.alzheimers.org.uk/news/2022-09-23/people-dementia-face-two-year-wait-diagnosis", name: "Reference" }},
+        { value: "22 weeks", label: "Average waiting time from referral to  diagnosis", link: { url: "https://www.alzheimers.org.uk/news/2024-08-08/national-audit-dementia-memory-services-spotlight-audit-2023-24", name: "Reference" }},
         { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.19302?af=R", name: "Reference" }},
         { value: "5.5 years", label: "Average time from onset of symptoms to correct diagnosis", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31161973/", name:"Reference" }},
         {value:'2',label:"Average number of visits required for diagnosis",link:{url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10357118/",name: "Reference" }},
