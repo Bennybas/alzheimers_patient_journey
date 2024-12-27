@@ -38,7 +38,7 @@ const SankeyDiagram = () => {
       nodes: [
         { name: "Patients", value: 100 },
         { name: "PCP", value: 85 },
-        { name: "Specialized Providers", value: 15 },
+        { name: "Specialists", value: 15 },
         { name: "Psychiatrist", value: 7.05 },   // 47% of 15%
         { name: "Neurologist", value: 6.6 },     // 44% of 15%
         { name: "Geriatrician", value: 1.35 }    // 9% of 15%
