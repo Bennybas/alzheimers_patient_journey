@@ -20,7 +20,7 @@ const AgeDistributionBarChart = () => {
       
       {/* Bar Chart */}
       <BarChart
-        width={350}
+        width={450}
         height={330}
         data={data}
         margin={{ top: 20, right: 30, left: 5, bottom: 5 }}

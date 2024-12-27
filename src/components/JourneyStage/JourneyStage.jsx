@@ -407,7 +407,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
           </div>
           <div className="grid grid-cols-2 gap-8">
-            <Card className="p-6">
+            {/* <Card className="p-6">
               <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={300}>
@@ -417,21 +417,21 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <YAxis />
                   <Tooltip />
                   
-                  {/* Place the Legend here with custom valueKey */}
+                  
                   <Legend
-                    valueKey="Frequency of Days" // This sets the label for the legend
-                    iconType="circle"    // Optional: Set the icon type for the legend
+                    valueKey="Frequency of Days"
+                    iconType="circle"  
                   />
 
                   <Bar dataKey="percentage" fill="#82ca9d" name="Frequency of Days">
-                    {/* Display the percentage on top of each bar */}
+                    
                     <LabelList dataKey="percentage" position="top" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
               </div>
 
-            </Card>
+            </Card> */}
             <Card className="p-6">
             <h3 className="text-sm font-bold text-gray-700 mb-4">Age Distribution of People 65+ With Alzheimer's</h3>
             <div className="aspect-[4/3] w-full">
@@ -456,10 +456,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </ResponsiveContainer>
             </div>
 
-            </Card>
+            </Card> <IncorrectDiagnosesChart />
+
           </div>
           <div className="grid grid-cols-2 gap-8">
-            <Card className="p-6">
+            {/* <Card className="p-6">
             <div style={{ width: "100%", height: 500 }}>
                 <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
                 Projected Alzheimer's Cases in U.S. Adults 65+
@@ -497,9 +498,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
-            </Card>
+            </Card> */}
 
-            <IncorrectDiagnosesChart />
+           
            
 
           </div>
@@ -551,7 +552,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <ScreeningReason />
               <AssessmentBarChart />
             </div>
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
               <h4 className="text-sm font-medium text-gray-700">Perceived Specialist Availability to Meet Patient Demand</h4>
               <div className="aspect-[4/3] w-full">
@@ -570,7 +571,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
             <AgeDistributionBarChart />
 
-            <Card className="p-6">
+            {/* <Card className="p-6">
             <h4 className="text-sm font-medium text-gray-700">Estimated Lifetime Risk of Alzheimer's by Gender and Age </h4>
             <div className="aspect-[4/3] w-full">
             <ResponsiveContainer width="100%" height={400}>
@@ -586,10 +587,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </ResponsiveContainer>
 
             </div>
-            </Card>
+            </Card> */}
           </div>
 
-          <div className="grid grid-cols-2 gap-8">
+          {/* <div className="grid grid-cols-2 gap-8">
           <Card className="p-6">
             <h4 className="text-sm font-medium text-gray-700">Impact of Alzheimer's on Hospital Stays for Common Comorbid Conditions</h4>
               <div className="w-full">
@@ -598,11 +599,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <BarChart
                         data={Comorbid}
                         margin={{
-                          top: 20, right: 30, left: 10, //Increased bottom margin
+                          top: 20, right: 30, left: 10, 
                         }}
                   >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="condition" angle={-23} textAnchor="end" interval={0} height={90}/> {/* Adjusted label properties */}
+                  <XAxis dataKey="condition" angle={-23} textAnchor="end" interval={0} height={90}/>
                   <YAxis label={{ value: 'Hospital stays', angle: -90, position: 'insideLeft' }} domain={[0, 1000]}/>
                   <Tooltip />
                   <Legend verticalAlign="bottom" height={36} />
@@ -620,9 +621,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
-
-            
-          </div>
+          </div> */}
           
             
           </div>

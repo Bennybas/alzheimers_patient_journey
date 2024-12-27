@@ -20,7 +20,7 @@ const SankeyDiagram = () => {
       .domain([
         "Patients",
         "PCP",
-        "Specialized Providers",
+        "Specialists",
         "Psychiatrist",
         "Neurologist",
         "Geriatrician"
