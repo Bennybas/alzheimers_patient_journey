@@ -889,7 +889,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
 
         const backendUrl = "https://alz-backend-1.onrender.com/chat";
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
 
         const response = await fetch(backendUrl, {
             method: "POST",
