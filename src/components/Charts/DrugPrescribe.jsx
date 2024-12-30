@@ -12,6 +12,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import MedicationSankey from './SwitchRate';
 
 const PieChartData = [
   { name: 'Rivastigmine', value: 19 },
@@ -70,37 +71,9 @@ const DrugPrescribingCharts = () => {
 
         {/* Drug Switch Rates Chart */}
         <div className="bg-white p-4 rounded-lg shadow">
-          <h4 className="text-lg font-bold mb-4 text-center text-gray-700">
-            Medication Switch Rates
-          </h4>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              layout="vertical"
-              data={SwitchRateData}
-              margin={{ top: 20, right: 30, left: 40, bottom: 20 }}
-              barSize={30}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                type="number" 
-                domain={[0, 10]} 
-                tickFormatter={(value) => `${value}%`}
-              />
-              <YAxis 
-                type="category" 
-                dataKey="name" 
-                width={100}
-                tick={{ fill: '#4a5568' }}
-              />
-              <Tooltip formatter={(value) => `${value}%`} />
-              <Bar 
-                dataKey="percentage" 
-                fill="#82ca9d"
-                radius={[0, 4, 4, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+          <MedicationSankey />
         </div>
+         
       </div>
     </div>
   );

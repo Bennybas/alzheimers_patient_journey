@@ -37,6 +37,7 @@ import AgeDistributionBarChart from '../Charts/AgeDistribution';
 import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
 import AssessmentBarChart from '../Charts/Assesment';
 import AverageWaitingTimeChart from '../Charts/WaitingTime';
+import MedicationSankey from '../Charts/SwitchRate';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -637,6 +638,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 
              
               </div>
+              
               <div className="grid gap-8">
                 <TherapyMetrics />
               </div>
