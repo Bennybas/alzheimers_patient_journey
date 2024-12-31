@@ -17,43 +17,42 @@ const DrugSwitch = () => {
 
     const colorScale = d3
       .scaleOrdinal()
-      .domain(["Patient Cohort", "Donepezil", "Rivastigmine", "Galantamine", "Memantine"])
-      .range(["#64B5F6", "#FF5733", "#33FF57", "#3357FF", "#FF33FF"]);
+      .domain(["Donepezil", "Rivastigmine", "Galantamine", "Memantine"])
+      .range(["#FF5733", "#33FF57", "#3357FF", "#FF33FF"]);
 
     const data = {
       nodes: [
-        { id: "Patient Cohort", name: "Patient Cohort", x: 0 },
-        { id: "Donepezil_1", name: "Donepezil", x: 1 },
-        { id: "Rivastigmine_1", name: "Rivastigmine", x: 1 },
-        { id: "Galantamine_1", name: "Galantamine", x: 1 },
-        { id: "Memantine_1", name: "Memantine", x: 1 },
-        { id: "Memantine_2", name: "Memantine", x: 2 },
-        { id: "Rivastigmine_2", name: "Rivastigmine", x: 2 },
-        { id: "Donepezil_2", name: "Donepezil", x: 2 },
-        { id: "Galantamine_2", name: "Galantamine", x: 2 },
-        { id: "Memantine_3", name: "Memantine", x: 3 },
-        { id: "Donepezil_3", name: "Donepezil", x: 3 },
-        { id: "Rivastigmine_3", name: "Rivastigmine", x: 3 },
-        { id: "Galantamine_3", name: "Galantamine", x: 3 }
+        { "id": "Donepezil_1", "name": "Donepezil", "x": 0 },
+        { "id": "Rivastigmine_1", "name": "Rivastigmine", "x": 0 },
+        { "id": "Galantamine_1", "name": "Galantamine", "x": 0 },
+        { "id": "Memantine_1", "name": "Memantine", "x": 0 },
+        { "id": "Memantine_2", "name": "Memantine", "x": 1 },
+        { "id": "Rivastigmine_2", "name": "Rivastigmine", "x": 1 },
+        { "id": "Donepezil_2", "name": "Donepezil", "x": 1 },
+        { "id": "Galantamine_2", "name": "Galantamine", "x": 1 },
+        { "id": "Memantine_3", "name": "Memantine", "x": 2 },
+        { "id": "Donepezil_3", "name": "Donepezil", "x": 2 },
+        { "id": "Rivastigmine_3", "name": "Rivastigmine", "x": 2 },
+        { "id": "Galantamine_3", "name": "Galantamine", "x": 2 }
       ],
       links: [
-        { source: "Patient Cohort", target: "Donepezil_1", value: 30 },
-        { source: "Patient Cohort", target: "Rivastigmine_1", value: 30 },
-        { source: "Patient Cohort", target: "Galantamine_1", value: 20 },
-        { source: "Patient Cohort", target: "Memantine_1", value: 20 },
-        { source: "Donepezil_1", target: "Memantine_2", value: 15 }, // Corrected value
-        { source: "Donepezil_1", target: "Rivastigmine_2", value: 10 },
-        { source: "Rivastigmine_1", target: "Memantine_2", value: 20 },
-        { source: "Rivastigmine_1", target: "Galantamine_2", value: 10 },
-        { source: "Galantamine_1", target: "Memantine_2", value: 15 },
-        { source: "Galantamine_1", target: "Donepezil_2", value: 5 },
-        { source: "Memantine_1", target: "Donepezil_2", value: 10 },
-        { source: "Memantine_2", target: "Donepezil_3", value: 5 },
-        { source: "Memantine_2", target: "Rivastigmine_3", value: 10 },
-        { source: "Memantine_2", target: "Galantamine_3", value: 5 },
-        { source: "Donepezil_2", target: "Memantine_3", value: 15 },
-        { source: "Rivastigmine_2", target: "Memantine_3", value: 5 },
-        { source: "Galantamine_2", target: "Memantine_3", value: 10 }
+        { "source": "Donepezil_1", "target": "Memantine_2", "value": 15 },
+        { "source": "Donepezil_1", "target": "Rivastigmine_2", "value": 10 },
+        { "source": "Rivastigmine_1", "target": "Memantine_2", "value": 20 },
+        { "source": "Rivastigmine_1", "target": "Galantamine_2", "value": 10 },
+        { "source": "Galantamine_1", "target": "Memantine_2", "value": 15 },
+        { "source": "Galantamine_1", "target": "Donepezil_2", "value": 5 },
+        { "source": "Memantine_1", "target": "Donepezil_2", "value": 10 },
+        { "source": "Memantine_2", "target": "Donepezil_3", "value": 5 },
+        { "source": "Memantine_2", "target": "Rivastigmine_3", "value": 10 },
+        { "source": "Memantine_2", "target": "Galantamine_3", "value": 5 },
+        { "source": "Donepezil_2", "target": "Memantine_3", "value": 15 },
+        { "source": "Rivastigmine_2", "target": "Memantine_3", "value": 5 },
+        { "source": "Galantamine_2", "target": "Memantine_3", "value": 10 },
+        { "source": "Donepezil_1", "target": "Donepezil_3", "value": 5 },
+        { "source": "Rivastigmine_1", "target": "Rivastigmine_3", "value": 10 },
+        { "source": "Galantamine_1", "target": "Galantamine_3", "value": 10 },
+        { "source": "Memantine_1", "target": "Memantine_3", "value": 25 }
       ]
     };
 
@@ -66,7 +65,6 @@ const DrugSwitch = () => {
 
     const { nodes, links } = sankeyGenerator(data);
 
-    // Filter out nodes with zero value
     const filteredNodes = nodes.filter(node => node.value > 0);
 
     const chart = svg.append("g");
@@ -111,7 +109,7 @@ const DrugSwitch = () => {
     const node = chart
       .append("g")
       .selectAll(".node")
-      .data(filteredNodes) // Use filtered nodes
+      .data(filteredNodes)
       .enter()
       .append("g")
       .attr("class", "node")
