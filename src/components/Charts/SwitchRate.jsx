@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const MedicationSankey = () => {
   const [hoveredPath, setHoveredPath] = useState(null);
 
-  // Source medications (left side)
   const sourceMeds = [
     { id: 'don', name: 'Donepezil', color: '#16a34a' },
     { id: 'riv', name: 'Rivastigmine', color: '#2563eb' },
@@ -22,20 +21,25 @@ const MedicationSankey = () => {
   ];
 
   const flows = [
-    { from: 'don', to: 'mem', value: 6.9 },
-    { from: 'don', to: 'addMem', value: 21.0 },
-    { from: 'don', to: 'riv', value: 5.7 },
-    { from: 'riv', to: 'mem', value: 9.3 },
-    { from: 'riv', to: 'addMem', value: 24.0 },
-    { from: 'riv', to: 'gal', value: 14.5 },
-    { from: 'gal', to: 'mem', value: 2.6 },
-    { from: 'gal', to: 'addMem', value: 18.0 },
-    { from: 'gal', to: 'don', value: 20.5 },
-    { from: 'mem', to: 'don', value: 10.5 },
-    { from: 'mem', to: 'riv', value: 9.3 },
-    { from: 'mem', to: 'gal', value: 2.6 },
-    { from: 'mem', to: 'addAChEI', value: 31.0 }
+    { from: 'don', to: 'mem', value: 3.7 },
+    { from: 'don', to: 'addMem', value: 11.2 },
+    { from: 'don', to: 'riv', value: 3.0 },
+    { from: 'don', to: 'addAChEI', value: 5.7 }, // Added connection to addAChEI
+    { from: 'riv', to: 'mem', value: 4.3 },
+    { from: 'riv', to: 'addMem', value: 11.1 },
+    { from: 'riv', to: 'gal', value: 6.7 },
+    { from: 'riv', to: 'addAChEI', value: 7.1 }, // Added connection to addAChEI
+    { from: 'gal', to: 'mem', value: 1.0 },
+    { from: 'gal', to: 'addMem', value: 7.2 },
+    { from: 'gal', to: 'don', value: 8.2 },
+    { from: 'gal', to: 'addAChEI', value: 3.8 }, // Added connection to addAChEI
+    { from: 'mem', to: 'don', value: 5.4 },
+    { from: 'mem', to: 'riv', value: 5.4 },
+    { from: 'mem', to: 'gal', value: 1.0 },
+    { from: 'mem', to: 'addAChEI', value: 16.0 }
   ];
+
+  
 
   const getPathD = (fromIndex, toIndex, value) => {
     const startX = 60;
