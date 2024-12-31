@@ -1,174 +1,168 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from "react";
+import * as d3 from "d3";
+import { sankey, sankeyLinkHorizontal } from "d3-sankey";
 
-const MedicationSankey = () => {
-  const [hoveredPath, setHoveredPath] = useState(null);
+const DrugSwitch = () => {
+  const svgRef = useRef(null);
 
-  const sourceMeds = [
-    { id: 'don', name: 'Donepezil', color: '#15803d' }, // Darker green
-    { id: 'riv', name: 'Rivastigmine', color: '#1e3a8a' }, // Darker blue
-    { id: 'gal', name: 'Galantamine', color: '#b91c1c' }, // Muted red
-    { id: 'mem', name: 'Memantine', color: '#6b21a8' } // Muted purple
-  ];
+  useEffect(() => {
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
 
-  // Target medications (right side)
-  const targetMeds = [
-    { id: 'mem', name: 'Memantine', color: '#6b21a8' }, // Muted purple
-    { id: 'don', name: 'Donepezil', color: '#15803d' }, // Darker green
-    { id: 'riv', name: 'Rivastigmine', color: '#1e3a8a' }, // Darker blue
-    { id: 'gal', name: 'Galantamine', color: '#b91c1c' }, // Muted red
-    { id: 'addMem', name: '+ Memantine', color: '#0f766e' }, // Muted teal
-    { id: 'addAChEI', name: '+ AChEI', color: '#9a3412' } // Muted orange-brown
-  ];
+    const width = 1100;
+    const height = 550;
+    const margin = { top: 60, right: 60, bottom: 60, left: 60 };
 
-  const flows = [
-    { from: 'don', to: 'mem', value: 3.7 },
-    { from: 'don', to: 'addMem', value: 11.2 },
-    { from: 'don', to: 'riv', value: 3.0 },
-    { from: 'don', to: 'addAChEI', value: 5.7 }, // Added connection to addAChEI
-    { from: 'riv', to: 'mem', value: 4.3 },
-    { from: 'riv', to: 'addMem', value: 11.1 },
-    { from: 'riv', to: 'gal', value: 6.7 },
-    { from: 'riv', to: 'addAChEI', value: 7.1 }, // Added connection to addAChEI
-    { from: 'gal', to: 'mem', value: 1.0 },
-    { from: 'gal', to: 'addMem', value: 7.2 },
-    { from: 'gal', to: 'don', value: 8.2 },
-    { from: 'gal', to: 'addAChEI', value: 3.8 }, // Added connection to addAChEI
-    { from: 'mem', to: 'don', value: 5.4 },
-    { from: 'mem', to: 'riv', value: 5.4 },
-    { from: 'mem', to: 'gal', value: 1.0 },
-    { from: 'mem', to: 'addAChEI', value: 16.0 }
-  ];
+    svg.attr("width", width).attr("height", height);
 
+    const colorScale = d3
+      .scaleOrdinal()
+      .domain(["Patient Cohort", "Donepezil", "Rivastigmine", "Galantamine", "Memantine"])
+      .range(["#64B5F6", "#FF5733", "#33FF57", "#3357FF", "#FF33FF"]);
 
-  const getPathD = (fromIndex, toIndex, value) => {
-    const startX = 60;
-    const endX = 440;
-    const boxHeight = 40;
-    const sourceGap = 20;
-    const targetGap = 15;
-    const startY = fromIndex * (boxHeight + sourceGap) + 30;
-    const endY = toIndex * (boxHeight + targetGap) + 30;
-    const curveStrength = 200;
-    // Reduced the multiplier for width calculation to make flows thinner
-    const width = Math.max(value * 1.5, 1);
+    const data = {
+      nodes: [
+        { id: "Patient Cohort", name: "Patient Cohort", x: 0 },
+        { id: "Donepezil_1", name: "Donepezil", x: 1 },
+        { id: "Rivastigmine_1", name: "Rivastigmine", x: 1 },
+        { id: "Galantamine_1", name: "Galantamine", x: 1 },
+        { id: "Memantine_1", name: "Memantine", x: 1 },
+        { id: "Memantine_2", name: "Memantine", x: 2 },
+        { id: "Rivastigmine_2", name: "Rivastigmine", x: 2 },
+        { id: "Donepezil_2", name: "Donepezil", x: 2 },
+        { id: "Galantamine_2", name: "Galantamine", x: 2 },
+        { id: "Memantine_3", name: "Memantine", x: 3 },
+        { id: "Donepezil_3", name: "Donepezil", x: 3 },
+        { id: "Rivastigmine_3", name: "Rivastigmine", x: 3 },
+        { id: "Galantamine_3", name: "Galantamine", x: 3 }
+      ],
+      links: [
+        { source: "Patient Cohort", target: "Donepezil_1", value: 30 },
+        { source: "Patient Cohort", target: "Rivastigmine_1", value: 30 },
+        { source: "Patient Cohort", target: "Galantamine_1", value: 20 },
+        { source: "Patient Cohort", target: "Memantine_1", value: 20 },
+        { source: "Donepezil_1", target: "Memantine_2", value: 15 }, // Corrected value
+        { source: "Donepezil_1", target: "Rivastigmine_2", value: 10 },
+        { source: "Rivastigmine_1", target: "Memantine_2", value: 20 },
+        { source: "Rivastigmine_1", target: "Galantamine_2", value: 10 },
+        { source: "Galantamine_1", target: "Memantine_2", value: 15 },
+        { source: "Galantamine_1", target: "Donepezil_2", value: 5 },
+        { source: "Memantine_1", target: "Donepezil_2", value: 10 },
+        { source: "Memantine_2", target: "Donepezil_3", value: 5 },
+        { source: "Memantine_2", target: "Rivastigmine_3", value: 10 },
+        { source: "Memantine_2", target: "Galantamine_3", value: 5 },
+        { source: "Donepezil_2", target: "Memantine_3", value: 15 },
+        { source: "Rivastigmine_2", target: "Memantine_3", value: 5 },
+        { source: "Galantamine_2", target: "Memantine_3", value: 10 }
+      ]
+    };
 
-    return `
-      M ${startX} ${startY}
-      C ${startX + curveStrength} ${startY},
-        ${endX - curveStrength} ${endY},
-        ${endX} ${endY}
-      L ${endX} ${endY + width}
-      C ${endX - curveStrength} ${endY + width},
-        ${startX + curveStrength} ${startY + width},
-        ${startX} ${startY + width}
-      Z
-    `;
-  };
+    const sankeyGenerator = sankey()
+      .nodeId(d => d.id)
+      .nodeWidth(40)
+      .nodePadding(30)
+      .iterations(32)
+      .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]]);
 
-  return (
-    <div className="w-full h-[400px] bg-white overflow-hidden p-4">
-      <h2 className="text-lg font-bold text-center mb-4">Medication Switch Rates</h2>
-      <div className="relative">
-        <svg width="500" height="380" className="w-full h-full">
-          {/* Flow Paths */}
-          {flows.map((flow, idx) => {
-            const fromIdx = sourceMeds.findIndex(m => m.id === flow.from);
-            const toIdx = targetMeds.findIndex(m => m.id === flow.to);
-            const fromMed = sourceMeds.find(m => m.id === flow.from);
-            const toMed = targetMeds.find(m => m.id === flow.to);
-            
-            return (
-              <g key={`${flow.from}-${flow.to}`}>
-                <path
-                  d={getPathD(fromIdx, toIdx, flow.value)}
-                  fill={hoveredPath === idx ? fromMed.color : `${fromMed.color}30`}
-                  className="transition-all duration-300"
-                  onMouseEnter={() => setHoveredPath(idx)}
-                  onMouseLeave={() => setHoveredPath(null)}
-                />
-                {hoveredPath === idx && (
-                  <g>
-                    <rect
-                      x="220"
-                      y={(fromIdx + toIdx) * 25 + 15}
-                      width="60"
-                      height="24"
-                      fill="white"
-                      rx="4"
-                      className="shadow-lg"
-                    />
-                    <text
-                      x="250"
-                      y={(fromIdx + toIdx) * 25 + 31}
-                      textAnchor="middle"
-                      className="text-xs font-bold"
-                      fill="#1f2937"
-                    >
-                      {`${flow.value}%`}
-                    </text>
-                  </g>
-                )}
-              </g>
-            );
-          })}
+    const { nodes, links } = sankeyGenerator(data);
 
-          {/* Source Medications (Left) */}
-          {sourceMeds.map((med, idx) => {
-            const y = idx * (40 + 20) + 30;
-            return (
-              <g key={`source-${med.id}`}>
-                <rect
-                  x="10"
-                  y={y}
-                  width="100"
-                  height="40"
-                  rx="4"
-                  fill={med.color}
-                  className="opacity-90"
-                />
-                <text
-                  x="60"
-                  y={y + 25}
-                  textAnchor="middle"
-                  className="text-xs"
-                  fill="white"
-                >
-                  {med.name}
-                </text>
-              </g>
-            );
-          })}
+    // Filter out nodes with zero value
+    const filteredNodes = nodes.filter(node => node.value > 0);
 
-          {/* Target Medications (Right) */}
-          {targetMeds.map((med, idx) => {
-            const y = idx * (40 + 15) + 30;
-            return (
-              <g key={`target-${med.id}`}>
-                <rect
-                  x="390"
-                  y={y}
-                  width="100"
-                  height="40"
-                  rx="4"
-                  fill={med.color}
-                  className="opacity-90"
-                />
-                <text
-                  x="440"
-                  y={y + 25}
-                  textAnchor="middle"
-                  className="text-xs"
-                  fill="white"
-                >
-                  {med.name}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-    </div>
-  );
+    const chart = svg.append("g");
+
+    const defs = svg.append("defs");
+    const linkGradient = defs
+      .selectAll("linearGradient")
+      .data(links)
+      .enter()
+      .append("linearGradient")
+      .attr("id", (d, i) => `linkGradient${i}`)
+      .attr("gradientUnits", "userSpaceOnUse")
+      .attr("x1", (d) => d.source.x1)
+      .attr("x2", (d) => d.target.x0);
+
+    linkGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", (d) => colorScale(d.source.name));
+
+    linkGradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", (d) => colorScale(d.target.name));
+
+    const linkEnter = chart
+      .append("g")
+      .selectAll(".link")
+      .data(links)
+      .enter()
+      .append("path")
+      .attr("class", "link")
+      .attr("d", sankeyLinkHorizontal())
+      .attr("fill", "none")
+      .attr("stroke", (d, i) => `url(#linkGradient${i})`)
+      .attr("stroke-opacity", 0.5)
+      .attr("stroke-width", (d) => Math.max(1, d.width))
+      .attr("title", (d) => `${d.source.name} -> ${d.target.name}: ${d.value}%`)
+      .append("title")
+      .text(d => `${d.source.name} -> ${d.target.name}: ${d.value}%`);
+
+    const node = chart
+      .append("g")
+      .selectAll(".node")
+      .data(filteredNodes) // Use filtered nodes
+      .enter()
+      .append("g")
+      .attr("class", "node")
+      .attr("transform", (d) => `translate(${d.x0},${d.y0})`);
+
+    node
+      .append("rect")
+      .attr("height", (d) => d.y1 - d.y0)
+      .attr("width", (d) => d.x1 - d.x0)
+      .attr("fill", (d) => colorScale(d.name))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 2)
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .attr("title", (d) => `${d.name}: ${d.value}%`)
+      .on("mouseover", function () {
+        d3.select(this)
+          .attr("stroke", "#000")
+          .attr("stroke-width", 3)
+          .attr("opacity", 0.8);
+      })
+      .on("mouseout", function () {
+        d3.select(this)
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 2)
+          .attr("opacity", 1);
+      });
+
+    node
+      .append("text")
+      .attr("x", (d) => (d.x1 - d.x0) / 2)
+      .attr("y", (d) => (d.y1 - d.y0) / 2)
+      .attr("dy", "0.35em")
+      .attr("text-anchor", "middle")
+      .text((d) => `${d.name}: ${d.value}%`)
+      .attr("fill", "#000")
+      .style("font-size", "12px")
+      .style("font-weight", "bold")
+      .style("pointer-events", "none");
+
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", margin.top / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("font-weight", "bold")
+      .text("Treatment Switch Pattern");
+  }, []);
+
+  return <svg ref={svgRef}></svg>;
 };
 
-export default MedicationSankey;
+export default DrugSwitch;

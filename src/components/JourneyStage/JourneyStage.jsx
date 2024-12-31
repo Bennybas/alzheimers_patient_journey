@@ -37,7 +37,7 @@ import AgeDistributionBarChart from '../Charts/AgeDistribution';
 import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
 import AssessmentBarChart from '../Charts/Assesment';
 import AverageWaitingTimeChart from '../Charts/WaitingTime';
-import MedicationSankey from '../Charts/SwitchRate';
+import DrugSwitch from '../Charts/SwitchRate';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -633,17 +633,19 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
           return (
             <div className="w-full space-y-8">
               <div className="grid gap-8">
-                
                 <TreatmentDistribution />
-                
-             
+              </div>
+              
+              <div className="grid gap-8">
+                <DrugSwitch />
               </div>
               
               <div className="grid gap-8">
                 <TherapyMetrics />
               </div>
-              <div className="grid gap-8">
-              <DrugPrescribingCharts />
+              <div className="grid grid-cols-2 gap-8">
+                <DrugPrescribingCharts />
+                <DrugDiscontinuationRates />
               </div>
               <div className="grid grid-cols-2 gap-8">
 
