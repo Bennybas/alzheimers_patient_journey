@@ -655,10 +655,6 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   < SideEffectsAdherenceChart />
                   </div>
                 </Card>
-                <DrugDiscontinuationRates />
-              </div>
-
-              <div className="grid grid-cols-2 gap-8">
                 <Card className="p-6">
                   <h4 className="text-sm font-medium text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
                   <div className="aspect-[4/3] w-full">
@@ -681,7 +677,53 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                     </ResponsiveContainer>
                   </div>
                 </Card>
+                
+              </div>
 
+              <div className="grid grid-cols-2 gap-8">
+                
+              <Card className="p-6">
+              <div className="p-4">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
+                  <div className="space-y-3">
+                    {barrierData.map((item, index) => (
+                      <div key={index} className="mb-2">
+                        <div className="flex items-center">
+                          {/* Barrier Label */}
+                          <div className="w-1/4 text-sm font-semibold text-gray-800">
+                            {item.barrier}
+                          </div>
+                          {/* Progress Bar Container */}
+                          <div className="flex-grow flex space-x-1">
+                            {/* Barrier Intensity */}
+                            <div
+                              className="bg-blue-500 h-4 rounded -ml-24"
+                              style={{ width: `${item.barrier}%` }}
+                            />
+                            {/* Extreme Barrier Intensity */}
+                            <div
+                              className="bg-red-500 h-4 rounded"
+                              style={{ width: `${item.extremeBarrier}%` }}
+                            />
+                          </div>
+                          {/* Total Value */}
+                          <div className="text-xs text-gray-600 ml-2">
+                            {item.barrier + item.extremeBarrier}
+                          </div>
+                        </div>
+                        {/* Description always visible */}
+                        <div className="text-xs text-gray-500 mt-1 ml-4">
+                          {item.description}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-xs text-center text-gray-500">
+                    <span className="mr-2">🔵Seen as Barrier</span>
+                    <span>🔴 Seen as Extreme Barrier</span>
+                  </div>
+                </div>
+              </Card>
 
                 <Card className="p-6">
                   <h4 className="text-sm font-medium text-gray-700">Payment Source Distribution</h4>
@@ -736,48 +778,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </Card>
               
 
-              <Card className="p-6">
-              <div className="p-4">
-                  <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
-                  <div className="space-y-3">
-                    {barrierData.map((item, index) => (
-                      <div key={index} className="mb-2">
-                        <div className="flex items-center">
-                          {/* Barrier Label */}
-                          <div className="w-1/4 text-sm font-semibold text-gray-800">
-                            {item.barrier}
-                          </div>
-                          {/* Progress Bar Container */}
-                          <div className="flex-grow flex space-x-1">
-                            {/* Barrier Intensity */}
-                            <div
-                              className="bg-blue-500 h-4 rounded -ml-24"
-                              style={{ width: `${item.barrier}%` }}
-                            />
-                            {/* Extreme Barrier Intensity */}
-                            <div
-                              className="bg-red-500 h-4 rounded"
-                              style={{ width: `${item.extremeBarrier}%` }}
-                            />
-                          </div>
-                          {/* Total Value */}
-                          <div className="text-xs text-gray-600 ml-2">
-                            {item.barrier + item.extremeBarrier}
-                          </div>
-                        </div>
-                        {/* Description always visible */}
-                        <div className="text-xs text-gray-500 mt-1 ml-4">
-                          {item.description}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 text-xs text-center text-gray-500">
-                    <span className="mr-2">🔵Seen as Barrier</span>
-                    <span>🔴 Seen as Extreme Barrier</span>
-                  </div>
-                </div>
-              </Card>
+              
               
               </div>
               
