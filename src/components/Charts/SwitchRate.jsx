@@ -4,20 +4,20 @@ const MedicationSankey = () => {
   const [hoveredPath, setHoveredPath] = useState(null);
 
   const sourceMeds = [
-    { id: 'don', name: 'Donepezil', color: '#16a34a' },
-    { id: 'riv', name: 'Rivastigmine', color: '#2563eb' },
-    { id: 'gal', name: 'Galantamine', color: '#dc2626' },
-    { id: 'mem', name: 'Memantine', color: '#9333ea' }
+    { id: 'don', name: 'Donepezil', color: '#15803d' }, // Darker green
+    { id: 'riv', name: 'Rivastigmine', color: '#1e3a8a' }, // Darker blue
+    { id: 'gal', name: 'Galantamine', color: '#b91c1c' }, // Muted red
+    { id: 'mem', name: 'Memantine', color: '#6b21a8' } // Muted purple
   ];
 
   // Target medications (right side)
   const targetMeds = [
-    { id: 'mem', name: 'Memantine', color: '#9333ea' },
-    { id: 'don', name: 'Donepezil', color: '#16a34a' },
-    { id: 'riv', name: 'Rivastigmine', color: '#2563eb' },
-    { id: 'gal', name: 'Galantamine', color: '#dc2626' },
-    { id: 'addMem', name: '+ Memantine', color: '#0891b2' },
-    { id: 'addAChEI', name: '+ AChEI', color: '#ea580c' }
+    { id: 'mem', name: 'Memantine', color: '#6b21a8' }, // Muted purple
+    { id: 'don', name: 'Donepezil', color: '#15803d' }, // Darker green
+    { id: 'riv', name: 'Rivastigmine', color: '#1e3a8a' }, // Darker blue
+    { id: 'gal', name: 'Galantamine', color: '#b91c1c' }, // Muted red
+    { id: 'addMem', name: '+ Memantine', color: '#0f766e' }, // Muted teal
+    { id: 'addAChEI', name: '+ AChEI', color: '#9a3412' } // Muted orange-brown
   ];
 
   const flows = [
@@ -39,7 +39,6 @@ const MedicationSankey = () => {
     { from: 'mem', to: 'addAChEI', value: 16.0 }
   ];
 
-  
 
   const getPathD = (fromIndex, toIndex, value) => {
     const startX = 60;
