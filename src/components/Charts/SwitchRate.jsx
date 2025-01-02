@@ -20,41 +20,28 @@ const DrugSwitch = () => {
       .domain(["Donepezil", "Rivastigmine", "Galantamine", "Memantine"])
       .range(["#FF5733", "#33FF57", "#3357FF", "#FF33FF"]);
 
-    const data = {
-      nodes: [
-        { "id": "Donepezil_1", "name": "Donepezil", "x": 0 },
-        { "id": "Rivastigmine_1", "name": "Rivastigmine", "x": 0 },
-        { "id": "Galantamine_1", "name": "Galantamine", "x": 0 },
-        { "id": "Memantine_1", "name": "Memantine", "x": 0 },
-        { "id": "Memantine_2", "name": "Memantine", "x": 1 },
-        { "id": "Rivastigmine_2", "name": "Rivastigmine", "x": 1 },
-        { "id": "Donepezil_2", "name": "Donepezil", "x": 1 },
-        { "id": "Galantamine_2", "name": "Galantamine", "x": 1 },
-        { "id": "Memantine_3", "name": "Memantine", "x": 2 },
-        { "id": "Donepezil_3", "name": "Donepezil", "x": 2 },
-        { "id": "Rivastigmine_3", "name": "Rivastigmine", "x": 2 },
-        { "id": "Galantamine_3", "name": "Galantamine", "x": 2 }
-      ],
-      links: [
-        { "source": "Donepezil_1", "target": "Memantine_2", "value": 15 },
-        { "source": "Donepezil_1", "target": "Rivastigmine_2", "value": 10 },
-        { "source": "Rivastigmine_1", "target": "Memantine_2", "value": 20 },
-        { "source": "Rivastigmine_1", "target": "Galantamine_2", "value": 10 },
-        { "source": "Galantamine_1", "target": "Memantine_2", "value": 15 },
-        { "source": "Galantamine_1", "target": "Donepezil_2", "value": 5 },
-        { "source": "Memantine_1", "target": "Donepezil_2", "value": 10 },
-        { "source": "Memantine_2", "target": "Donepezil_3", "value": 5 },
-        { "source": "Memantine_2", "target": "Rivastigmine_3", "value": 10 },
-        { "source": "Memantine_2", "target": "Galantamine_3", "value": 5 },
-        { "source": "Donepezil_2", "target": "Memantine_3", "value": 15 },
-        { "source": "Rivastigmine_2", "target": "Memantine_3", "value": 5 },
-        { "source": "Galantamine_2", "target": "Memantine_3", "value": 10 },
-        { "source": "Donepezil_1", "target": "Donepezil_3", "value": 5 },
-        { "source": "Rivastigmine_1", "target": "Rivastigmine_3", "value": 10 },
-        { "source": "Galantamine_1", "target": "Galantamine_3", "value": 10 },
-        { "source": "Memantine_1", "target": "Memantine_3", "value": 25 }
-      ]
-    };
+      const data = {
+        nodes: [
+          { id: "Donepezil_1", name: "Donepezil", x: 0 },
+          { id: "Rivastigmine_1", name: "Rivastigmine", x: 0 },
+          { id: "Galantamine_1", name: "Galantamine", x: 0 },
+          { id: "Memantine_1", name: "Memantine", x: 1 },
+          { id: "Combination_1", name: "Combination Therapy", x: 1 },
+          { id: "Memantine_2", name: "Memantine (Severe)", x: 2 },
+          { id: "Donepezil_2", name: "Donepezil (Switch Back)", x: 2 }
+        ],
+        links: [
+          { source: "Donepezil_1", target: "Memantine_1", value: 30 },
+          { source: "Rivastigmine_1", target: "Memantine_1", value: 20 },
+          { source: "Galantamine_1", target: "Memantine_1", value: 25 },
+          { source: "Donepezil_1", target: "Combination_1", value: 15 },
+          { source: "Rivastigmine_1", target: "Combination_1", value: 10 },
+          { source: "Memantine_1", target: "Memantine_2", value: 40 },
+          { source: "Combination_1", target: "Memantine_2", value: 20 },
+          { source: "Combination_1", target: "Donepezil_2", value: 10 }
+        ]
+      };
+      
 
     const sankeyGenerator = sankey()
       .nodeId(d => d.id)
