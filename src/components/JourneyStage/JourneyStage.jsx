@@ -38,6 +38,8 @@ import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
 import AssessmentBarChart from '../Charts/Assesment';
 import AverageWaitingTimeChart from '../Charts/WaitingTime';
 import DrugSwitch from '../Charts/SwitchRate';
+import AdherenceChart from '../Charts/Adherence';
+import CaregiverChart from '../Charts/CareGiver';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -656,7 +658,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </div>
                 </Card>
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
+                  <h4 className="text-lg font-bold mb-4 text-center text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
                   <div className="aspect-[4/3] w-full">
                   <ResponsiveContainer width="100%" height={400}>
                     <BarChart
@@ -726,7 +728,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </Card>
 
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Payment Source Distribution</h4>
+                  <h4 className="text-lg font-bold mb-4 text-center text-gray-700">Payment Source Distribution</h4>
                   <div className="aspect-[4/3] w-full">
                   <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
@@ -776,10 +778,12 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
                 </div>
               </Card>
-              
 
-              
-              
+              <AdherenceChart />
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
+                <CaregiverChart />
               </div>
               
 
