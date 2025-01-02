@@ -56,7 +56,7 @@ export const journeyData = [
                 text: "Inadequate cognitive assessment tools and insufficient diagnostic support contribute to misdiagnosis and delays.",
               },
               {
-                text: "Limited specialist referral networks, with many states experiencing shortages, hinder access to specialized care.",
+                text: "Limited specialist referral networks, with many states experiencing shortages, hinder access to specialized care. 44% to 71% of PCPs report a lack of specialists, especially in rural and suburban areas",
               },
               {
                 text: "Cognitive assessment and diagnosis remain fragmented, with gaps in support and coverage for patients.",
@@ -142,33 +142,30 @@ export const journeyData = [
         physician: [
           {
             subpoints: [
-              
               {
                 text: "15-30% of those meeting Alzheimer's criteria don’t have Alzheimer's brain changes, complicating diagnosis.",
               },
               {
-                text: "85% of dementia diagnoses are made by non-specialists, leading to variability in accuracy due to limited specialized training.",
-              },
-              {
-                text: "Limited access to biomarker testing and overlap of dementia types hinder precise diagnosis and staging.",
+                text: "The significant overlap in symptoms and characteristics among different types of dementia poses challenges in achieving an accurate diagnosis and proper staging of Alzheimer's disease",
               },
             ]
           }
-            
         ],
-        system:[ { subpoints: [
+        system: [
           {
-            text: "High costs and limited insurance coverage for diagnostic tools like PET scans and biomarker tests hinder timely diagnosis.",
-          },
-          {
-            text: "44% to 71% of PCPs report a lack of specialists, especially in rural and suburban areas, impacting patient access to care.",
-          },
-          {
-            text: "Complex authorization processes and limited Medicare coverage delay diagnosis and access to necessary treatments.",
-          },
-        ]}
-      ],
-        
+            subpoints: [
+              {
+                text: "High costs and limited insurance coverage for diagnostic tools like PET scans and biomarker tests hinder timely diagnosis.",
+              },
+              {
+                text: "Complex authorization processes and limited Medicare coverage delay diagnosis and access to necessary treatments.",
+              },
+              {
+                text: "Access to amyloid tracer manufacturing facilities (cyclotrons) is not uniform across the US. This can limit access to PET scans for patients in these areas.",
+              },
+            ]
+          }
+        ],
         patient: [
           {
             subpoints: [
@@ -176,16 +173,13 @@ export const journeyData = [
                 text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
               },
               {
-                text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
-              },
-              {
                 text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
               },
             ]
-            
           }
         ]
-      },
+      }
+      ,
       findings: [
         {
           description: "Access to Diagnostic Resources",
@@ -265,7 +259,7 @@ export const journeyData = [
           {
             subpoints: [
               {
-                text: "The high costs associated with Alzheimer's care, including expensive medications, create financial barriers for patients and the healthcare system.",
+                text: "The limited capacity of infusion centers to deliver the treatment contribute to long treatment initiation times.",
               },
               {
                 text: "Medicare/Medicaid coverage is limited, and long-term care costs are not adequately covered by Medicare, creating resource strain.",
@@ -280,18 +274,19 @@ export const journeyData = [
           {
             subpoints: [
               {
-                text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
+                text: "The high costs associated with Alzheimer's care, including expensive medications create financial barriers for patients and the healthcare system.",
               },
               {
                 text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
               },
               {
-                text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
+                text: "Medications can cause adverse effects like nausea, dizziness, gastrointestinal issues, Insomnia leading to discontinuation.",
               },
             ],
           },
         ],
-      },      
+      }
+      ,      
       findings: [
         {
           description: "Financial Burden",
