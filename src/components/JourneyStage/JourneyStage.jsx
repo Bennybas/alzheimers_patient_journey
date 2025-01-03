@@ -783,8 +783,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </div>
               </Card> */}
 
-              <AdherenceChart />
+              {/* <AdherenceChart /> */}
               <CaregiverChart />
+              <HospitalizationBarChart />
               </div>
               
               {/* <div className="grid grid-cols-1 gap-8">
@@ -792,9 +793,6 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
               </div> */}
 
-              <div className="grid grid-cols-2 gap-8">
-                <HospitalizationBarChart />
-              </div>
               
               
             </div>
