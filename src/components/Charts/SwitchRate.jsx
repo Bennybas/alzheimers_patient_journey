@@ -11,37 +11,39 @@ const DrugSwitch = () => {
 
     const width = 1100;
     const height = 550;
-    const margin = { top: 60, right: 60, bottom: 60, left: 60 };
+    const margin = { top: 60, right: 80, bottom: 60, left: 60 };
 
     svg.attr("width", width).attr("height", height);
 
     const colorScale = d3
       .scaleOrdinal()
-      .domain(["Donepezil", "Rivastigmine", "Galantamine", "Memantine"])
-      .range(["#FF5733", "#33FF57", "#3357FF", "#FF33FF"]);
+      .domain(["Donepezil", "Rivastigmine", "Galantamine", "Memantine", "Combination"])
+      .range(["#4ECDC4", "#FF6B6B", "#45B7D1", "#96CEB4", "#FFEEAD"]);
 
-      const data = {
-        nodes: [
-          { id: "Donepezil_1", name: "Donepezil", x: 0 },
-          { id: "Rivastigmine_1", name: "Rivastigmine", x: 0 },
-          { id: "Galantamine_1", name: "Galantamine", x: 0 },
-          { id: "Memantine_1", name: "Memantine", x: 1 },
-          { id: "Combination_1", name: "Combination Therapy", x: 1 },
-          { id: "Memantine_2", name: "Memantine (Severe)", x: 2 },
-          { id: "Donepezil_2", name: "Donepezil (Switch Back)", x: 2 }
-        ],
-        links: [
-          { source: "Donepezil_1", target: "Memantine_1", value: 30 },
-          { source: "Rivastigmine_1", target: "Memantine_1", value: 20 },
-          { source: "Galantamine_1", target: "Memantine_1", value: 25 },
-          { source: "Donepezil_1", target: "Combination_1", value: 15 },
-          { source: "Rivastigmine_1", target: "Combination_1", value: 10 },
-          { source: "Memantine_1", target: "Memantine_2", value: 40 },
-          { source: "Combination_1", target: "Memantine_2", value: 20 },
-          { source: "Combination_1", target: "Donepezil_2", value: 10 }
-        ]
-      };
-      
+    const data = {
+      nodes: [
+        // L1 nodes
+        { id: "Donepezil_1", name: "Donepezil", x: 0 },
+        { id: "Rivastigmine_1", name: "Rivastigmine", x: 0 },
+        { id: "Galantamine_1", name: "Galantamine", x: 0 },
+        // L2 nodes
+        { id: "Memantine_1", name: "Memantine", x: 1 },
+        { id: "DonepezilMem", name: "Donepezil + Memantine", x: 1 },
+        { id: "RivastigmineMem", name: "Rivastigmine + Memantine", x: 1 },
+        { id: "GalantamineMem", name: "Galantamine + Memantine", x: 1 }
+      ],
+      links: [
+        // From Donepezil
+        { source: "Donepezil_1", target: "Memantine_1", value: 13.7 },
+        { source: "Donepezil_1", target: "DonepezilMem", value: 13.8 },
+        // From Rivastigmine
+        { source: "Rivastigmine_1", target: "Memantine_1", value: 23.7 },
+        { source: "Rivastigmine_1", target: "RivastigmineMem", value: 6.8 },
+        // From Galantamine
+        { source: "Galantamine_1", target: "Memantine_1", value: 4.1 },
+        { source: "Galantamine_1", target: "GalantamineMem", value: 1.4 }
+      ]
+    };
 
     const sankeyGenerator = sankey()
       .nodeId(d => d.id)

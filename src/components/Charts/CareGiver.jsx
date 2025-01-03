@@ -6,10 +6,10 @@ import {
 
 const COLORS = ["#9B4D96", "#FFC107"]; // Updated colors for high stress and clinical depression
 
-const dementiaCaregiverData = [
-  { name: "High or Very High Stress", value: 60 },
-  { name: "Clinical Depression", value: 40 },
-];
+// const dementiaCaregiverData = [
+//   { name: "High or Very High Stress", value: 60 },
+//   { name: "Clinical Depression", value: 40 },
+// ];
 
 const data = [
   { year: 2010, dementia: 18, amyloid: 14, infusion: 6 },
@@ -43,8 +43,8 @@ const data = [
 const CaregiverChart = () => {
   return (
     <div className="flex">
-      {/* Left: Pie Chart */}
-      <div className="p-6 w-1/2">
+     
+      {/* <div className="p-6 w-1/2">
         <h3 className="text-lg font-bold mb-4 text-center text-gray-700">Dementia Caregiver Statistics</h3>
         <div className="aspect-[4/3] w-full">
           <ResponsiveContainer width="100%" height={300}>
@@ -67,12 +67,12 @@ const CaregiverChart = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </div> */}
 
       {/* Right: Bar Chart */}
-      <div className="p-6 w-1/2">
+      <div >
         <h3 className="text-lg font-bold mb-4 text-center text-gray-700">Diagnosis and Treatment Delay Statistics</h3>
-        <BarResponsiveContainer width="100%" height={400}>
+        <BarResponsiveContainer width={500} height={400}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />

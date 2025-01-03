@@ -40,6 +40,7 @@ import AverageWaitingTimeChart from '../Charts/WaitingTime';
 import DrugSwitch from '../Charts/SwitchRate';
 import AdherenceChart from '../Charts/Adherence';
 import CaregiverChart from '../Charts/CareGiver';
+import DelayChart from '../Charts/DelayChart';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -657,7 +658,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   < SideEffectsAdherenceChart />
                   </div>
                 </Card>
-                <Card className="p-6">
+
+                <DelayChart />
+                {/* <Card className="p-6">
                   <h4 className="text-lg font-bold mb-4 text-center text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
                   <div className="aspect-[4/3] w-full">
                   <ResponsiveContainer width="100%" height={400}>
@@ -673,12 +676,12 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                     <Tooltip />
                     <Legend verticalAlign="bottom" />
                     <Bar dataKey="dementiaCaregivers" name="Dementia Caregivers" fill="#4c2464" />
-                    <Bar dataKey="nonDementiaCaregivers" name="Non-Dementia Caregivers" fill="#8884d8" /> {/* Added another bar */}
-                    <Bar dataKey="nonCaregivers" name="Non-Caregivers" fill="#82ca9d" /> {/* Added another bar */}
+                    <Bar dataKey="nonDementiaCaregivers" name="Non-Dementia Caregivers" fill="#8884d8" />
+                    <Bar dataKey="nonCaregivers" name="Non-Caregivers" fill="#82ca9d" /> 
                     </BarChart>
                     </ResponsiveContainer>
                   </div>
-                </Card>
+                </Card> */}
                 
               </div>
 
@@ -753,7 +756,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </Card>
               </div>
               <div className="grid grid-cols-2 gap-8">
-              <Card className="p-6">
+              {/* <Card className="p-6">
                 <div style={{ width: "100%", height: 400 }}>
                   <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
                     Effectiveness of Dementia Care Navigation
@@ -777,20 +780,16 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </ResponsiveContainer>
 
                 </div>
-              </Card>
+              </Card> */}
 
               <AdherenceChart />
-              </div>
-
-              <div className="grid grid-cols-1 gap-8">
-                <CaregiverChart />
+              <CaregiverChart />
               </div>
               
-
-              <div className="grid grid-cols-1 gap-8">
+              {/* <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
 
-              </div>
+              </div> */}
               
               
             </div>
