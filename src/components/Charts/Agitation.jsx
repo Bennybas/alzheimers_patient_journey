@@ -77,12 +77,7 @@ const AgitationPieChart = () => {
             ))}
           </Pie>
           <Tooltip content={<CustomTooltip />} />
-          <Legend
-            layout="horizontal"
-            verticalAlign="bottom"
-            align="center"
-            iconType="circle"
-          />
+          
         </PieChart>
       </ResponsiveContainer>
     </div>

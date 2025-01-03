@@ -32,7 +32,7 @@ const TherapyMetrics = () => {
     { name: "Rivastigmine", percentage: 13.63 },
     { name: "Donepezil + Memantine", percentage: 6.43 },
     { name: "Galantamine", percentage: 12.83 },
-    { name: "No antidementia drug", percentage: 8 },
+    
   ];
 
   // Custom tooltip for the grouped bar chart
