@@ -42,6 +42,7 @@ import AdherenceChart from '../Charts/Adherence';
 import CaregiverChart from '../Charts/CareGiver';
 import DelayChart from '../Charts/DelayChart';
 import HospitalizationBarChart from '../Charts/Hospitalization';
+import AgitationPieChart from '../Charts/Agitation';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -792,6 +793,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 <StateCaregivingMap />
 
               </div> */}
+              <div className="grid grid-cols-1 gap-8">
+                <AgitationPieChart />
+              </div>
 
               
               
