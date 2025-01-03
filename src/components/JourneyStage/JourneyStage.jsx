@@ -27,7 +27,7 @@ import IncorrectDiagnosesChart from '../Charts/Incorrect';
 import ReasonsForSCDChart from '../Charts/SCD';
 import TreatmentDistribution from '../Charts/TreatmentFlow';
 import TherapyMetrics from '../Charts/TherapyMetrics';
-import DrugPrescribingCharts from '../Charts/DrugPrescribe';
+import NonAdheherence from '../Charts/NonAdheherence';
 import Cognitive from '../Charts/Cognitive';
 import AlzheimerStagesPieChart from '../Charts/Stages';
 import DiagnosisTimeline from '../Charts/DiagnosisTime';
@@ -41,6 +41,7 @@ import DrugSwitch from '../Charts/SwitchRate';
 import AdherenceChart from '../Charts/Adherence';
 import CaregiverChart from '../Charts/CareGiver';
 import DelayChart from '../Charts/DelayChart';
+import HospitalizationBarChart from '../Charts/Hospitalization';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -647,7 +648,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 <TherapyMetrics />
               </div>
               <div className="grid grid-cols-2 gap-8">
-                <DrugPrescribingCharts />
+                <NonAdheherence />
                 <DrugDiscontinuationRates />
               </div>
               <div className="grid grid-cols-2 gap-8">
@@ -790,6 +791,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 <StateCaregivingMap />
 
               </div> */}
+
+              <div className="grid grid-cols-2 gap-8">
+                <HospitalizationBarChart />
+              </div>
               
               
             </div>
