@@ -2,70 +2,62 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { sankey, sankeyLinkHorizontal } from "d3-sankey";
 
-const SankeyDiagram = () => {
+const DrugSwitch = () => {
   const svgRef = useRef(null);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const width = 1100; // Slightly increased width
-    const height = 550; // Increased height for better spacing
-    const margin = { top: 60, right: 60, bottom: 60, left: 60 }; // Increased margins
+    const width = 1100;
+    const height = 550;
+    const margin = { top: 60, right: 80, bottom: 60, left: 60 };
 
     svg.attr("width", width).attr("height", height);
 
     const colorScale = d3
       .scaleOrdinal()
-      .domain([
-        "Patients",
-        "PCP",
-        "Specialists",
-        "Psychiatrist",
-        "Neurologist",
-        "Geriatrician"
-      ])
-      .range([
-        "#64B5F6",   // Lighter Blue for Patients
-        "#90CAF9",   // Much Lighter Blue for PCP
-        "#B39DDB",   // Lighter Purple for Specialized Providers
-        "#F48FB1",   // Lighter Pink for Psychiatrist
-        "#A1887F",   // Lighter Brown for Neurologist
-        "#FFD54F"    // Lighter Amber for Geriatrician
-      ]);
+      .domain(["Donepezil", "Rivastigmine", "Galantamine", "Memantine", "Combination"])
+      .range(["#4ECDC4", "#FF6B6B", "#45B7D1", "#96CEB4", "#FFEEAD"]);
 
     const data = {
       nodes: [
-        { name: "Patients", value: 100 },
-        { name: "PCP", value: 85 },
-        { name: "Specialists", value: 15 },
-        { name: "Psychiatrist", value: 7.05 },   // 47% of 15%
-        { name: "Neurologist", value: 6.6 },     // 44% of 15%
-        { name: "Geriatrician", value: 1.35 }    // 9% of 15%
+        // L1 nodes
+        { id: "Donepezil_1", name: "Donepezil", x: 0 },
+        { id: "Rivastigmine_1", name: "Rivastigmine", x: 0 },
+        { id: "Galantamine_1", name: "Galantamine", x: 0 },
+        // L2 nodes
+        { id: "Memantine_1", name: "Memantine", x: 1 },
+        { id: "DonepezilMem", name: "Donepezil + Memantine", x: 1 },
+        { id: "RivastigmineMem", name: "Rivastigmine + Memantine", x: 1 },
+        { id: "GalantamineMem", name: "Galantamine + Memantine", x: 1 }
       ],
       links: [
-        { source: 0, target: 1, value: 85 },   // Patients -> PCP
-        { source: 0, target: 2, value: 15 },   // Patients -> Specialized Providers (original 15%)
-        { source: 1, target: 2, value: 42.5 }, // PCP -> Specialized Providers (50% of 85)
-        { source: 2, target: 3, value: 7.05 }, // Specialized Providers -> Psychiatrist
-        { source: 2, target: 4, value: 6.6 },  // Specialized Providers -> Neurologist
-        { source: 2, target: 5, value: 1.35 }  // Specialized Providers -> Geriatrician
+        // From Donepezil
+        { source: "Donepezil_1", target: "Memantine_1", value: 13.7 },
+        { source: "Donepezil_1", target: "DonepezilMem", value: 13.8 },
+        // From Rivastigmine
+        { source: "Rivastigmine_1", target: "Memantine_1", value: 23.7 },
+        { source: "Rivastigmine_1", target: "RivastigmineMem", value: 6.8 },
+        // From Galantamine
+        { source: "Galantamine_1", target: "Memantine_1", value: 4.1 },
+        { source: "Galantamine_1", target: "GalantamineMem", value: 1.4 }
       ]
     };
 
     const sankeyGenerator = sankey()
+      .nodeId(d => d.id)
       .nodeWidth(40)
-      .nodePadding(30) // Increased padding for better separation
-      .extent([
-        [margin.left, margin.top],
-        [width - margin.right, height - margin.bottom],
-      ]);
+      .nodePadding(30)
+      .iterations(32)
+      .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]]);
 
     const { nodes, links } = sankeyGenerator(data);
 
+    const filteredNodes = nodes.filter(node => node.value > 0);
+
     const chart = svg.append("g");
 
-    // Gradient for links to add depth
     const defs = svg.append("defs");
     const linkGradient = defs
       .selectAll("linearGradient")
@@ -87,7 +79,6 @@ const SankeyDiagram = () => {
       .attr("offset", "100%")
       .attr("stop-color", (d) => colorScale(d.target.name));
 
-    // Links with improved hover effect
     const linkEnter = chart
       .append("g")
       .selectAll(".link")
@@ -100,22 +91,14 @@ const SankeyDiagram = () => {
       .attr("stroke", (d, i) => `url(#linkGradient${i})`)
       .attr("stroke-opacity", 0.5)
       .attr("stroke-width", (d) => Math.max(1, d.width))
-      .on("mouseover", function () {
-        d3.select(this)
-          .attr("stroke-opacity", 0.9)
-          .attr("stroke-width", (d) => Math.max(2, d.width * 1.5));
-      })
-      .on("mouseout", function () {
-        d3.select(this)
-          .attr("stroke-opacity", 0.5)
-          .attr("stroke-width", (d) => Math.max(1, d.width));
-      });
+      .attr("title", (d) => `${d.source.name} -> ${d.target.name}: ${d.value}%`)
+      .append("title")
+      .text(d => `${d.source.name} -> ${d.target.name}: ${d.value}%`);
 
-    // Nodes with enhanced hover effect
     const node = chart
       .append("g")
       .selectAll(".node")
-      .data(nodes)
+      .data(filteredNodes)
       .enter()
       .append("g")
       .attr("class", "node")
@@ -128,8 +111,9 @@ const SankeyDiagram = () => {
       .attr("fill", (d) => colorScale(d.name))
       .attr("stroke", "#fff")
       .attr("stroke-width", 2)
-      .attr("rx", 5) // Added rounded corners
+      .attr("rx", 5)
       .attr("ry", 5)
+      .attr("title", (d) => `${d.name}: ${d.value}%`)
       .on("mouseover", function () {
         d3.select(this)
           .attr("stroke", "#000")
@@ -153,9 +137,8 @@ const SankeyDiagram = () => {
       .attr("fill", "#000")
       .style("font-size", "12px")
       .style("font-weight", "bold")
-      .style("pointer-events", "none"); // Prevents text from interfering with hover
+      .style("pointer-events", "none");
 
-    // Add title to the chart
     svg
       .append("text")
       .attr("x", width / 2)
@@ -163,20 +146,10 @@ const SankeyDiagram = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-      .text("Patient Flow");
-
-    // Add annotation about 15% to specialized providers
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", height - 10)
-      .attr("text-anchor", "middle")
-      .style("font-size", "12px")
-      .style("font-style", "italic")
-      
+      .text("Treatment Switch Pattern");
   }, []);
 
   return <svg ref={svgRef}></svg>;
 };
 
-export default SankeyDiagram;
+export default DrugSwitch;

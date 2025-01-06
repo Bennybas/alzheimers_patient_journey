@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import {
   ArrowRight, Stethoscope, Building2, User, LineChart as LineChartIcon,
-  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion,MessageCircle
+  ClipboardCheck, AlertTriangle, ChevronDown, ChevronUp,FolderSearch2,MessageCircleQuestion,MessageCircle,
+  TheaterIcon
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -18,10 +19,32 @@ import {
 import SankeyDiagram from '../Sankey/SankeyDiagram'
 import StateCaregivingMap from '../usa/Map'
 import ChatbotButton from './ChatBot'
-import EffectDataPlot from './EffectData';
-import AlzheimersTreatmentFlow from './AlzheimersTreatmentFlow'
 import SideEffectsAdherenceChart from '../Charts/SideEffects'
 import Therapies from '../Charts/Therapies';
+import PCPPieChart from '../Charts/Specialists';
+import BarriersToMCIChart from '../Charts/Barriers';
+import IncorrectDiagnosesChart from '../Charts/Incorrect';
+import ReasonsForSCDChart from '../Charts/SCD';
+import TreatmentDistribution from '../Charts/TreatmentFlow';
+import TherapyMetrics from '../Charts/TherapyMetrics';
+import NonAdheherence from '../Charts/NonAdheherence';
+import Cognitive from '../Charts/Cognitive';
+import AlzheimerStagesPieChart from '../Charts/Stages';
+import DiagnosisTimeline from '../Charts/DiagnosisTime';
+import SymptomsBarChart from '../Charts/Symptoms';
+import ScreeningReason from '../Charts/ScreeningReason';
+import AgeDistributionBarChart from '../Charts/AgeDistribution';
+import DrugDiscontinuationRates from '../Charts/DrugDiscontinue';
+import AssessmentBarChart from '../Charts/Assesment';
+import AverageWaitingTimeChart from '../Charts/WaitingTime';
+import DrugSwitch from '../Charts/SwitchRate';
+import AdherenceChart from '../Charts/Adherence';
+import CaregiverChart from '../Charts/CareGiver';
+import DelayChart from '../Charts/DelayChart';
+import HospitalizationBarChart from '../Charts/Hospitalization';
+import AgitationPieChart from '../Charts/Agitation';
+import DrugChangeHeatmap from '../Charts/DrugChangeReasons';
+
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
   const [hoveredAction, setHoveredAction] = useState(null);
@@ -376,9 +399,22 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       return (
         <div className="w-full space-y-6">
           <SankeyDiagram />
-
           <div className="grid grid-cols-2 gap-8">
-            <Card className="p-6">
+              <PCPPieChart />
+              <Cognitive />
+              
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+          <Card className="p-6">
+            <ReasonsForSCDChart />
+          </Card>
+          <Card className="p-6">
+            <BarriersToMCIChart />
+            </Card>
+
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            {/* <Card className="p-6">
               <h3 className="text-sm font-bold text-gray-700 mb-4">Frequency of Alzheimer's Questions to PCPs From Older Patients (Age 65+)</h3>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={300}>
@@ -388,21 +424,21 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <YAxis />
                   <Tooltip />
                   
-                  {/* Place the Legend here with custom valueKey */}
+                  
                   <Legend
-                    valueKey="Frequency of Days" // This sets the label for the legend
-                    iconType="circle"    // Optional: Set the icon type for the legend
+                    valueKey="Frequency of Days"
+                    iconType="circle"  
                   />
 
                   <Bar dataKey="percentage" fill="#82ca9d" name="Frequency of Days">
-                    {/* Display the percentage on top of each bar */}
+                    
                     <LabelList dataKey="percentage" position="top" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
               </div>
 
-            </Card>
+            </Card> */}
             <Card className="p-6">
             <h3 className="text-sm font-bold text-gray-700 mb-4">Age Distribution of People 65+ With Alzheimer's</h3>
             <div className="aspect-[4/3] w-full">
@@ -427,10 +463,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </ResponsiveContainer>
             </div>
 
-            </Card>
+            </Card> <IncorrectDiagnosesChart />
+
           </div>
           <div className="grid grid-cols-2 gap-8">
-            <Card className="p-6">
+            {/* <Card className="p-6">
             <div style={{ width: "100%", height: 500 }}>
                 <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
                 Projected Alzheimer's Cases in U.S. Adults 65+
@@ -468,32 +505,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
-            </Card>
+            </Card> */}
 
-            <Card className="p-6">
-            <div style={{ width: "100%", height: 500 }}>
-                <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                Time to First Visit vs. Disease Progression 
-                </h3>
-                <ResponsiveContainer width="100%" height={400}>
-                  <ScatterChart
-                          margin={{
-                            top: 20,
-                            right: 20,
-                            bottom: 20,
-                            left: 20,
-                          }}
-                  >
-                  <CartesianGrid />
-                  <XAxis type="number" dataKey="x" name="Time to First Visit (months)" />
-                  <YAxis type="number" dataKey="y" name="Disease Progression Stage" />
-                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                  <Legend />
-                  <Scatter name="Time to First Visit vs. Disease Progression" data={alzheimersData} fill="rgba(75,192,192,0.4)" />
-                  </ScatterChart>
-                  </ResponsiveContainer>
-            </div>
-            </Card>
+           
+           
 
           </div>
 
@@ -530,6 +545,20 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
       case 'bar':
         return (
           <div className="w-full space-y-6">
+            <div className="grid grid-cols-1 gap-8">
+            <DiagnosisTimeline />
+            </div>
+            <div className="grid grid-cols-3 gap-8">
+              <AlzheimerStagesPieChart />
+              <SymptomsBarChart />
+              <AverageWaitingTimeChart />
+              
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              
+              <ScreeningReason />
+              <AssessmentBarChart />
+            </div>
             <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
               <h4 className="text-sm font-medium text-gray-700">Perceived Specialist Availability to Meet Patient Demand</h4>
@@ -547,7 +576,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <AgeDistributionBarChart />
+
+            {/* <Card className="p-6">
             <h4 className="text-sm font-medium text-gray-700">Estimated Lifetime Risk of Alzheimer's by Gender and Age </h4>
             <div className="aspect-[4/3] w-full">
             <ResponsiveContainer width="100%" height={400}>
@@ -563,10 +594,10 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </ResponsiveContainer>
 
             </div>
-            </Card>
+            </Card> */}
           </div>
 
-          <div className="grid grid-cols-2 gap-8">
+          {/* <div className="grid grid-cols-2 gap-8">
           <Card className="p-6">
             <h4 className="text-sm font-medium text-gray-700">Impact of Alzheimer's on Hospital Stays for Common Comorbid Conditions</h4>
               <div className="w-full">
@@ -575,11 +606,11 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   <BarChart
                         data={Comorbid}
                         margin={{
-                          top: 20, right: 30, left: 10, //Increased bottom margin
+                          top: 20, right: 30, left: 10, 
                         }}
                   >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="condition" angle={-23} textAnchor="end" interval={0} height={90}/> {/* Adjusted label properties */}
+                  <XAxis dataKey="condition" angle={-23} textAnchor="end" interval={0} height={90}/>
                   <YAxis label={{ value: 'Hospital stays', angle: -90, position: 'insideLeft' }} domain={[0, 1000]}/>
                   <Tooltip />
                   <Legend verticalAlign="bottom" height={36} />
@@ -597,49 +628,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 </ResponsiveContainer>
               </div>
             </Card>
-
-
-            <Card className="p-6">
-            <h4 className="text-sm font-medium text-gray-700">Correlation between Symptom Severity and Diagnosis Time</h4>
-              <div className="w-full">
-              <ResponsiveContainer width="100%" height={400}>
-                  <LineChart
-                    data={severity}
-                    margin={{
-                      top: 50,
-                      right: 30,
-                      left: 30,
-                      bottom: 50,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="symptomSeverity"
-                      name="Symptom Severity"
-                      type="number"
-                      label={{ value: 'Symptom Severity', position: 'insideBottom', offset: 0 }}
-                    />
-                    <YAxis
-                      dataKey="timeToDiagnosis"
-                      name="Time to Diagnosis (days)"
-                      type="number"
-                      label={{ value: 'Time to Diagnosis (days)', angle: -90, position: 'insideLeft', offset: 0 }}
-                    />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="timeToDiagnosis"
-                      stroke="#8884d8"
-                      activeDot={{ r: 8 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </Card>
-
-            
-          </div>
+          </div> */}
           
             
           </div>
@@ -649,58 +638,36 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
         case 'pie':
           return (
             <div className="w-full space-y-8">
-              <div className="grid grid-cols-1 gap-8">
-                <h3 className="text-sm font-medium text-gray-900" style={{textAlign:'center',fontSize:'25px'}}> Treatment Flow</h3>
-                <div className="p-6" style={{marginBottom:'200px'}}>
-                <AlzheimersTreatmentFlow />
-                </div>
+              <div className="grid gap-8">
+                <TreatmentDistribution />
+              </div>
+              
+              <div className="grid gap-8">
+                <DrugSwitch />
+              </div>
+              <div className="grid gap-8">
+              <DrugDiscontinuationRates />
+              </div>
+              
+              <div className="grid gap-8">
+                <TherapyMetrics />
               </div>
               <div className="grid grid-cols-2 gap-8">
-                <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Mortality Rate By Age and Year</h4>
-                  <div className="aspect-[4/3] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        width={500}
-                        height={300}
-                        data={deathdata}
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ddd" /> {/* Lighter grid */}
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="45-54" stroke="#3498db" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="55-64" stroke="#2ecc71" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="65-74" stroke="#f39c12" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="75-84" stroke="#e74c3c" strokeWidth={2} /> 
-                        <Line type="monotone" dataKey="85+" stroke="#9b59b6" strokeWidth={2} /> 
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-
+                <NonAdheherence />
+                
+              </div>
+              <div className="grid grid-cols-2 gap-8">
 
                 <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Mortality Rate By(per 100000 patients ) Year</h4>
+                  <h2 className="text-lg font-bold text-grey-700">SideEffects and Adherence</h2>
                   <div className="aspect-[4/3] w-full">
                   < SideEffectsAdherenceChart />
                   </div>
                 </Card>
 
-
-                
-              </div>
-
-              <div className="grid grid-cols-2 gap-8">
-                <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
+                <DelayChart />
+                {/* <Card className="p-6">
+                  <h4 className="text-lg font-bold mb-4 text-center text-gray-700">Health Profiles of Dementia Caregivers vs. Non-Caregivers</h4>
                   <div className="aspect-[4/3] w-full">
                   <ResponsiveContainer width="100%" height={400}>
                     <BarChart
@@ -715,69 +682,17 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                     <Tooltip />
                     <Legend verticalAlign="bottom" />
                     <Bar dataKey="dementiaCaregivers" name="Dementia Caregivers" fill="#4c2464" />
-                    <Bar dataKey="nonDementiaCaregivers" name="Non-Dementia Caregivers" fill="#8884d8" /> {/* Added another bar */}
-                    <Bar dataKey="nonCaregivers" name="Non-Caregivers" fill="#82ca9d" /> {/* Added another bar */}
+                    <Bar dataKey="nonDementiaCaregivers" name="Non-Dementia Caregivers" fill="#8884d8" />
+                    <Bar dataKey="nonCaregivers" name="Non-Caregivers" fill="#82ca9d" /> 
                     </BarChart>
                     </ResponsiveContainer>
                   </div>
-                </Card>
-
-
-                <Card className="p-6">
-                  <h4 className="text-sm font-medium text-gray-700">Payment Source Distribution</h4>
-                  <div className="aspect-[4/3] w-full">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                    <Pie
-                            data={insurance}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={true}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            dataKey="value"
-                    >
-                            {insurance.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                    </Pie>
-                    <Legend /> {/* Include the legend */}
-                    </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
+                </Card> */}
+                
               </div>
-              <div className="grid grid-cols-3 gap-8">
-              <Card className="p-6">
-                <div style={{ width: "100%", height: 400 }}>
-                  <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
-                    Effectiveness of Dementia Care Navigation
-                  </h3>
-                  <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={healthcare_worker} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category"  />
-                      <YAxis tickFormatter={(tick) => `${tick}%`} />
-                      <Tooltip formatter={(value) => `${value}%`} />
-                      <Legend layout="horizontal" align="center" verticalAlign="bottom" />
-                      <Bar 
-                        dataKey="value" 
-                        name="Healthcare Worker Effectiveness" 
-                        fill="#00C49F" 
-                        stackId="a" 
-                        data={healthcare_worker}
-                        isAnimationActive={false} 
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
 
-                </div>
-              </Card>
-              <Card className="p-6">
-                <Therapies />
-              </Card>
-
+              <div className="grid grid-cols-2 gap-8">
+                
               <Card className="p-6">
               <div className="p-4">
                   <h3 className="text-lg font-bold mb-4 text-gray-800">Healthcare Barriers Analysis</h3>
@@ -820,61 +735,73 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                   </div>
                 </div>
               </Card>
-              
+
+                <Card className="p-6">
+                  <h4 className="text-lg font-bold mb-4 text-center text-gray-700">Payment Source Distribution</h4>
+                  <div className="aspect-[4/3] w-full">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                    <Pie
+                            data={insurance}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={true}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                    >
+                            {insurance.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                    </Pie>
+                    <Legend /> {/* Include the legend */}
+                    </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
               </div>
               <div className="grid grid-cols-2 gap-8">
-              <Card className="p-6">
-                
-                  <EffectDataPlot />
-              </Card>
-              <Card className="p-6">
-              <h3 className="text-lg font-bold mb-4 text-gray-800">Adherence vs Disease Progression</h3>
-                <div className="space-y-3">
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart
-                      data={AdhereData}
-                      margin={{
-                        top: 10,
-                        right: 10,
-                        left: 10,
-                        
-                      }}
-                    >
+              {/* <Card className="p-6">
+                <div style={{ width: "100%", height: 400 }}>
+                  <h3 style={{ textAlign: "center", fontWeight: "bold"}}>
+                    Effectiveness of Dementia Care Navigation
+                  </h3>
+                  <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={healthcare_worker} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis
-                        dataKey="medicationAdherence"
-                        name="Medication Adherence (%)"
-                        type="number"
-                        label={{ value: 'Medication Adherence (%)', position: 'insideBottom', offset: 0 }}
+                      <XAxis dataKey="category"  />
+                      <YAxis tickFormatter={(tick) => `${tick}%`} />
+                      <Tooltip formatter={(value) => `${value}%`} />
+                      <Legend layout="horizontal" align="center" verticalAlign="bottom" />
+                      <Bar 
+                        dataKey="value" 
+                        name="Healthcare Worker Effectiveness" 
+                        fill="#00C49F" 
+                        stackId="a" 
+                        data={healthcare_worker}
+                        isAnimationActive={false} 
                       />
-                      <YAxis
-                        dataKey="diseaseProgression"
-                        name="Disease Progression (Change in Cognitive Function Scores)"
-                        type="number"
-                        label={{ value: 'Disease Progression', angle: -90, position: 'left', offset: 0 }}
-                      />
-                      <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="diseaseProgression"
-                        stroke="#8884d8"
-                        activeDot={{ r: 8 }}
-                        dot={{ r: 4 }}
-                      />
-                    </LineChart>
+                    </BarChart>
                   </ResponsiveContainer>
 
                 </div>
-                  
-              </Card>
+              </Card> */}
+
+              {/* <AdherenceChart /> */}
+              <CaregiverChart />
+              <HospitalizationBarChart />
               </div>
               
-
-              <div className="grid grid-cols-1 gap-8">
+              {/* <div className="grid grid-cols-1 gap-8">
                 <StateCaregivingMap />
 
+              </div> */}
+              <div className="grid grid-cols-2 gap-8">
+                <AgitationPieChart />
+                <DrugChangeHeatmap />
               </div>
+
               
               
             </div>
@@ -941,7 +868,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
   };
 
   const handlePromptClick = () => {
-    const newMessage = `Explain detailly about ${stage.title} of Alzheimer's Patient Journey`;
+    const newMessage = `Provide a comprehensive and well-structured explanation of the ${stage.title} phase in the Alzheimer's Patient Journey.`;
     setDefaultMessage(newMessage);
     if (!isChatOpen) {
       setIsChatOpen(true);
@@ -949,7 +876,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
   };
 
   const handlePromptClick2 = () => {
-    const newMessage = `Explain detailly about ${stage.title} barriers of Alzheimer's Patient Journey`;
+    const newMessage = `Provide a comprehensive and well-structured explanation of the barriers in ${stage.title} phase in the Alzheimer's Patient Journey.`;
     setDefaultMessage(newMessage);
     if (!isChatOpen) {
       setIsChatOpen(true);
@@ -961,81 +888,119 @@ const [isChatOpen, setIsChatOpen] = useState(false);
     if (trimmedMessage === "") return;
 
     const newUserMessage = {
-      id: Date.now(),
-      text: trimmedMessage,
-      sender: "user",
+        id: Date.now(),
+        text: trimmedMessage,
+        sender: "user",
     };
 
     setConversation((prev) => [...prev, newUserMessage]);
-
+    const botResponseId = Date.now() + 1;
+    
     try {
-      const backendUrl = "https://alz-backend-1.onrender.com/chat";
+       
+        const initialBotMessage = { 
+            id: botResponseId, 
+            text: "Thinking...", 
+            sender: "bot",
+            loading: true 
+        };
+        setConversation((prev) => [...prev, initialBotMessage]);
 
-      const botResponseId = Date.now() + 1;
-      const initialBotMessage = { id: botResponseId, text: "", sender: "bot" };
-      setConversation((prev) => [...prev, initialBotMessage]);
+        const backendUrl = "https://alz-backend-1.onrender.com/chat";
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      const response = await fetch(backendUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: trimmedMessage }),
-        signal: AbortSignal.timeout(30000), // 30-second timeout
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let fullResponse = "";
-
-      while (true) {
-        const { done, value } = await reader?.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const events = chunk.split("\n\n");
-
-        events.forEach((event) => {
-          if (event.startsWith("data: ")) {
-            const content = event.replace("data: ", "").trim();
-
-            if (content === "[DONE]") {
-              return;
-            }
-
-            try {
-              const parsedContent = JSON.parse(content);
-              fullResponse = parsedContent.message.replace(/\\n/g, '\n');
-              setConversation((prev) =>
-                prev.map((msg) =>
-                  msg.id === botResponseId ? { ...msg, text: fullResponse } : msg
-                )
-              );
-
-              if (parsedContent.suggested_questions && parsedContent.suggested_questions.length > 0) {
-                setSuggestedQuestions(parsedContent.suggested_questions);
-              }
-            } catch (parseError) {
-              console.error("Error parsing response:", parseError);
-            }
-          }
+        const response = await fetch(backendUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: trimmedMessage }),
+            signal: controller.signal
         });
-      }
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        if (!response.body) {
+            throw new Error("Response body is null");
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullResponse = "";
+        let responseTimeout = setTimeout(() => {
+            reader.cancel();
+            throw new Error("Response timeout - no data received for 30 seconds");
+        }, 30000);
+
+        while (true) {
+            const { done, value } = await reader.read();
+            
+            if (done) {
+                clearTimeout(responseTimeout);
+                break;
+            }
+
+            // Reset timeout on each chunk
+            clearTimeout(responseTimeout);
+            responseTimeout = setTimeout(() => {
+                reader.cancel();
+                throw new Error("Response timeout - no data received for 30 seconds");
+            }, 30000);
+
+            const chunk = decoder.decode(value);
+            const events = chunk.split("\n\n");
+
+            for (const event of events) {
+                if (event.startsWith("data: ")) {
+                    const content = event.replace("data: ", "").trim();
+
+                    if (content === "[DONE]") {
+                        continue;
+                    }
+
+                    try {
+                        const parsedContent = JSON.parse(content);
+                        fullResponse = parsedContent.message.replace(/\\n/g, '\n');
+                        
+                        setConversation((prev) =>
+                            prev.map((msg) =>
+                                msg.id === botResponseId 
+                                    ? { ...msg, text: fullResponse, loading: false } 
+                                    : msg
+                            )
+                        );
+
+                        if (parsedContent.suggested_questions?.length > 0) {
+                            setSuggestedQuestions(parsedContent.suggested_questions);
+                        }
+                    } catch (parseError) {
+                        console.error("Error parsing response:", parseError);
+                        throw new Error("Failed to parse server response");
+                    }
+                }
+            }
+        }
     } catch (error) {
-      console.error("Chat error:", error);
-      const errorMessage = {
-        id: Date.now() + 1,
-        text: `Connection Error: ${error.message}\n\n**Troubleshooting Tips:**`,
-        sender: "bot",
-      };
-      setConversation((prev) => [...prev, errorMessage]);
+        const errorMessage = error.name === 'AbortError' 
+            ? "Request timed out. Please try again."
+            : `Error: ${error.message}. Please try again.`;
+
+        setConversation((prev) =>
+            prev.map((msg) =>
+                msg.id === botResponseId
+                    ? { ...msg, text: errorMessage, loading: false, error: true }
+                    : msg
+            )
+        );
+        
+        setSuggestedQuestions([]);
     }
-  };
+};
 
   return (
     <div className="relative w-full">
@@ -1069,11 +1034,17 @@ const [isChatOpen, setIsChatOpen] = useState(false);
         </div>
         <div className='flex'>
           <p className="text-gray-700 mb-6 leading-relaxed pr-4">{stage.description}</p>
-          <div className="relative group inline-block">
-            <MessageCircleQuestion 
-              onClick={handlePromptClick} 
-              className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out" 
-            />
+          <div className="relative inline-block">
+            <div className="relative group inline-block">
+              <MessageCircleQuestion
+                onClick={handlePromptClick}
+                className="cursor-pointer text-gray-600 hover:text-purple-600 transition-colors duration-200 ease-in-out"
+              />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
+                Ask AIVY
+              </div>
+            </div>
+
             <div className="fixed bottom-6 right-6 z-50">
               <button
                 onClick={handleChatToggle}
@@ -1082,20 +1053,19 @@ const [isChatOpen, setIsChatOpen] = useState(false);
                 <MessageCircle className="w-6 h-6" />
               </button>
             </div>
+
             {isChatOpen && (
-              <ChatbotButton 
-                isChatOpen={isChatOpen} 
-                setIsChatOpen={setIsChatOpen} 
-                predifinedPrompt={defaultMessage} 
-                conversation={conversation} 
+              <ChatbotButton
+                isChatOpen={isChatOpen}
+                setIsChatOpen={setIsChatOpen}
+                predifinedPrompt={defaultMessage}
+                conversation={conversation}
                 setConversation={setConversation}
-                sendMessage={sendMessage} 
+                sendMessage={sendMessage}
               />
             )}
-            <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
-              Ask AIVY
-            </div>
           </div>
+
 
         </div>
        

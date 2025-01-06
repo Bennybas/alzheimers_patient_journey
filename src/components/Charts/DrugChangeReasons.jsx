@@ -1,0 +1,110 @@
+import React from 'react';
+
+const DrugChangeHeatmap = () => {
+  const data = [
+    { name: 'Rivastigmine', HCP: 22.22, payerChange: 11.11, planChange: 16.67 }, 
+    { name: 'Donepezil', HCP: 22.22, payerChange: 0.00, planChange: 0.00 }, 
+    { name: 'Galantamine', HCP: 16.67, payerChange: 0.00, planChange: 0.00 },
+    { name: 'Memantine', HCP: 0.00, payerChange: 5.56, planChange: 5.56 }
+  ];
+
+  const colorScale = {
+    HCP: {
+      high: '#FF6B6B',
+      medium: '#FFB74D',
+      low: '#FFC870'
+    },
+    payerChange: {
+      high: '#FFA500',
+      medium: '#FFD700',
+      low: '#FFECB5'
+    },
+    planChange: {
+      high: '#008000',
+      medium: '#90EE90',
+      low: '#CCFFCC'
+    }
+  };
+
+  const getColor = (category, value) => {
+    if (value >= 20) {
+      return colorScale[category].high;
+    } else if (value >= 10) {
+      return colorScale[category].medium;
+    } else {
+      return colorScale[category].low;
+    }
+  };
+
+  const categories = ['HCP', 'payerChange', 'planChange'];
+  const categoryLabels = {
+    HCP: 'HCP',
+    payerChange: 'Payer',
+    planChange: 'Plan'
+  };
+
+  return (
+    <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
+      <h2 className="text-xl font-bold text-gray-800 mb-6">Drug Switch Reasons</h2>
+      
+      <div className="flex gap-8">
+        <div className="w-full space-y-4">
+          {data.map((drug, index) => {
+            const nonZeroCategories = categories.filter(cat => drug[cat] > 0);
+            const widthPercentage = nonZeroCategories.length > 0 ? `${(100 / nonZeroCategories.length)}%` : '0%';
+            return (
+              <div key={index} className="relative">
+                <div className="flex items-center mb-2">
+                  <div className="w-32 font-bold text-sm">{drug.name}</div>
+                  <div className="flex-1 h-8 flex">
+                    {nonZeroCategories.map((category) => (
+                      <div
+                        key={category}
+                        style={{
+                          width: widthPercentage,
+                          height: '18px',
+                          backgroundColor: getColor(category, drug[category])
+                        }}
+                        className="h-full relative group"
+                      >
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-xs font-medium">
+                          <span className="whitespace-nowrap overflow-hidden text-ellipsis px-1">
+                            {drug[category].toFixed(2)}%
+                          </span>
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 absolute -bottom-16 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white p-2 rounded text-xs whitespace-nowrap z-10">
+                          {categoryLabels[category]}<br />
+                          {drug[category].toFixed(2)}%
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Updated Legend without the word "Legend" */}
+      <div className="w-full mt-8">
+        <div className="flex justify-center space-x-4">
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: colorScale.HCP.high }}></div>
+            <span className="ml-2 text-xs text-gray-600">HCP</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: colorScale.payerChange.high }}></div>
+            <span className="ml-2 text-xs text-gray-600">Payer</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: colorScale.planChange.high }}></div>
+            <span className="ml-2 text-xs text-gray-600">Plan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DrugChangeHeatmap;

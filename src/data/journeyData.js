@@ -23,14 +23,14 @@ export const journeyData = [
           content: "PCP refers Patients to a Neurologist for further evaluation if Alzheimer's is suspected." 
         }
       ],
-      metrics: [
-        { value: "85%", label: "Initial PCP Diagnoses" },
-        {value:"18 Months",label:"Time to Referral"},
-        { value: "4 years", label: "Time Spent Under Incorrect Diagnosis" },
-        { value: "13%", label: "Misdiagnosis Rate" },
-        { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)" },
-        { value: "8%", label: "Early MCI Detection" }
-      ],
+      metrics:[
+        { value: "85%", label: "Initial PCP Diagnoses", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=63", name:"Reference" }},
+        { value: "18 Months", label: "Time to Referral", link:{ url:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6745869/", name:"Reference" }},
+        { value: "13%", label: "Misdiagnosis Rate", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/33136176/", name:"Reference" }},
+        { value: "10%", label: "Prevalence of Subjective Cognitive Decline (SCD)", link:{ url:"https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=25", name:"Reference" }},
+        { value: "8%", label: "Early MCI Detection", link:{ url:"https://pubmed.ncbi.nlm.nih.gov/31905546/", name:"Reference" }}
+      ]
+      ,
       barriers: {
         physician: [
           {
@@ -54,7 +54,7 @@ export const journeyData = [
                 text: "Inadequate cognitive assessment tools and insufficient diagnostic support contribute to misdiagnosis and delays.",
               },
               {
-                text: "Limited specialist referral networks, with many states experiencing shortages, hinder access to specialized care.",
+                text: "Limited specialist referral networks, with many states experiencing shortages, hinder access to specialized care. 44% to 71% of PCPs report a lack of specialists, especially in rural and suburban areas",
               },
               {
                 text: "Cognitive assessment and diagnosis remain fragmented, with gaps in support and coverage for patients.",
@@ -129,46 +129,41 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "17.7 weeks", label: "Average Time to Diagnosis" },
-        { value: "8%", label: "Leqembi Eligibility Rate" },
-        { value: "10.2%", label: "Rate of Amyloid/Tau Imaging" },
-        { value: "6 months", label: "Delay in Amyloid/Tau Imaging (Scheduling)" },
-        { value: "60%", label: "Rate of Cognitive Screening Use:MMSE" },
-        { value: "40%", label: "Rate of Cognitive Screening Use:MoCA" },
-        { value: "~30%", label: "Rate of Neuropsychological Testing" }
-
-      ],
+        { value: "22 weeks", label: "Average waiting time from referral to  diagnosis", link: { url: "https://www.alzheimers.org.uk/news/2024-08-08/national-audit-dementia-memory-services-spotlight-audit-2023-24", name: "Reference" }},
+        { value: "53%", label: "Rate of Follow-Up After Initial Screening", link: { url: "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.19302?af=R", name: "Reference" }},
+        { value: "5.5 years", label: "Average time from onset of symptoms to correct diagnosis", link:{ url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8461696/", name:"Reference" }},
+        {value:'2',label:"Average number of visits required for diagnosis",link:{url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10357118/",name: "Reference" }},
+        {value:'79%',label:"MMSE Cognitive Screening Usage Rate",link:{url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10357118/",name: "Reference" }}
+      ]
+      ,
       barriers: {
         physician: [
           {
             subpoints: [
-              
               {
                 text: "15-30% of those meeting Alzheimer's criteria don’t have Alzheimer's brain changes, complicating diagnosis.",
               },
               {
-                text: "85% of dementia diagnoses are made by non-specialists, leading to variability in accuracy due to limited specialized training.",
-              },
-              {
-                text: "Limited access to biomarker testing and overlap of dementia types hinder precise diagnosis and staging.",
+                text: "The significant overlap in symptoms and characteristics among different types of dementia poses challenges in achieving an accurate diagnosis and proper staging of Alzheimer's disease",
               },
             ]
           }
-            
         ],
-        system:[ { subpoints: [
+        system: [
           {
-            text: "High costs and limited insurance coverage for diagnostic tools like PET scans and biomarker tests hinder timely diagnosis.",
-          },
-          {
-            text: "44% to 71% of PCPs report a lack of specialists, especially in rural and suburban areas, impacting patient access to care.",
-          },
-          {
-            text: "Complex authorization processes and limited Medicare coverage delay diagnosis and access to necessary treatments.",
-          },
-        ]}
-      ],
-        
+            subpoints: [
+              {
+                text: "High costs and limited insurance coverage for diagnostic tools like PET scans and biomarker tests hinder timely diagnosis.",
+              },
+              {
+                text: "Complex authorization processes and limited Medicare coverage delay diagnosis and access to necessary treatments.",
+              },
+              {
+                text: "Access to amyloid tracer manufacturing facilities (cyclotrons) is not uniform across the US. This can limit access to PET scans for patients in these areas.",
+              },
+            ]
+          }
+        ],
         patient: [
           {
             subpoints: [
@@ -176,16 +171,13 @@ export const journeyData = [
                 text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
               },
               {
-                text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
-              },
-              {
                 text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
               },
             ]
-            
           }
         ]
-      },
+      }
+      ,
       findings: [
         {
           description: "Access to Diagnostic Resources",
@@ -236,18 +228,13 @@ export const journeyData = [
         }
       ],
       metrics: [
-        { value: "21.1 months", label: "Time to first-line Treatment" },
-        { value: "12.7 months", label: "Time to second-line Treatment" },
-        { value: "15%", label: "Leqembi Treatment Discontinuation Rate" },
-       
-        { value: "31 hrs", label: "Monthly Caregiver Time" },
-        
-        { value: "61%", label: "Life Expectancy Impact" },
-        { value: "69.20%", label: "Non-Adherence Percentage" },
-        { value: "76%", label: "Agitation" },
-        { value: "60%", label: "Rate of Caregiver Burnout" },
-        
-      ],
+        { value: "18.6 months", label: "Average Time to start Treatment after Diagnosis", link: { url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8359937/", name: "Reference" }},
+        { value: "76%", label: "Agitation", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=15", name: "Reference" }},
+        { value: "Donepezil", label: "Most Prescribed Drug", link: { url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4163299", name: "Reference" }},
+        { value: "51.8%", label: "Avg Hospitalization Rate", link: { url: "https://www.alz.org/media/Documents/alzheimers-facts-and-figures.pdf#page=63", name: "Reference" }},
+        { value: "15.94%", label: "Average Non Adherence %", link: { url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11573516", name: "Reference" }},
+      ]
+      ,
       barriers: {
         physician: [
           {
@@ -268,7 +255,7 @@ export const journeyData = [
           {
             subpoints: [
               {
-                text: "The high costs associated with Alzheimer's care, including expensive medications like Lecanemab, create financial barriers for patients and the healthcare system.",
+                text: "The limited capacity of infusion centers to deliver the treatment contribute to long treatment initiation times.",
               },
               {
                 text: "Medicare/Medicaid coverage is limited, and long-term care costs are not adequately covered by Medicare, creating resource strain.",
@@ -283,18 +270,19 @@ export const journeyData = [
           {
             subpoints: [
               {
-                text: "The high financial burden of testing and transportation challenges limit patient access to diagnostic services.",
+                text: "The high costs associated with Alzheimer's care, including expensive medications create financial barriers for patients and the healthcare system.",
               },
               {
                 text: "Patients and caregivers face difficulties understanding complex diagnostic procedures, impacting adherence.",
               },
               {
-                text: "The emotional impact of diagnosis adds to the challenges of managing the condition effectively.",
+                text: "Medications can cause adverse effects like nausea, dizziness, gastrointestinal issues, Insomnia leading to discontinuation.",
               },
             ],
           },
         ],
-      },      
+      }
+      ,      
       findings: [
         {
           description: "Financial Burden",
