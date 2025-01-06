@@ -1,3 +1,5 @@
+import { lab, link } from "d3";
+
 export const journeyData = [
     {
       number: 1,

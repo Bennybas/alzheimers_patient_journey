@@ -61,13 +61,21 @@ const AgitationPieChart = () => {
       >
         Factors Contributing to Agitation in Alzheimer's Patients
       </h3>
+<<<<<<< HEAD
       <ResponsiveContainer width="100%" height={300}>
+=======
+      <ResponsiveContainer width="100%" height={400}>
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
+<<<<<<< HEAD
             outerRadius={90}
+=======
+            outerRadius={120}
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
             label={(entry) => `${entry.name}: ${entry.value}%`}
             labelLine={false}
             dataKey="value"

@@ -43,7 +43,10 @@ import CaregiverChart from '../Charts/CareGiver';
 import DelayChart from '../Charts/DelayChart';
 import HospitalizationBarChart from '../Charts/Hospitalization';
 import AgitationPieChart from '../Charts/Agitation';
+<<<<<<< HEAD
 import DrugChangeHeatmap from '../Charts/DrugChangeReasons';
+=======
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -645,16 +648,23 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <div className="grid gap-8">
                 <DrugSwitch />
               </div>
+<<<<<<< HEAD
               <div className="grid gap-8">
               <DrugDiscontinuationRates />
               </div>
+=======
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
               
               <div className="grid gap-8">
                 <TherapyMetrics />
               </div>
               <div className="grid grid-cols-2 gap-8">
                 <NonAdheherence />
+<<<<<<< HEAD
                 
+=======
+                <DrugDiscontinuationRates />
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
               </div>
               <div className="grid grid-cols-2 gap-8">
 
@@ -797,9 +807,14 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
                 <StateCaregivingMap />
 
               </div> */}
+<<<<<<< HEAD
               <div className="grid grid-cols-2 gap-8">
                 <AgitationPieChart />
                 <DrugChangeHeatmap />
+=======
+              <div className="grid grid-cols-1 gap-8">
+                <AgitationPieChart />
+>>>>>>> 24b7c0817e1a7f25615cc0196bee43e029866967
               </div>
 
               
