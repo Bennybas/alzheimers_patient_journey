@@ -44,6 +44,7 @@ import DelayChart from '../Charts/DelayChart';
 import HospitalizationBarChart from '../Charts/Hospitalization';
 import AgitationPieChart from '../Charts/Agitation';
 import DrugChangeHeatmap from '../Charts/DrugChangeReasons';
+import ComplianceChart from '../Charts/ComplainceRate';
 
 
 const JourneyStage = ({ stage, metrics, barriers, findings }) => {
@@ -660,9 +661,9 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
               <div className="grid grid-cols-2 gap-8">
 
                 <Card className="p-6">
-                  <h2 className="text-lg font-bold text-grey-700">SideEffects and Adherence</h2>
+                 
                   <div className="aspect-[4/3] w-full">
-                  < SideEffectsAdherenceChart />
+                  <ComplianceChart />
                   </div>
                 </Card>
 
@@ -799,7 +800,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
 
               </div> */}
               <div className="grid grid-cols-1 gap-8">
-                <AgitationPieChart />
+              <AgitationPieChart />
               </div>
    
             </div>
