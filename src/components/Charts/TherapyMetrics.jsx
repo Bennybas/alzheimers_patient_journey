@@ -111,7 +111,7 @@ const TherapyMetrics = () => {
         {/* Drug Prescribing Pattern Chart */}
         <div className="bg-white p-4 rounded-lg shadow flex-1">
           <h3 className="text-lg font-bold mb-4 text-center">
-            DDrug Prescription Rate
+            Drug Prescription Rate
           </h3>
           <div className="h-70 -ml-10">
             <ResponsiveContainer width="100%" height="100%">
