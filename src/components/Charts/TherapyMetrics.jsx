@@ -1,45 +1,27 @@
 import React from 'react';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Label,PieChart,Pie,Cell
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, Label, PieChart, Pie, Cell
 } from 'recharts';
 
 const TherapyMetrics = () => {
-  // Combined data for Patients and Avg Duration
   const combinedData = [
-    {
-      line: "L1",
-      percentage: 63.5,
-      months: 21.1,
-    },
-    {
-      line: "L2",
-      percentage: 36.5,
-      months: 12.7,
-    },
+    { line: "L1", percentage: 63.5, months: 21.1 },
+    { line: "L2", percentage: 36.5, months: 12.7 }
   ];
 
-  // Drug prescribing pattern data
   const drugData = [
     { name: "Donepezil", percentage: 58.4 },
     { name: "Rivastigmine", percentage: 13.63 },
     { name: "Donepezil + Memantine", percentage: 6.43 },
-    { name: "Galantamine", percentage: 12.83 },
-    
+    { name: "Galantamine", percentage: 12.83 }
   ];
+
   const getColor = (index) => {
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     return colors[index % colors.length];
   };
 
-  // Custom tooltip for the grouped bar chart
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -60,7 +42,6 @@ const TherapyMetrics = () => {
   return (
     <div className="w-full p-8">
       <div className="flex flex-row gap-4">
-        {/* Combined Patients and Avg Days Chart */}
         <div className="bg-white p-4 rounded-lg shadow flex-1">
           <h3 className="text-lg font-bold mb-4 text-center">
             Patients and Avg Days by Line of Therapy
@@ -74,30 +55,11 @@ const TherapyMetrics = () => {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="line" />
-                <YAxis
-                  yAxisId="left"
-                  orientation="left"
-                  tickFormatter={(value) => `${value}%`}
-                >
-                  <Label
-                    value="Patient Percentage"
-                    angle={-90}
-                    position="insideLeft"
-                    style={{ textAnchor: "middle" }}
-                  />
+                <YAxis yAxisId="left" orientation="left" tickFormatter={(value) => `${value}%`}>
+                  <Label value="Patient Percentage" angle={-90} position="insideLeft" style={{ textAnchor: "middle" }} />
                 </YAxis>
-                <YAxis
-                  yAxisId="right"
-                  orientation="right"
-                  domain={[0, 24]}
-                  tickFormatter={(value) => `${value}m`}
-                >
-                  <Label
-                    value="Avg Duration (Months)"
-                    angle={-90}
-                    position="insideRight"
-                    style={{ textAnchor: "middle" }}
-                  />
+                <YAxis yAxisId="right" orientation="right" domain={[0, 24]} tickFormatter={(value) => `${value}m`}>
+                  <Label value="Avg Duration (Months)" angle={-90} position="insideRight" style={{ textAnchor: "middle" }} />
                 </YAxis>
                 <Tooltip content={<CustomTooltip />} />
                 <Legend />
@@ -108,12 +70,11 @@ const TherapyMetrics = () => {
           </div>
         </div>
 
-        {/* Drug Prescribing Pattern Chart */}
-        <div className="bg-white p-4 rounded-lg shadow flex-1">
+        <div className="bg-white p-2 rounded-lg shadow flex-1">
           <h3 className="text-lg font-bold mb-4 text-center">
             Drug Prescription Rate
           </h3>
-          <div className="h-70 -ml-10">
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -131,7 +92,6 @@ const TherapyMetrics = () => {
                   ))}
                 </Pie>
                 <Tooltip />
-                
               </PieChart>
             </ResponsiveContainer>
           </div>

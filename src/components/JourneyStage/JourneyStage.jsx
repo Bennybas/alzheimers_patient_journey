@@ -561,7 +561,7 @@ const JourneyStage = ({ stage, metrics, barriers, findings }) => {
             </div>
             <div className="grid grid-cols-2 gap-8">
             <Card className="p-6">
-              <h4 className="text-sm font-medium text-gray-700">Perceived Specialist Availability to Meet Patient Demand</h4>
+              <h4 className="text-lg font-medium text-grey-700">Perceived Specialist Availability to Meet Patient Demand</h4>
               <div className="aspect-[4/3] w-full">
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={Specialist_availability}>
