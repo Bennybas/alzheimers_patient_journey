@@ -132,7 +132,7 @@ const DrugDiscontinuationRates = () => {
       .attr("y", d => (d.y1 - d.y0) / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")
-      .text(d => `${d.name} (${d.value.toFixed(1)}%)`)
+      .text(d => `${d.name}`)
       .style("font-size", "12px")
       .style("font-weight", "bold");
 
@@ -143,7 +143,7 @@ const DrugDiscontinuationRates = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-      .text("Drug Treatment Pattern");
+      .text("Drug Discontinuation Pattern");
   }, []);
 
   return <svg ref={svgRef}></svg>;

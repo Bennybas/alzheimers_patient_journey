@@ -70,7 +70,7 @@ const AgitationPieChart = () => {
             data={data}
             cx="50%"
             cy="50%"
-            outerRadius={90}
+            outerRadius={130}
             label={(entry) => `${entry.name}: ${entry.value}%`}
             labelLine={false}
             dataKey="value"

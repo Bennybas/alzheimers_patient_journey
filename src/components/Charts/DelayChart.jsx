@@ -31,7 +31,7 @@ const DelayChart = () => {
           <XAxis dataKey="name" tick={{ fill: "#333", fontSize: 12 }} />
           <YAxis tick={{ fill: "#333", fontSize: 12 }} />
           <Tooltip content={<CustomTooltip />} />
-          <Legend verticalAlign="top" height={36} />
+          <Legend verticalAlign="bottom" height={36} />
           <Bar dataKey="Percentage" fill="#82ca9d" barSize={30} radius={[5, 5, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>

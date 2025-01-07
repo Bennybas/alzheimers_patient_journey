@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Label,
+  Label,PieChart,Pie,Cell
 } from 'recharts';
 
 const TherapyMetrics = () => {
@@ -34,6 +34,10 @@ const TherapyMetrics = () => {
     { name: "Galantamine", percentage: 12.83 },
     
   ];
+  const getColor = (index) => {
+    const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    return colors[index % colors.length];
+  };
 
   // Custom tooltip for the grouped bar chart
   const CustomTooltip = ({ active, payload, label }) => {
@@ -107,23 +111,28 @@ const TherapyMetrics = () => {
         {/* Drug Prescribing Pattern Chart */}
         <div className="bg-white p-4 rounded-lg shadow flex-1">
           <h3 className="text-lg font-bold mb-4 text-center">
-            Drug Prescribing Pattern
+            DDrug Prescription Rate
           </h3>
-          <div className="h-80">
+          <div className="h-70 -ml-10">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                layout="vertical"
-                data={drugData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                barCategoryGap="30%"
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" domain={[0, 70]} />
-                <YAxis type="category" dataKey="name" width={200} />
+              <PieChart>
+                <Pie
+                  data={drugData}
+                  dataKey="percentage"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius="68%"
+                  fill="#8884d8"
+                  label={({ name, percentage }) => `${name}: ${percentage}%`}
+                >
+                  {drugData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={getColor(index)} />
+                  ))}
+                </Pie>
                 <Tooltip />
-                <Legend />
-                <Bar dataKey="percentage" name="Percentage" fill="#8884d8" />
-              </BarChart>
+                
+              </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
